@@ -1,0 +1,47 @@
+{
+    "name": "imagewallet-demo",
+    "version": "0.0.1",
+    "description": "Demonstration of the Trinkler Software image wallet",
+    "main": "src/main.js",
+    "author": "Trinkler Software AG <company@trinkler.software>",
+    "license": "GPL-3.0",
+    "scripts": {
+        "format": "prettier --write './src/*.js'",
+        "start": "parcel -p 3001 ./src/index.html",
+        "lint": "eslint ./src"
+    },
+    "dependencies": {
+        "@trinkler/imagewallet": "^0.0.6",
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^8.2.6",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.7.0",
+        "bootstrap": "^4.1.3",
+        "bootstrap-vue": "^2.0.0-rc.11",
+        "dom-to-image": "^2.6.0",
+        "eslint": "^5.2.0",
+        "file-saver": "^1.3.8",
+        "jquery": "^3.3.1",
+        "parcel-bundler": "^1.9.7",
+        "popper.js": "^1.14.3",
+        "prettier": "^1.13.7",
+        "vue": "^2.5.16",
+        "vue-hot-reload-api": "^2.3.0",
+        "vue-template-compiler": "^2.5.16",
+        "vuelidate": "^0.7.4"
+    },
+    "devDependencies": {
+        "@vue/component-compiler-utils": "^2.1.0"
+    },
+    "eslintConfig": {
+        "parser": "babel-eslint",
+        "extends": [],
+        "rules": {
+            "no-use-before-define": 0,
+            "arrow-body-style": 0,
+            "dot-notation": 0,
+            "no-console": 0
+        },
+        "env": {}
+    }
+}
