@@ -13,7 +13,9 @@
         <!-- ---------------------------------------------- -->
         <!-- Header                                         -->
         <!-- ---------------------------------------------- -->
-        <b-img src="https://raw.githubusercontent.com/Trinkler/brand/master/assets/trinkler%20software/06_no-space.jpg" fluid alt="Responsive image" />
+        <b-img src="https://raw.githubusercontent.com/Trinkler/brand/master/assets/trinkler%20software/06_no-space.jpg"
+               fluid
+               alt="Trinkler Software Logo" />
         <b-navbar toggleable="md" type="dark" variant="dark">
             <b-navbar-brand href="#">Image Wallet Demonstration v{{ IW.version }}</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
