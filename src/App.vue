@@ -121,7 +121,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="TS Image Wallet v0.0.8 - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="TS Image Wallet v0.0.9 - Demonstration">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
         </b-modal>
