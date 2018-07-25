@@ -7,7 +7,7 @@
     "license": "GPL-3.0",
     "scripts": {
         "format": "prettier --write './src/*.js'",
-	"build": "parcel build public/index.html",
+        "build": "parcel build src/index.html",
         "start": "parcel -p 3001 ./src/index.html",
         "lint": "eslint ./src"
     },
