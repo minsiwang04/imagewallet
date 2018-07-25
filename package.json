@@ -12,7 +12,7 @@
         "lint": "eslint ./src"
     },
     "dependencies": {
-        "@trinkler/imagewallet": "^0.0.6",
+        "@trinkler/imagewallet": "^0.0.9",
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.6",
         "babel-plugin-transform-runtime": "^6.23.0",
