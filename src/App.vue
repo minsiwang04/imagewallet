@@ -13,9 +13,8 @@
         <!-- ---------------------------------------------- -->
         <!-- Header                                         -->
         <!-- ---------------------------------------------- -->
-        <!-- <b-img src="https://raw.githubusercontent.com/Trinkler/brand/master/assets/trinkler%20software/06_no-space.jpg" fluid alt="Responsive image" /> -->
         <b-navbar toggleable="md" type="dark" variant="dark">
-            <b-navbar-brand href="#">Image Wallet Demonstration v{{ IW.version }}</b-navbar-brand>
+            <b-navbar-brand href="#">Agora Imagewallet v{{ IW.version }}</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
                 <b-form-radio-group buttons v-model="action" :options="actions"/>
             </b-navbar-nav>
@@ -121,7 +120,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="TS Image Wallet v0.0.8 - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="Agora Imagewallet">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
         </b-modal>
