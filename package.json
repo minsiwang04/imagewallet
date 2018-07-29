@@ -12,7 +12,7 @@
         "lint": "eslint ./src"
     },
     "dependencies": {
-        "@trinkler/imagewallet": "^0.0.9",
+        "@trinkler/imagewallet": "^0.1.5",
         "@vue/component-compiler-utils": "^2.1.0",
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.6",
