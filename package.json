@@ -1,14 +1,14 @@
 {
     "name": "imagewallet-demo",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Demonstration of the Trinkler Software image wallet",
     "main": "src/main.js",
     "author": "Trinkler Software AG <company@trinkler.software>",
     "license": "GPL-3.0",
     "scripts": {
         "format": "prettier --write './src/*.js'",
-        "build": "parcel build src/index.html",
-        "start": "parcel -p 3001 ./src/index.html",
+        "build": "parcel build ./public/index.html",
+        "start": "parcel -p 3001 ./public/index.html",
         "lint": "eslint ./src"
     },
     "dependencies": {
