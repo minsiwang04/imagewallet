@@ -89,9 +89,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
 
-"@trinkler/imagewallet@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@trinkler/imagewallet/-/imagewallet-0.0.9.tgz#22aa45fd965a19eb4aace69d8f6605a7ff4ed84e"
+"@trinkler/imagewallet@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@trinkler/imagewallet/-/imagewallet-0.1.4.tgz#f0016c0e58692b35375366266f4349a33e51fa8e"
   dependencies:
     babel-polyfill "^6.26.0"
     babel-runtime "^6.26.0"
