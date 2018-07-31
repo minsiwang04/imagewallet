@@ -8,14 +8,11 @@
 // View HTML template.
 // **************************************************
 <template>
-    <div id="imageWalletDemoApplication">
+    <div id="imageWalletApplication">
 
         <!-- ---------------------------------------------- -->
         <!-- Header                                         -->
         <!-- ---------------------------------------------- -->
-        <b-img src="https://raw.githubusercontent.com/Trinkler/brand/master/assets/trinkler%20software/06_no-space.jpg"
-               fluid
-               alt="Trinkler Software Logo" />
         <b-navbar toggleable="md" type="dark" variant="dark">
             <b-navbar-brand href="#">Image Wallet Demonstration v{{ IW.version }}</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
@@ -136,78 +133,82 @@
 <script>
 import 'babel-polyfill';
 import * as ImageWallet from '@trinkler/imagewallet';
-import {saveAs}         from 'file-saver/FileSaver';
-import domtoimage       from 'dom-to-image';
-
+import { saveAs } from 'file-saver/FileSaver';
+import domtoimage from 'dom-to-image';
 
 // Application view.
 export default {
-    name: 'imageWalletDemoApplication',
+    name: 'imageWalletApplication',
 
     // View model.
-    data () {
+    data() {
         return {
-            action: "encode",
+            action: 'encode',
             actions: [
-                {value: "encode", text: "Encode"},
-                {value: "decode", text: "Decode"}
+                { value: 'encode', text: 'Encode' },
+                { value: 'decode', text: 'Decode' },
             ],
             decoding: {
-                password: "P96P4Bdp6wMy4pBV",
+                password: 'P96P4Bdp6wMy4pBV',
                 privateKey: null,
                 walletFile: null,
             },
             encoding: {
                 credentials: {
                     password: 'P96P4Bdp6wMy4pBV',
-                    privateKey: '02f987803ea5bf8960c76c35f6d518d29144604668086daba0d4f5322b0d576e'
+                    privateKey:
+                        '02f987803ea5bf8960c76c35f6d518d29144604668086daba0d4f5322b0d576e',
                 },
-                wallet: null
+                wallet: null,
             },
-            IW: ImageWallet
+            IW: ImageWallet,
         };
     },
 
     // View handlers.
     methods: {
         // Event handler: on decode initiation.
-        async onDecode (encoded) {
+        async onDecode(encoded) {
             await ImageWallet.decode(encoded, this.decoding.password)
                 .then(this.onDecodeComplete)
                 .catch(this.onDecodeError);
         },
 
         // Event handler: on decode completed.
-        async onDecodeComplete (response) {
+        async onDecodeComplete(response) {
             this.decoding.privateKey = response.data.privateKey;
             const stream = new FileReader();
             stream.onload = function(e) {
-                const $decodingImageWallet = document.getElementById("decodingImageWallet");
+                const $decodingImageWallet = document.getElementById(
+                    'decodingImageWallet',
+                );
                 $decodingImageWallet.src = stream.result;
             };
             stream.readAsDataURL(this.decoding.walletFile);
         },
 
         // Event handler: on decode error.
-        async onDecodeError (err) {
+        async onDecodeError(err) {
             // TODO display error modal.
             alert(err.message);
         },
 
         // Event handler: on encode initiation.
-        onEncode (evt) {
+        onEncode(evt) {
             ImageWallet.encode(this.encoding.credentials, {})
-            .then(this.onEncodeComplete)
-            .catch(this.onEncodeError);
+                .then(this.onEncodeComplete)
+                .catch(this.onEncodeError);
         },
 
         // Event handler: on encode complete.
-        onEncodeComplete (wallet) {
+        onEncodeComplete(wallet) {
             // Cache result.
             this.encoding.wallet = wallet;
 
             // Update DOM.
-            const $container = document.getElementById("imageWalletDemoContainer");
+            const $container = document.getElementById(
+                'imageWalletDemoContainer',
+            );
             while ($container.firstChild) {
                 $container.removeChild($container.firstChild);
             }
@@ -218,17 +219,16 @@ export default {
         },
 
         // Event handler: on encode error.
-        onEncodeError (err) {
+        onEncodeError(err) {
             alert(err.message);
         },
 
         // Event handler: on save wallet to file system.
-        onSaveWallet (evt) {
-            domtoimage.toBlob(this.encoding.wallet)
-                .then(blob => {
-                    saveAs(blob, 'my-agora-image-wallet-noir.png');
-                });
-        }
-    }
-}
+        onSaveWallet(evt) {
+            domtoimage.toBlob(this.encoding.wallet).then((blob) => {
+                saveAs(blob, 'my-agora-image-wallet-noir.png');
+            });
+        },
+    },
+};
 </script>
