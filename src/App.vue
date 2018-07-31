@@ -123,7 +123,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="TS Image Wallet v0.1.5 - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.1.6 - Demonstration">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
         </b-modal>
@@ -134,6 +134,7 @@
 // View Javascript.
 // **************************************************
 <script>
+import 'babel-polyfill';
 import * as ImageWallet from '@trinkler/imagewallet';
 import {saveAs}         from 'file-saver/FileSaver';
 import domtoimage       from 'dom-to-image';
