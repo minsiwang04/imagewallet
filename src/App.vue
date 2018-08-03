@@ -66,7 +66,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Decode                                         -->
         <!-- ---------------------------------------------- -->
-        <b-container fluid v-show="action === 'decode'">
+        <b-container v-show="action === 'decode'">
             <b-form-group>
                 <b-row>
                     <b-col sm="3">
