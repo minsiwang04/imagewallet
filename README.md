@@ -1,6 +1,6 @@
 # Imagewallet
 
-> Imagewallet for cross-chain, non-custoidal, cryptocurrency exchange https://agora.trade
+_A custodian file that is simpler than [brainwallets](https://en.bitcoin.it/wiki/Brainwallet) and can be used for the entire blockchain ecosystem._
 
 ## Supported Commands
 
@@ -9,7 +9,7 @@
 $ yarn install
 
 # Run demo
-$ yarn start
+$ yarn start-demo
 
 # Build
 $ yarn build
