@@ -15,6 +15,7 @@
 // Module imports.
 import encoder from './encoder/index';
 import decoder from './decoder/index';
+import * as curves from './curves/index';
 
 /**
  * Asynchronously encodes an image wallet from user credentials and encoding options.
@@ -40,7 +41,13 @@ export const decode = async (blob, password) => {
 export const name = 'Image Wallet';
 
 // Library version.
-export const version = '0.1.6';
+export const version = '0.2.0';
 
 // Library provider.
 export const provider = 'Trinkler Software AG';
+
+// Export elliptic curve set.
+export const CURVES = [
+    curves.secp256k1,
+    curves.ed25519
+]
