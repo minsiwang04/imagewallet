@@ -4,7 +4,7 @@
  * @param {string} input - An input string.
  * @return True if hexadecimal, false otherwise.
  */
-export const isHex = (input) => {
+export const IsHexString = (input) => {
     if (typeof input !== 'string') {
         return false;
     }
