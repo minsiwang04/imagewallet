@@ -27,13 +27,13 @@
         "build": "parcel build ./src/index.js -o ImageWallet.js",
         "format": "prettier --write './src/**/**/*.js'",
         "lint": "eslint ./src",
-        "test": "jest ./test/test-interface"
+        "test": "jest ./test/210*"
     },
     "dependencies": {
         "bindings": "^1.3.0",
         "elliptic": "^6.4.1",
-        "hash.js": "^1.1.5",
         "jsqr": "^1.1.0",
+        "keccak": "^1.4.0",
         "logger": "^0.0.1",
         "png.js": "^0.2.1",
         "popper.js": "^1.14.3",
@@ -49,8 +49,11 @@
         "babel-preset-airbnb": "^2.5.2",
         "babel-preset-env": "^1.7.0",
         "eslint": "^5.2.0",
-        "jest": "^23.4.1",
+        "eth-crypto": "^1.2.4",
+        "eth-lib": "^0.2.8",
+        "jest": "^23.6.0",
         "jquery": "^3.3.1",
+        "lodash": "^4.17.11",
         "parcel-bundler": "^1.9.7",
         "prettier": "^1.13.7"
     },

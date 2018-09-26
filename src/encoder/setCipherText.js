@@ -20,7 +20,7 @@ export default async function(ctx) {
     ctx.cipherText = cryptography.encrypt(
         JSON.stringify({
             data: {
-                privateKey: ctx.credentials.privateKey,
+                secretSeed: ctx.credentials.secretSeed,
             },
             wallet: {
                 name: IW.name,

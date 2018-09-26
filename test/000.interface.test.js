@@ -1,15 +1,16 @@
 // Module imports.
 import * as IW from '../src/index';
 
-test('IW imported', () => {
+test('IW :: imported', () => {
     expect(IW).toBeDefined();
 });
 
-test('IW high level interface is defined', () => {
+test('IW :: interface :: is defined', () => {
     const slots = [
         IW.CURVES,
         IW.decode,
         IW.encode,
+        IW.utils,
         IW.name,
         IW.provider,
         IW.version
@@ -18,18 +19,18 @@ test('IW high level interface is defined', () => {
         expect(slot).toBeDefined();
     });
     expect(IW.name).toBe('Image Wallet');
-    expect(IW.version).toBe('0.1.6');
+    expect(IW.version).toBe('0.2.0');
     expect(IW.provider).toBe('Trinkler Software AG');
 });
 
-test('IW curves have standard functions', () => {
+test('IW :: interface :: curves are defined', () => {
     IW.CURVES.forEach((curve) => {
         const funcs = [
             curve,
-            curve.createKey,
+            curve.getPrivateKey,
             curve.getPublicKey,
-            curve.signMessageHash,
-            curve.verifyMessageHash,
+            curve.sign,
+            curve.verify,
         ];
         funcs.forEach((func) => {
             expect(func).toBeDefined();

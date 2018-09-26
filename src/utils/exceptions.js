@@ -53,11 +53,11 @@ export class EncodingError extends BaseError {
 }
 
 /**
- * Raised when private key is deemed to be invalid.
+ * Raised when secret seed is deemed to be invalid.
  * @constructor
  * @param {string} err - Error message.
  */
-export class InvalidPrivateKeyError extends EncodingError {
+export class InvalidSecretSeedError extends EncodingError {
     constructor(msg) {
         super(msg, 'ERR_ENCODING_INVALID_PRIVATE_KEY');
     }

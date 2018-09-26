@@ -10,7 +10,7 @@
 
 // Module imports.
 import {
-    InvalidPrivateKeyError,
+    InvalidSecretSeedError,
     InvalidPasswordError,
 } from '../utils/exceptions';
 import { logTODO } from '../utils/logging';
@@ -20,22 +20,24 @@ import { logTODO } from '../utils/logging';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    validatePrivateKey(ctx.credentials.privateKey);
+    validateSecretSeed(ctx.credentials.secretSeed);
     validatePassword(ctx.credentials.password);
 }
 
 /**
- * Validates supplied private key.
+ * Validates supplied secret seed.
  * @param {string} key - Private key being validated.
  */
-const validatePrivateKey = (key) => {
-    // Must be a hex encoded string.
+const validateSecretSeed = (seed) => {
+    // Expecting a 32 byte hex encoded string.
     try {
-        key = Buffer.from(key, 'hex');
+        seed = Buffer.from(seed, 'hex');
     } catch (err) {
-        throw new InvalidPrivateKeyError('expecting a hex encoded string');
+        throw new InvalidSecretSeedError('expecting a 32 byte hex encoded string');
     }
-    // TODO: validate length ?
+    if (seed.length != 32) {
+        throw new InvalidSecretSeedError('expecting a 32 byte hex encoded string');
+    }
 };
 
 /**
@@ -44,4 +46,11 @@ const validatePrivateKey = (key) => {
  */
 const validatePassword = (pwd) => {
     logTODO('validate password against a regex');
+};
+
+const isHexString = (input) => {
+    if (typeof input !== 'string') {
+        return false;
+    }
+    return parseInt(input, 16).toString(16) === input.toLowerCase();
 };

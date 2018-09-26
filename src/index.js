@@ -16,6 +16,7 @@
 import encoder from './encoder/index';
 import decoder from './decoder/index';
 import * as curves from './curves/index';
+import * as utils from './utils/index';
 
 /**
  * Asynchronously encodes an image wallet from user credentials and encoding options.
@@ -23,7 +24,7 @@ import * as curves from './curves/index';
  * @param {object} options - Encoding options.
  * @return A promise encoded image wallet.
  */
-export const encode = async (credentials, options) => {
+const encode = async (credentials, options) => {
     return await encoder(credentials, options);
 };
 
@@ -33,21 +34,32 @@ export const encode = async (credentials, options) => {
  * @param {string} password - Password used when generating wallet.
  * @return A private key.
  */
-export const decode = async (blob, password) => {
+const decode = async (blob, password) => {
     return await decoder(blob, password);
 };
 
 // Library version.
-export const name = 'Image Wallet';
+const name = 'Image Wallet';
 
 // Library version.
-export const version = '0.2.0';
+const version = '0.2.0';
 
 // Library provider.
-export const provider = 'Trinkler Software AG';
+const provider = 'Trinkler Software AG';
 
 // Export elliptic curve set.
-export const CURVES = [
+const CURVES = [
     curves.secp256k1,
     curves.ed25519
 ]
+
+// Module exports.
+export {
+	CURVES,
+	decode,
+	encode,
+	name,
+	version,
+	provider,
+	utils,
+}
