@@ -11,6 +11,9 @@
 // Default cipher algorithm.
 export const CIPHER_ALGORITHM = 'aes256';
 
+// Default hashing algorithm - sha-3:keccak256.
+export const HASH_ALGORITHM = 'keccak256';
+
 // Utf8 encoding.
 export const UTF8 = 'utf8';
 

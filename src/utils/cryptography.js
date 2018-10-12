@@ -10,7 +10,8 @@
 
 // Module imports.
 import * as crypto from 'crypto';
-import { CIPHER_ALGORITHM, HEX, UTF8 } from './constants';
+import { CIPHER_ALGORITHM, HASH_ALGORITHM, HEX, UTF8 } from './constants';
+import * as keccak from 'keccak';
 
 /**
  * Encrypts plain text.
@@ -38,4 +39,17 @@ export const decrypt = (cipherText, password) => {
     decrypted += decipher.final(UTF8);
 
     return decrypted;
+};
+
+/**
+ * Returns a hash of the passed data using the keccak256 algorithm.
+ *
+ * @param {string} data - Text to be hashed.
+ * @return {hex} The hashed value.
+ */
+export const hashData = (data) => {
+	const input = JSON.stringify(data);
+	const h = keccak.default(HASH_ALGORITHM);
+
+	return h.update(JSON.stringify(data)).digest(HEX);
 };
