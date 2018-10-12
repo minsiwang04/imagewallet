@@ -30,14 +30,21 @@ test('IW :: utils :: cryptography', () => {
     });
 });
 
-test('IW :: utils :: cryptography :: hashData', () => {
-    expect(_.isEqual(CRYPTO.hashData(DATA), DATA_KECCAK256_HASH)).toBe(true);
-});
-
 test('IW :: utils :: cryptography :: decrypt', () => {
     expect(_.isEqual(CRYPTO.decrypt(DATA_CIPHER_TEXT, PWD), DATA_PLAINTEXT)).toBe(true);
 });
 
 test('IW :: utils :: cryptography :: encrypt', () => {
     expect(_.isEqual(CRYPTO.encrypt(DATA_PLAINTEXT, PWD), DATA_CIPHER_TEXT)).toBe(true);
+});
+
+test('IW :: utils :: cryptography :: generateEntropy', () => {
+    let entropy = CRYPTO.generateEntropy();
+    expect(entropy.length).toBe(32);
+    entropy = CRYPTO.generateEntropy(256);
+    expect(entropy.length).toBe(256);
+});
+
+test('IW :: utils :: cryptography :: hashData', () => {
+    expect(_.isEqual(CRYPTO.hashData(DATA), DATA_KECCAK256_HASH)).toBe(true);
 });
