@@ -16,3 +16,6 @@ export const UTF8 = 'utf8';
 
 // Hex encoding.
 export const HEX = 'hex';
+
+// Image wallet slip 44 index.
+export const SLIP44 = 241;
