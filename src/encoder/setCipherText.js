@@ -9,8 +9,9 @@
  */
 
 // Module imports.
-import * as cryptography from '../utils/cryptography';
+import * as cryptography from '../cryptography/index';
 import * as IW from '../index';
+
 
 /**
  * Encrypts data in readiness for transformation to a QR code.

@@ -8452,6 +8452,18 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
+tweetnacl-auth@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tweetnacl-auth/-/tweetnacl-auth-1.0.1.tgz#8fcb6185f83f1d18b97c49055ed1811dceb7474b"
+  integrity sha512-Qu2JonS5VUh5oJBnGsFohfel8O4gqN2QwdrsLjaZEZOU/25iIr3zU7jFOFbtOM5Wak5jiIViAqMvRvuxk9Lhmg==
+  dependencies:
+    tweetnacl "1.x.x"
+
+tweetnacl@1.x.x:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
+  integrity sha1-cT2LgY2kIGh0C/aDhtBHnmb8ins=
+
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"

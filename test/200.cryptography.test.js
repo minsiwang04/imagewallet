@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
-import * as CRYPTO from '../src/utils/cryptography';
-
+import * as CRYPTO from '../src/cryptography/index';
 
 // Message data to be processed.
 const DATA = {
@@ -21,11 +20,15 @@ const PWD = 'aGTHTRnntrKLGvdr'
 
 test('IW :: utils :: cryptography', () => {
     const slots = [
-        'encrypt',
         'decrypt',
-        'hashData',
+		'deriveKey',
+		'encrypt',
+		'generateEntropy',
+        // 'hashData',
     ];
+
     slots.forEach((slot) => {
+		console.log(slot);
         expect(CRYPTO[slot]).toBeDefined();
     });
 });
@@ -45,6 +48,6 @@ test('IW :: utils :: cryptography :: generateEntropy', () => {
     expect(entropy.length).toBe(256);
 });
 
-test('IW :: utils :: cryptography :: hashData', () => {
-    expect(_.isEqual(CRYPTO.hashData(DATA), DATA_KECCAK256_HASH)).toBe(true);
-});
+// test('IW :: utils :: cryptography :: hashData', () => {
+//     expect(_.isEqual(CRYPTO.hashData(DATA), DATA_KECCAK256_HASH)).toBe(true);
+// });

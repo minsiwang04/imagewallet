@@ -15,7 +15,8 @@
 // Module imports.
 import encoder from './encoder/index';
 import decoder from './decoder/index';
-import * as curves from './curves/index';
+import * as curves from './cryptography/curves/index';
+import deriveKey from './cryptography/index';
 import * as utils from './utils/index';
 
 /**
@@ -56,6 +57,7 @@ const CURVES = [
 // Module exports.
 export {
 	CURVES,
+    deriveKey,
 	decode,
 	encode,
 	name,

@@ -7,19 +7,20 @@ test('IW :: imported', () => {
 
 test('IW :: interface :: is defined', () => {
     const slots = [
-        IW.CURVES,
-        IW.decode,
-        IW.encode,
-        IW.utils,
-        IW.name,
-        IW.provider,
-        IW.version
+        'CURVES',
+        'decode',
+        // 'deriveKey',
+        'encode',
+        'utils',
+        'name',
+        'provider',
+        'version'
     ];
     slots.forEach((slot) => {
-        expect(slot).toBeDefined();
+        expect(IW[slot]).toBeDefined();
     });
     expect(IW.name).toBe('Image Wallet');
-    expect(IW.version).toBe('0.2.0');
+    expect(IW.version).toBe('0.2.1');
     expect(IW.provider).toBe('Trinkler Software AG');
 });
 

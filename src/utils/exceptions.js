@@ -87,3 +87,30 @@ export class InvalidPngFileError extends DecodingError {
         super(msg, 'ERR_DECODING_INVALID_PMG_FILE');
     }
 }
+
+/**
+ * Raised when image wallet is asked to derive a key for an invalid coin.
+ * @constructor
+ * @param {string} identifier - Coin identifier.
+ */
+export class InvalidCoinIdentiferError extends BaseError {
+    constructor(identifier) {
+        super(
+            `${identifier} is an invalid chain identifier as per slip0044`,
+            'ERR_INVALID_COIN_IDENTIFIER',
+        );
+    }
+}
+
+/**
+ * Raised when image wallet is asked to derive a key from weak entropy.
+ * @constructor
+ */
+export class InvalidEntropyError extends BaseError {
+    constructor() {
+        super(
+            'Entropy source is invalid',
+            'ERR_ENTROPY_INVALID',
+        );
+    }
+}
