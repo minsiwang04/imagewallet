@@ -9,7 +9,7 @@
  *
  * @exports encode/decode
  * @requires TODO
- * @version 0.1.6
+ * @version 0.2.1
  */
 
 // Module imports.
@@ -42,7 +42,7 @@ const decode = async (blob, password) => {
 const name = 'Image Wallet';
 
 // Library version.
-const version = '0.2.0';
+const version = '0.2.1';
 
 // Library provider.
 const provider = 'Trinkler Software AG';

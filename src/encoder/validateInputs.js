@@ -20,37 +20,13 @@ import { logTODO } from '../utils/logging';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    validateSecretSeed(ctx.credentials.secretSeed);
     validatePassword(ctx.credentials.password);
 }
-
-/**
- * Validates supplied secret seed.
- * @param {string} key - Private key being validated.
- */
-const validateSecretSeed = (seed) => {
-    // Expecting a 32 byte hex encoded string.
-    try {
-        seed = Buffer.from(seed, 'hex');
-    } catch (err) {
-        throw new InvalidSecretSeedError('expecting a 32 byte hex encoded string');
-    }
-    if (seed.length != 32) {
-        throw new InvalidSecretSeedError('expecting a 32 byte hex encoded string');
-    }
-};
 
 /**
  * Validates supplied password.
  * @param {string} pwd - Password being validated.
  */
 const validatePassword = (pwd) => {
-    logTODO('validate password against a regex');
-};
-
-const isHexString = (input) => {
-    if (typeof input !== 'string') {
-        return false;
-    }
-    return parseInt(input, 16).toString(16) === input.toLowerCase();
+    logTODO('validate password minimum length = 8 ?');
 };

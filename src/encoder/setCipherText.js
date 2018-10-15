@@ -20,7 +20,7 @@ export default async function(ctx) {
     ctx.cipherText = cryptography.encrypt(
         JSON.stringify({
             data: {
-                secretSeed: ctx.credentials.secretSeed,
+                secretSeed: '02f987803ea5bf8960c76c35f6d518d29144604668086daba0d4f5322b0d576e',
             },
             wallet: {
                 name: IW.name,
@@ -31,3 +31,21 @@ export default async function(ctx) {
         ctx.credentials.password,
     );
 }
+
+/**
+ * Returns entropy encoded as a base64 string.
+ */
+const getEncodedEntropy = () => {
+    const asObj = {
+        secretSeed: cryptography.generateEntropy(32).toString('hex'),
+        wallet: {
+            name: IW.name,
+            provider: IW.provider,
+            version: IW.version,
+        }
+    };
+    const asString = JSON.stringify(asObj);
+    const asB64 = new Buffer(asString).toString('base64');
+
+    return asB64;
+};
