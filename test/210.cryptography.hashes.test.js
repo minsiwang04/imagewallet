@@ -31,19 +31,19 @@ test('IW :: cryptography :: hashes  :: test interface', () => {
     });
 });
 
-test('IW :: cryptography :: hashes  :: test blake2b', () => {
+test('IW :: cryptography :: hashes  :: blake2b', () => {
     let hashed = API.blake2b(DATA);
     hashed = hexFromUint8Buffer(hashed);
     expect(_.isEqual(hashed, DATA_BLAKE2B)).toBe(true);
 });
 
-test('IW :: cryptography :: hashes  :: test keccak256', () => {
+test('IW :: cryptography :: hashes  :: keccak256', () => {
     let hashed = API.keccak256(DATA);
     hashed = hexFromUint8Buffer(hashed);
     expect(_.isEqual(hashed, DATA_KECCAK256)).toBe(true);
 });
 
-test('IW :: cryptography :: hashes  :: test hmacSha512', () => {
+test('IW :: cryptography :: hashes  :: hmacSha512', () => {
     let hashed = API.hmacSha512(DATA_KECCAK256, KEY);
     hashed = hexFromUint8Buffer(hashed);
     expect(_.isEqual(hashed, DATA_HMAC_SHA512)).toBe(true);

@@ -23,7 +23,7 @@ const PVK_HEX = 'a002d4c655cbe28ed11dd54c4511e37a0d7fb80c81e1988fc75b99f3947a594
 
 const PBK_HEX = '045ef599f0162789a73d576b01d358ccd127ba0ab45d41bb379747c658f21a9d933b7ab980d97651b878df91d063fc96a50386e67c44e9fddd1d099d6d96c9bdc8'
 
-// Expected signature. 
+// Expected signature.
 const SIG_R = [
     45, 76, 83, 107, 155, 77, 218, 32, 10, 124, 192, 180, 34, 211, 86, 29,
     184, 114, 141, 153, 124, 82, 141, 102, 243, 2, 52, 32, 46, 202, 204, 196,
@@ -42,7 +42,7 @@ const HASH = [
     9, 32, 169, 128, 221, 34, 18, 34, 89, 86, 165, 6, 172, 45, 8, 216, 14
     ];
 
-test('IW :: curves :: ecdsa :: secp256k1', () => {
+test('IW :: cryptography :: curves :: eddsa:ed25519 :: interface', () => {
     const slots = [
         'getPrivateKey',
         'getPublicKey',
@@ -54,18 +54,18 @@ test('IW :: curves :: ecdsa :: secp256k1', () => {
     });
 });
 
-test('IW :: curves :: ecdsa :: secp256k1 :: getPrivateKey', () => {
+test('IW :: cryptography :: curves :: eddsa:ed25519 :: getPrivateKey', () => {
     expect(_.isEqual(CURVE.getPrivateKey(ENTROPY), PVK)).toBe(true);
 });
 
-test('IW :: curves :: ecdsa :: secp256k1 :: getPublicKey', () => {
+test('IW :: cryptography :: curves :: eddsa:ed25519 :: getPublicKey', () => {
     expect(_.isEqual(CURVE.getPublicKey(ENTROPY), PBK)).toBe(true);
 });
 
-test('IW :: curves :: ecdsa :: secp256k1 :: sign', () => {
+test('IW :: cryptography :: curves :: eddsa:ed25519 :: sign', () => {
     expect(_.isEqual(CURVE.sign(ENTROPY, DATA_HASH), SIG)).toBe(true);
 });
 
-// test('IW :: curves :: ecdsa :: secp256k1 :: verify', () => {
+// test('IW :: cryptography :: curves :: eddsa:ed25519 :: verify', () => {
 //     expect(CURVE.verify(PVK, DATA_HASH, SIG)).toBe(true);
 // });
