@@ -15,10 +15,6 @@ import * as exceptions from '../utils/exceptions';
 import * as convert from '../utils/conversion';
 import * as hash from './hashes/index';
 
-// Derivation path levels.
-const PL_PURPOSE = 0x8000002C;  // 44'
-const PL_CHANGE = 0; // change
-
 /**
  * Returns a hash of the passed data using the keccak256 algorithm.
  *
@@ -27,10 +23,9 @@ const PL_CHANGE = 0; // change
  * @param {number} accountIndex - Account identifier.
  * @return {hex} seed - Master source of entropy.
  */
-export const derive = (seed, coinSymbol, accountIndex) => {
+export default function(seed, coinSymbol, accountIndex) {
     // Defensive programming.
-    validateSeed(seed);
-    const coin = validateCoinSymbol(coinSymbol);
+    const coin = validateInputs(seed, coinSymbol, accountIndex);
 
     // Iterate BIP32 path extendingly master key accordingly.
     const path = getBip32Path(coin.hexCode, accountIndex || 0, 0);
@@ -40,7 +35,7 @@ export const derive = (seed, coinSymbol, accountIndex) => {
     }
 
     return derived.key;
-};
+}
 
 /**
  * Returns a hash of the passed data using the keccak256 algorithm.
@@ -51,10 +46,7 @@ export const derive = (seed, coinSymbol, accountIndex) => {
  * @return {hex} seed - Master source of entropy.
  */
 const getBip32Path = (coinHexCode, account, address_index) => {
-    // TODO: verify source of account / address index.
-    const path = `m / ${PL_PURPOSE} / ${coinHexCode} / ${account} / ${PL_CHANGE} / ${address_index}`;
-
-    return path.split('/');
+    return `m / 0x8000002C / ${coinHexCode} / ${account} / 0 / ${address_index}`.split(' / ');
 }
 
 /**
@@ -67,7 +59,10 @@ const getMasterExtendedKey = (seed) => {
     const key = hash.keccak256('أبو يوسف يعقوب بن إسحاق الصبّاح الكندي');
     const digest = hash.hmacSha512(key, seed);
 
-    return new ExtendedPrivateKey(digest.slice(0, 32), digest.slice(32));
+    return {
+        key: digest.slice(0, 32),
+        chainCode: digest.slice(32)
+    }
 }
 
 /**
@@ -83,7 +78,10 @@ const getDerivedExtendedKey = (parent, index) => {
     const seed = Array.from(parent.key).concat(convert.hexToArray(index));
     const digest = Array.from(hash.hmacSha512(parent.chainCode, seed));
 
-    return new ExtendedPrivateKey(digest.slice(0, 32), digest.slice(32));
+    return {
+        key: digest.slice(0, 32),
+        chainCode: digest.slice(32)
+    }
 }
 
 /**
@@ -91,49 +89,20 @@ const getDerivedExtendedKey = (parent, index) => {
  *
  * @param {number} j - Chain identifier as per SLIP0044.
  */
-const validateCoinSymbol = (symbol) => {
-    const coin = coins.getBySymbol(symbol);
-    if (!coin) {
-        throw new exceptions.InvalidCoinSymbolError(symbol);
-    }
-
-    return coin;
-};
-
-/**
- * Validates incoming seed entropy.
- *
- * @return {hex} seed - Master source of entropy.
- */
-const validateSeed = (seed) => {
+const validateInputs = (seed, coinSymbol, accountIndex) => {
     if (typeof seed !== 'string') {
         throw new exceptions.InvalidEntropyError();
     }
     if (seed.length != 64) {
         throw new exceptions.InvalidEntropyError();
     }
-};
 
-/**
- * Represents a private key - not to be revealed by any entity than it's creator !
- * @constructor
- * @param {string} key - The key.
- */
-class PrivateKey {
-    constructor(key) {
-        this.key = key
+    const coin = coins.getBySymbol(coinSymbol);
+    if (!coin) {
+        throw new exceptions.InvalidCoinSymbolError(coinSymbol);
     }
-}
 
-/**
- * Represents an extended private key - extended via hmacSha512.
- * @constructor
- * @param {string} key - The key.
- * @param {string} chainCode - The chain code.
- */
-class ExtendedPrivateKey extends PrivateKey {
-    constructor(key, chainCode) {
-        super(key)
-        this.chainCode = chainCode
-    }
+    // TODO: validate account index.
+
+    return coin;
 }

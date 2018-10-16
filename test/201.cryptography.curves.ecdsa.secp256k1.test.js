@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import * as keccak from 'keccak';
-import * as CONVERTOR from '../src/utils/conversion';
 import * as CURVE from '../src/curves/ecdsa/secp256k1';
 import * as utils from './utils';
 

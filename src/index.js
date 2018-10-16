@@ -7,27 +7,14 @@
 /**
  * @fileOverview An image wallet - easier than brain wallets.
  *
- * @exports encode/decode
- * @requires TODO
+ * @exports decode/deriveKey/encode/name/provider/version
  * @version 0.2.1
  */
 
 // Module imports.
 import encoder from './encoder/index';
 import decoder from './decoder/index';
-import * as curves from './cryptography/curves/index';
 import deriveKey from './cryptography/index';
-import * as utils from './utils/index';
-
-/**
- * Asynchronously encodes an image wallet from user credentials and encoding options.
- * @param {object} credentials - Credentials to be encoded.
- * @param {object} options - Encoding options.
- * @return A promise encoded image wallet.
- */
-const encode = async (credentials, options) => {
-    return await encoder(credentials, options);
-};
 
 /**
  * Asynchronously decodes an image wallet.
@@ -39,29 +26,34 @@ const decode = async (blob, password) => {
     return await decoder(blob, password);
 };
 
-// Library version.
-const name = 'Image Wallet';
+/**
+ * Asynchronously encodes an image wallet from user credentials and encoding options.
+ * @param {object} credentials - Credentials to be encoded.
+ * @param {object} options - Encoding options.
+ * @return A promise encoded image wallet.
+ */
+const encode = async (credentials, options) => {
+    return await encoder(credentials, options);
+};
+
+// Synonym for encode.
+const generateFromPassword = encode;
 
 // Library version.
-const version = '0.2.1';
+const name = 'Image Wallet';
 
 // Library provider.
 const provider = 'Trinkler Software AG';
 
-// Export elliptic curve set.
-const CURVES = [
-    curves.secp256k1,
-    curves.ed25519
-]
+// Library version.
+const version = '0.2.1';
 
 // Module exports.
 export {
-	CURVES,
-    deriveKey,
 	decode,
+    deriveKey,
 	encode,
 	name,
-	version,
 	provider,
-	utils,
-}
+    version,
+};

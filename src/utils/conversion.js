@@ -1,4 +1,14 @@
+// Copyright 2018 Trinkler Software AG (Switzerland).
+// Trinkler Software provides free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version <http://www.gnu.org/licenses/>.
+
 /**
+ * @fileOverview Library type instance converstion utility functions.
+ */
+
+ /**
  * Returns a hexadecimal string decoded from a binary array.
  *
  * @param {Array} arr - A binary array.
@@ -40,10 +50,11 @@ export const hexFromUint8Buffer = (arr) => {
  * @return Array
  */
 export const hexToArray = (hex) => {
-  let arr = [];
-  for (let i = 2, l = hex.length; i < l; i += 2)
-    arr.push(parseInt(hex.slice(i, i + 2), 16));
-  return arr;
+    let arr = [];
+    for (let i = 2, l = hex.length; i < l; i += 2) {
+      arr.push(parseInt(hex.slice(i, i + 2), 16));
+    }
+    return arr;
 }
 
 /**
@@ -75,7 +86,7 @@ export const isHexString = (input) => {
   * @param {string} s - An input string.
   * @return {Uint8Array}
   */
-export const encodeUTF8 = (s) => {
+export const utf8ToBytes = (s) => {
 	var i = 0, bytes = new Uint8Array(s.length * 4);
 	for (var ci = 0; ci != s.length; ci++) {
 		var c = s.charCodeAt(ci);
@@ -109,7 +120,7 @@ export const encodeUTF8 = (s) => {
  * @param {Uint8Array} bytes - An array of unsigned 8 bit integers.
  * @return {string}
  */
-export const decodeUTF8 = (bytes) => {
+export const bytesToUtf8 = (bytes) => {
 	var i = 0, s = '';
 	while (i < bytes.length) {
 		var c = bytes[i++];

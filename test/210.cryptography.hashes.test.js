@@ -3,7 +3,6 @@ import {hash as API} from '../src/cryptography';
 import {hexFromArray, hexFromUint8Buffer} from '../src/utils/conversion';
 import * as utils from './utils';
 
-
 // Message data to be hashed.
 const DATA = {
 		'Al-Kindi': 'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي'
@@ -23,16 +22,9 @@ const KEY = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe';
 
 test('IW :: cryptography :: hashes  :: test interface', () => {
 	utils.testSlots(API, [
-		'blake2b',
         'hmacSha512',
     	'keccak256',
 	]);
-});
-
-test('IW :: cryptography :: hashes  :: blake2b', () => {
-    let hashed = API.blake2b(DATA);
-    hashed = hexFromUint8Buffer(hashed);
-    expect(_.isEqual(hashed, DATA_BLAKE2B)).toBe(true);
 });
 
 test('IW :: cryptography :: hashes  :: keccak256', () => {

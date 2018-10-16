@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Exceptions thrown by the library.
+ * @fileOverview Library wide exceptions.
  */
 
 /**

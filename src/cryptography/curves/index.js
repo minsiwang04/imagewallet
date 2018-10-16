@@ -12,6 +12,12 @@
 import * as secp256k1 from './ecdsa/secp256k1';
 import * as ed25519 from './eddsa/ed25519';
 
+// Supported elliptic curve set.
+export const SUPPORTED = [
+    secp256k1,
+    ed25519
+];
+
 // Module exports.
 export {
     secp256k1,

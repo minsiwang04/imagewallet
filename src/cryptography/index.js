@@ -13,8 +13,8 @@ import {
     decrypt,
     encrypt,
 } from './encryption';
-import { generate as generateEntropy } from './entropy';
-import { derive as deriveKey } from './keyDerivation';
+import generateEntropy from './entropyCreation';
+import deriveKey from './keyDerivation';
 import * as hash from './hashes';
 
  // Module exports.
@@ -24,4 +24,4 @@ export {
     encrypt,
     hash,
     generateEntropy
-}
+};

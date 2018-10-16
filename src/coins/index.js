@@ -28,20 +28,10 @@ export const SUPPORTED = [
 /**
  * Returns coin metadata mapping to passed chain identifier.
  *
- * @param {number} index - Chain index as per SLIP0044.
- */
-export const getByIndex = (index) => {
-    return _.find(SUPPORTED, (i) => {
-        return i.index === index;
-    });
-};
-
-/**
- * Returns coin metadata mapping to passed chain identifier.
- *
  * @param {string} symbol - Coin symbol.
  */
 export const getBySymbol = (symbol) => {
+    symbol = symbol.toUpperCase();
     return _.find(SUPPORTED, (i) => {
         return i.symbol === symbol;
     });
