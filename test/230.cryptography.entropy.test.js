@@ -24,9 +24,17 @@ test('IW :: utils :: cryptography', () => {
     });
 });
 
-test('IW :: utils :: cryptography :: generateEntropy', () => {
-    let entropy = CRYPTO.generateEntropy();
+test('IW :: utils :: cryptography :: generateEntropy :: default size', () => {
+    const entropy = API.generateEntropy();
     expect(entropy.length).toBe(32);
-    entropy = CRYPTO.generateEntropy(256);
+});
+
+test('IW :: utils :: cryptography :: generateEntropy :: custom size (large)', () => {
+    const entropy = API.generateEntropy(256);
     expect(entropy.length).toBe(256);
+});
+
+test('IW :: utils :: cryptography :: generateEntropy :: custom size (very large)', () => {
+    const entropy = API.generateEntropy(1024);
+    expect(entropy.length).toBe(1024);
 });

@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Wraps keccak library to expose keccak256 hasing algorithm.
+ * @fileOverview Wraps keccak library to expose keccak256 hashing algorithm.
  */
 
 // Module imports.
