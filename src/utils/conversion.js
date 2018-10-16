@@ -24,6 +24,16 @@ export const hexFromUint8Array = (arr) => {
 }
 
 /**
+ * Returns a hexadecimal string decoded from a buffered unsigned 8 bit array.
+ *
+ * @param {Uint8Array} arr - An unsigned 8 bit array.
+ * @return A hexadecimal encoded string.
+ */
+export const hexFromUint8Buffer = (arr) => {
+    return new Buffer(arr).toString('hex');
+}
+
+/**
  * Returns a binary array decoded from a hexadecimal string.
  *
  * @param {string} hex - A hexadecimal encoded string.
@@ -59,19 +69,12 @@ export const isHexString = (input) => {
     return parseInt(input, 16).toString(16) === input.toLowerCase();
 };
 
-/**
- * @param {string} string
- * @return {Uint8Array}
- */
-// static stringToBuffer(string) {
-//     const buf = new Uint8Array(string.length);
-//     for (let i = 0; i < string.length; ++i) {
-//         buf[i] = string.charCodeAt(i);
-//     }
-//     return buf;
-// }
-
-// Marshals a string to an Uint8Array.
+ /**
+  * Marshals a string to an Uint8Array.
+  *
+  * @param {string} s - An input string.
+  * @return {Uint8Array}
+  */
 export const encodeUTF8 = (s) => {
 	var i = 0, bytes = new Uint8Array(s.length * 4);
 	for (var ci = 0; ci != s.length; ci++) {
@@ -100,7 +103,12 @@ export const encodeUTF8 = (s) => {
 	return bytes.subarray(0, i);
 }
 
-// Unmarshals a string from an Uint8Array.
+/**
+ * Unmarshals a string from an Uint8Array.
+ *
+ * @param {Uint8Array} bytes - An array of unsigned 8 bit integers.
+ * @return {string}
+ */
 export const decodeUTF8 = (bytes) => {
 	var i = 0, s = '';
 	while (i < bytes.length) {
@@ -129,10 +137,3 @@ export const decodeUTF8 = (bytes) => {
 	}
 	return s;
 }
-
-const nacl = require('tweetnacl');
-nacl.auth = require('tweetnacl-auth');
-
-const arr = nacl.auth.full('ssssasSAs', 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe');
-
-console.log(arr.length);

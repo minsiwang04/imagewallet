@@ -9,10 +9,13 @@
  */
 
 // Module imports.
-import * as keccak from 'keccak';
+const blake2 = require('blake2');
 
-// Hashing algorithm - sha-3:keccak256.
-const ALGO = 'keccak256';
+// Hashing algorithm - blake2b.
+const ALGO = 'blake2b';
+
+// Default hash size.
+const DEFAULT_SIZE = 32;
 
 /**
  * Returns a hash of the passed data using the keccak256 algorithm.
@@ -20,9 +23,9 @@ const ALGO = 'keccak256';
  * @param {obj} data - Data to be hashed.
  * @return {hex} The hashed value.
  */
-export default function(data) {
-    const input = JSON.stringify(data);
-	const h = keccak.default(ALGO);
+export default function(data, length) {
+    const input = new Buffer(JSON.stringify(data));
+    const h = blake2.createHash(ALGO, {digestLength: length || DEFAULT_SIZE});
 
-	return h.update(input).digest();
+    return h.update(input).digest();
 }

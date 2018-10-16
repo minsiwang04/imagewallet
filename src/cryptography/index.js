@@ -8,6 +8,7 @@
  * @fileOverview Cryptographic functions used across the library.
  */
 
+// Module imports.
 import {
     decrypt,
     encrypt,
@@ -16,6 +17,7 @@ import { generate as generateEntropy } from './entropy';
 import { derive as deriveKey } from './keyDerivation';
 import * as hash from './hashes';
 
+ // Module exports.
 export {
 	decrypt,
     deriveKey,

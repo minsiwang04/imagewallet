@@ -14,10 +14,12 @@ const nacl = require('tweetnacl');
 nacl.auth = require('tweetnacl-auth');
 
 /**
- * Returns a hash of the passed data using the Hmac Sha512 algorithm.
+ * Authenticates the given message with the secret key.
+ * I.E. returns HMAC-SHA-512-256 of the message under the key.
  *
- * @param {string} data - Text to be hashed.
- * @return {hex} The hashed value.
+ * @param {string} message - Message to be hashed.
+ * @param {string} key - Key to apply.
+ * @return {Uint8Array} 64 element Uint8Array.
  */
 export default function(message, key) {
     return nacl.auth.full(message, key);

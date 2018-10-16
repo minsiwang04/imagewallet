@@ -38,8 +38,6 @@ export const derive = (seed, chainIndex, walletIndex) => {
  * @return {Bufferhex} seed - Either a buffer or hexadecimal string representing a previously generated source of entropy.
  */
 const generateMasterKey = (seed) => {
-    console.log(hash);
-    
     const key = hash.keccak256('أبو يوسف يعقوب بن إسحاق الصبّاح الكندي');
     const master = hash.hmacSha512(key, seed);
 
