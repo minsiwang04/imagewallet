@@ -12,8 +12,7 @@
 import * as coins from '../coins/index';
 import * as exceptions from '../utils/exceptions';
 import * as convert from '../utils/conversion';
-import * as hash from './hash';
-
+import * as hash from './hashes/index';
 
 /**
  * Returns a hash of the passed data using the keccak256 algorithm.
@@ -30,8 +29,6 @@ export const derive = (seed, chainIndex, walletIndex) => {
     const {pvk, chainCode} = generateMasterKey(seed);
     const coin = coins.getByIndex(chainIndex);
 
-    
-
     console.log('TODO: next level')
 };
 
@@ -41,6 +38,8 @@ export const derive = (seed, chainIndex, walletIndex) => {
  * @return {Bufferhex} seed - Either a buffer or hexadecimal string representing a previously generated source of entropy.
  */
 const generateMasterKey = (seed) => {
+    console.log(hash);
+    
     const key = hash.keccak256('أبو يوسف يعقوب بن إسحاق الصبّاح الكندي');
     const master = hash.hmacSha512(key, seed);
 

@@ -5,21 +5,15 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Cryptographic functions used across the library.
+ * @fileOverview Wraps keccak library to expose keccak256 hasing algorithm.
  */
 
-import {
-    decrypt,
-    encrypt,
-} from './encryption';
-import { generate as generateEntropy } from './entropy';
-import { derive as deriveKey } from './keyDerivation';
-import * as hash from './hashes';
+// Module imports.
+ import hmacSha512 from './hmacSha512';
+ import keccak256 from './keccak256';
 
-export {
-	decrypt,
-    deriveKey,
-    encrypt,
-    hash,
-    generateEntropy
-}
+ // Module exports.
+ export {
+     hmacSha512,
+ 	 keccak256,
+ }
