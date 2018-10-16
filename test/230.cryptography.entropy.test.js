@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as API from '../src/cryptography/index';
+import * as utils from './utils';
 
 // Message data to be encrpyted.
 const DATA = {
@@ -15,26 +16,23 @@ const DATA_CIPHER_TEXT = '854404807e24f6df7c022514b7abdd3513d87a540372f5ad647eea
 // Password used during encryption.
 const PWD = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe'
 
-test('IW :: utils :: cryptography', () => {
-    const slots = [
-        'generateEntropy',
-    ];
-    slots.forEach((slot) => {
-        expect(API[slot]).toBeDefined();
-    });
+test('IW :: cryptography :: entropy :: interface', () => {
+	utils.testSlots(API, [
+		'generateEntropy',
+	]);
 });
 
-test('IW :: utils :: cryptography :: generateEntropy :: default size', () => {
+test('IW :: cryptography :: entropy :: default size', () => {
     const entropy = API.generateEntropy();
     expect(entropy.length).toBe(32);
 });
 
-test('IW :: utils :: cryptography :: generateEntropy :: custom size (large)', () => {
+test('IW :: cryptography :: entropy :: custom size (large)', () => {
     const entropy = API.generateEntropy(256);
     expect(entropy.length).toBe(256);
 });
 
-test('IW :: utils :: cryptography :: generateEntropy :: custom size (very large)', () => {
+test('IW :: cryptography :: entropy :: custom size (very large)', () => {
     const entropy = API.generateEntropy(1024);
     expect(entropy.length).toBe(1024);
 });

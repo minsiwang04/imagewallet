@@ -1,12 +1,12 @@
-// Module imports.
-import * as IW from '../src/index';
+import * as API from '../src/index';
+import * as utils from './utils';
 
 test('IW :: imported', () => {
-    expect(IW).toBeDefined();
+    expect(API).toBeDefined();
 });
 
 test('IW :: interface :: is defined', () => {
-    const slots = [
+    utils.testSlots(API, [
         'CURVES',
         'decode',
         // 'deriveKey',
@@ -15,17 +15,14 @@ test('IW :: interface :: is defined', () => {
         'name',
         'provider',
         'version'
-    ];
-    slots.forEach((slot) => {
-        expect(IW[slot]).toBeDefined();
-    });
-    expect(IW.name).toBe('Image Wallet');
-    expect(IW.version).toBe('0.2.1');
-    expect(IW.provider).toBe('Trinkler Software AG');
+	]);
+    expect(API.name).toBe('Image Wallet');
+    expect(API.version).toBe('0.2.1');
+    expect(API.provider).toBe('Trinkler Software AG');
 });
 
 test('IW :: interface :: curves are defined', () => {
-    IW.CURVES.forEach((curve) => {
+    API.CURVES.forEach((curve) => {
         const funcs = [
             curve,
             curve.getPrivateKey,

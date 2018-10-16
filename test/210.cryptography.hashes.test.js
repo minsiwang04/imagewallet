@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import {hash as API} from '../src/cryptography';
 import {hexFromArray, hexFromUint8Buffer} from '../src/utils/conversion';
+import * as utils from './utils';
 
 
 // Message data to be hashed.
@@ -21,14 +22,11 @@ const DATA_HMAC_SHA512 = '8debe67b3c485a8f6d4845c7112c4090509c982d0fbe0a2640f778
 const KEY = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe';
 
 test('IW :: cryptography :: hashes  :: test interface', () => {
-    const slots = [
-        'blake2b',
+	utils.testSlots(API, [
+		'blake2b',
         'hmacSha512',
     	'keccak256',
-    ];
-    slots.forEach((slot) => {
-        expect(API[slot]).toBeDefined();
-    });
+	]);
 });
 
 test('IW :: cryptography :: hashes  :: blake2b', () => {

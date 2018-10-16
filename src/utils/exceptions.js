@@ -91,13 +91,13 @@ export class InvalidPngFileError extends DecodingError {
 /**
  * Raised when image wallet is asked to derive a key for an invalid coin.
  * @constructor
- * @param {string} identifier - Coin identifier.
+ * @param {string} symbol - Coin symbol.
  */
-export class InvalidCoinIdentiferError extends BaseError {
-    constructor(identifier) {
+export class InvalidCoinSymbolError extends BaseError {
+    constructor(symbol) {
         super(
-            `${identifier} is an invalid chain identifier as per slip0044`,
-            'ERR_INVALID_COIN_IDENTIFIER',
+            `${symbol} is an invalid chain symbol as per slip0044`,
+            'ERR_INVALID_COIN_SYMBOL',
         );
     }
 }

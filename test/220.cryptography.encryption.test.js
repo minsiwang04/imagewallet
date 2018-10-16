@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as API from '../src/cryptography/index';
+import * as utils from './utils';
 
 // Message data to be encrpyted.
 const DATA = {
@@ -16,13 +17,10 @@ const DATA_CIPHER_TEXT = '854404807e24f6df7c022514b7abdd3513d87a540372f5ad647eea
 const PWD = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe'
 
 test('IW :: cryptography :: encryption :: interface', () => {
-    const slots = [
-        'decrypt',
+	utils.testSlots(API, [
+		'decrypt',
 		'encrypt'
-    ];
-    slots.forEach((slot) => {
-        expect(API[slot]).toBeDefined();
-    });
+	]);
 });
 
 test('IW :: cryptography :: encryption :: decrypt', () => {

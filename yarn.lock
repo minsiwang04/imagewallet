@@ -1421,13 +1421,6 @@ bip66@^1.1.3:
   dependencies:
     safe-buffer "^5.0.1"
 
-blake2@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/blake2/-/blake2-2.0.1.tgz#a690366f6318893a3438a06a19a2faece5a7c96f"
-  integrity sha512-vX4aFerU61LnJFVa4XnUla+jqQLWh8+rTL8KkYZG00bHaZA3bi43XTqcy59A5jkk6/h9J4aVgsp3JOdtUkgKnw==
-  dependencies:
-    nan "^2.0.0"
-
 bluebird@^3.0.2, bluebird@^3.1.1, bluebird@^3.5.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.2.tgz#1be0908e054a751754549c270489c1505d4ab15a"
@@ -5647,11 +5640,6 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
-
-nan@^2.0.0:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
-  integrity sha512-iji6k87OSXa0CcrLl9z+ZiYSuR2o+c0bGuNmXdrhTQTakxytAFsC56SArGYoiHlJlFoHSnvmhpceZJaXkVuOtA==
 
 nan@^2.0.7, nan@^2.9.2:
   version "2.10.0"

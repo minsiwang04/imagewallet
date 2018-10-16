@@ -35,3 +35,14 @@ export const getByIndex = (index) => {
         return i.index === index;
     });
 };
+
+/**
+ * Returns coin metadata mapping to passed chain identifier.
+ *
+ * @param {string} symbol - Coin symbol.
+ */
+export const getBySymbol = (symbol) => {
+    return _.find(SUPPORTED, (i) => {
+        return i.symbol === symbol;
+    });
+};

@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Wraps keccak library to expose keccak256 hasing algorithm.
+ * @fileOverview Wraps keccak library to expose keccak256 hashing algorithm.
  */
 
 // Module imports.
@@ -18,7 +18,7 @@ const ALGO = 'keccak256';
  * Returns a hash of the passed data using the keccak256 algorithm.
  *
  * @param {obj} data - Data to be hashed.
- * @return {hex} The hashed value.
+ * @return {Buffer} The hashed value.
  */
 export default function(data) {
     const input = JSON.stringify(data);

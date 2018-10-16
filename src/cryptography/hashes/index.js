@@ -9,13 +9,13 @@
  */
 
 // Module imports.
-import blake2b from './blake2b';
+// import blake2b from './blake2b';
 import hmacSha512 from './hmacSha512';
 import keccak256 from './keccak256';
 
  // Module exports.
  export {
-     blake2b,
+     // blake2b,
      hmacSha512,
  	 keccak256,
  }

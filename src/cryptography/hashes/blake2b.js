@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Wraps keccak library to expose keccak256 hasing algorithm.
+ * @fileOverview Wraps keccak library to expose blake2b hashing algorithm.
  */
 
 // Module imports.
@@ -18,10 +18,10 @@ const ALGO = 'blake2b';
 const DEFAULT_SIZE = 32;
 
 /**
- * Returns a hash of the passed data using the keccak256 algorithm.
+ * Returns a hash of the passed data using the blake2b algorithm.
  *
  * @param {obj} data - Data to be hashed.
- * @return {hex} The hashed value.
+ * @return {Buffer} The hashed value.
  */
 export default function(data, length) {
     const input = new Buffer(JSON.stringify(data));

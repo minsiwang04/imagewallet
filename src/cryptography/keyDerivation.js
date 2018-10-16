@@ -9,42 +9,81 @@
  */
 
 // Module imports.
+import _ from 'lodash';
 import * as coins from '../coins/index';
 import * as exceptions from '../utils/exceptions';
 import * as convert from '../utils/conversion';
 import * as hash from './hashes/index';
 
+// Derivation path levels.
+const PL_PURPOSE = 0x8000002C;  // 44'
+const PL_CHANGE = 0; // change
+
 /**
  * Returns a hash of the passed data using the keccak256 algorithm.
  *
- * @param {number} i - Integer indicating which key pair in projected sequence to return.
- * @param {number} j - Chain identifier as per SLIP0044.
- * @return {Bufferhex} seed - Either a buffer or hexadecimal string representing a previously generated source of entropy.
+ * @param {hex} seed - Master source of entropy.
+ * @param {string} coinSymbol - Coin symbol, e.g. IW.
+ * @param {number} accountIndex - Account identifier.
+ * @return {hex} seed - Master source of entropy.
  */
-export const derive = (seed, chainIndex, walletIndex) => {
+export const derive = (seed, coinSymbol, accountIndex) => {
     // Defensive programming.
     validateSeed(seed);
-    validateChainIdentifier(chainIndex);
+    const coin = validateCoinSymbol(coinSymbol);
 
-    const {pvk, chainCode} = generateMasterKey(seed);
-    const coin = coins.getByIndex(chainIndex);
+    // Iterate BIP32 path extendingly master key accordingly.
+    const path = getBip32Path(coin.hexCode, accountIndex || 0, 0);
+    let derived = getMasterExtendedKey(seed);
+    for (let i = 1; i < path.length; i++) {
+        derived = getDerivedExtendedKey(derived, path[i]);
+    }
 
-    console.log('TODO: next level')
+    return derived.key;
 };
 
 /**
- * Generates a master key from a source of entropy.
+ * Returns a hash of the passed data using the keccak256 algorithm.
  *
- * @return {Bufferhex} seed - Either a buffer or hexadecimal string representing a previously generated source of entropy.
+ * @param {hex} seed - Master source of entropy.
+ * @param {string} coinSymbol - Coin symbol, e.g. IW.
+ * @param {number} accountIndex - Account identifier.
+ * @return {hex} seed - Master source of entropy.
  */
-const generateMasterKey = (seed) => {
-    const key = hash.keccak256('أبو يوسف يعقوب بن إسحاق الصبّاح الكندي');
-    const master = hash.hmacSha512(key, seed);
+const getBip32Path = (coinHexCode, account, address_index) => {
+    // TODO: verify source of account / address index.
+    const path = `m / ${PL_PURPOSE} / ${coinHexCode} / ${account} / ${PL_CHANGE} / ${address_index}`;
 
-    return {
-        pvk: master.slice(0, 32),
-        chainCode: master.slice(32)
-    }
+    return path.split('/');
+}
+
+/**
+ * Generates a master extended key from a source of entropy.
+ *
+ * @param {hex} seed - Master source of entropy.
+ * @return {ExtendedPrivateKey} The extended master key derived from entropy.
+ */
+const getMasterExtendedKey = (seed) => {
+    const key = hash.keccak256('أبو يوسف يعقوب بن إسحاق الصبّاح الكندي');
+    const digest = hash.hmacSha512(key, seed);
+
+    return new ExtendedPrivateKey(digest.slice(0, 32), digest.slice(32));
+}
+
+/**
+ * Generates a master extended key from a source of entropy.
+ *
+ * @param {hex} seed - Master source of entropy.
+ * @return {ExtendedPrivateKey} The extended master key derived from entropy.
+ */
+const getDerivedExtendedKey = (parent, index) => {
+    if (index < 0x80000000) {
+        index += 0x80000000
+    };
+    const seed = Array.from(parent.key).concat(convert.hexToArray(index));
+    const digest = Array.from(hash.hmacSha512(parent.chainCode, seed));
+
+    return new ExtendedPrivateKey(digest.slice(0, 32), digest.slice(32));
 }
 
 /**
@@ -52,21 +91,49 @@ const generateMasterKey = (seed) => {
  *
  * @param {number} j - Chain identifier as per SLIP0044.
  */
-const validateChainIdentifier = (identifier) => {
-    if (!coins.getByIndex(identifier)) {
-        throw new exceptions.InvalidCoinIdentiferError(identifier);
+const validateCoinSymbol = (symbol) => {
+    const coin = coins.getBySymbol(symbol);
+    if (!coin) {
+        throw new exceptions.InvalidCoinSymbolError(symbol);
     }
+
+    return coin;
 };
 
 /**
  * Validates incoming seed entropy.
  *
- * @param {number} seed - Master entropy used for key derivation.
+ * @return {hex} seed - Master source of entropy.
  */
 const validateSeed = (seed) => {
-    if (convert.isHexString(seed)) {
-        if (seed.length != 64) {
-            throw new exceptions.InvalidEntropyError(j);
-        }
+    if (typeof seed !== 'string') {
+        throw new exceptions.InvalidEntropyError();
+    }
+    if (seed.length != 64) {
+        throw new exceptions.InvalidEntropyError();
     }
 };
+
+/**
+ * Represents a private key - not to be revealed by any entity than it's creator !
+ * @constructor
+ * @param {string} key - The key.
+ */
+class PrivateKey {
+    constructor(key) {
+        this.key = key
+    }
+}
+
+/**
+ * Represents an extended private key - extended via hmacSha512.
+ * @constructor
+ * @param {string} key - The key.
+ * @param {string} chainCode - The chain code.
+ */
+class ExtendedPrivateKey extends PrivateKey {
+    constructor(key, chainCode) {
+        super(key)
+        this.chainCode = chainCode
+    }
+}

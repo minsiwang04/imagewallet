@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as keccak from 'keccak';
 import * as CONVERTOR from '../src/utils/conversion';
 import * as CURVE from '../src/curves/ecdsa/secp256k1';
+import * as utils from './utils';
 
 // Entropy supplied by an RNG.
 const ENTROPY = [
@@ -39,15 +40,12 @@ const DATA = 'Hello Dolly!'
 const DATA_HASH = keccak.default('keccak256').update(DATA).digest('hex');
 
 test('IW :: cryptography :: curves :: ecdsa:secp256k1 :: interface', () => {
-    const slots = [
+    utils.testSlots(API, [
         'getPrivateKey',
         'getPublicKey',
         'sign',
         'verify',
-    ];
-    slots.forEach((slot) => {
-        expect(CURVE[slot]).toBeDefined();
-    });
+	]);
 });
 
 test('IW :: cryptography :: curves :: ecdsa:secp256k1 :: getPrivateKey', () => {

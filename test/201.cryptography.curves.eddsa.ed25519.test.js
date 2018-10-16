@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as keccak from 'keccak';
 import * as CONVERTOR from '../src/utils/conversion';
 import * as CURVE from '../src/curves/eddsa/ed25519';
+import * as utils from './utils';
 
 
 const ENTROPY = [
@@ -43,15 +44,12 @@ const HASH = [
     ];
 
 test('IW :: cryptography :: curves :: eddsa:ed25519 :: interface', () => {
-    const slots = [
+    utils.testSlots(API, [
         'getPrivateKey',
         'getPublicKey',
         'sign',
         'verify',
-    ];
-    slots.forEach((slot) => {
-        expect(CURVE[slot]).toBeDefined();
-    });
+	]);
 });
 
 test('IW :: cryptography :: curves :: eddsa:ed25519 :: getPrivateKey', () => {
