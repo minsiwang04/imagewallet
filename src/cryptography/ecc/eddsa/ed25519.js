@@ -6,6 +6,7 @@
 
 // Module imports.
 import * as elliptic from 'elliptic';
+import generateEntropy from '../../entropyCreation';
 
 // Set EcDSA context.
 const ed25519 = new elliptic.eddsa('ed25519');
@@ -17,7 +18,7 @@ const ed25519 = new elliptic.eddsa('ed25519');
  * @return A private key (32 byte array).
  */
 export const getPrivateKey = (entropy) => {
-    const keyPair = getKeyPair(entropy);
+    const keyPair = getKeyPair(entropy || generateEntropy());
 
     return keyPair.privBytes();
 };
@@ -65,9 +66,13 @@ export const verify = (entropy, messageHash, signature) => {
 /**
  * Returns a key pair derived from entropic seed.
  *
- * @param {Array} entropy - A 32 byte array emitted by an RNG.
+ * @param {Array} entropy - A 32 byte array emitted by a PRNG.
  * @return A key pair for signing / verification purposes.
  */
-const getKeyPair = (entropy) => {
+export const getKeyPair = (entropy) => {
     return ed25519.keyFromSecret(entropy);
 };
+
+export const getKeyPairFromPublicKey = (publicKey) => {
+    return ed25519.keyFromPublic(publicKey);
+}

@@ -18,6 +18,9 @@ import decryptQR from './decoder/decryptQR';
 import deriveKey from './cryptography/keyDerivation';
 import NotImplementedError from './utils/exceptions';
 
+import {ed25519} from './cryptography/ecc/index';
+import {hash} from './cryptography';
+import {hexFromArray} from './utils/conversion';
 
 /**
  * Asynchronously decrypts an image wallet.
@@ -76,6 +79,75 @@ const getQrDataFromImage = async (blob) => {
     return await decodeQR(blob);
 };
 
+/**
+ * Returns a keccak256 hash of input data.
+ * @param {Object} data - Data to be hashed.
+ * @return {hex} Hexadecimal string.
+ */
+const getHash = (data) => {
+    // TODO validate input
+    return hash.keccak256(data);
+}
+
+/**
+ * Signs a data structure.
+ * @param {hex} pvk - User's private key.
+ * @return {object} Signature plus data hash.
+ */
+const signData = (pvk, data) => {
+    // TODO validate input
+    const hash = getHash(data);
+    const sig = signHash(pvk, hash);
+
+    return {sig, hash};
+};
+
+/**
+ * Signs a message hash.
+ * @param {hex} pvk - User's private key.
+ * @return {hex} msgHash - Hash of data.
+ */
+const signHash = (pvk, msgHash) => {
+    // TODO validate input
+    const key = ed25519.getKeyPair(pvk);
+
+    return key.sign(msgHash).toHex();
+};
+
+/**
+ * Returns a user's public key.
+ * @param {hex} derivedEntropy - Entropy derived from master entropy that is decrypted from a QR code.
+ * @return {hex} Public key.
+ */
+const getUserPublicKey = (derivedEntropy) => {
+    // TODO validate input
+    return hexFromArray(ed25519.getPublicKey(derivedEntropy));
+}
+
+/**
+ * Returns a user's private key.
+ * @param {hex} derivedEntropy - Entropy derived from master entropy that is decrypted from a QR code.
+ * @return {hex} Private key.
+ */
+const getUserPrivateKey = (derivedEntropy) => {
+    // TODO validate input
+    return hexFromArray(ed25519.getPrivateKey(derivedEntropy));
+}
+
+/**
+ * Verifies that a message was signed by the private key wiht which the public key is associated.
+ * @param {hex} pbk - A user's public key.
+ * @param {hex} msgHash - A message hash.
+ * @param {???} sig - A message signature.
+ * @return {Boolean} True if verified, false otherwise.
+ */
+const verifyHash = (pbk, msgHash, sig) => {
+    // TODO validate input
+    const key = ed25519.getKeyPairFromPublicKey(pbk);
+
+    return key.verify(msgHash, sig);
+};
+
 // Library version.
 const name = 'Image Wallet';
 
@@ -87,13 +159,22 @@ const version = '0.2.2';
 
 // Module exports.
 export {
+    // ... meta-data
+    name,
+	provider,
+    version,
+    // ... image file management
     decryptImage,
     decryptQrData,
-    deriveKey,
     generateFromPassword,
     generateFromPasswordAndImage,
     getQrDataFromImage,
-	name,
-	provider,
-    version,
+    // ... key derivation, signing ... etc.
+    deriveKey,
+    getHash,
+    getUserPrivateKey,
+    getUserPublicKey,
+    signData,
+    signHash,
+    verifyHash,
 };
