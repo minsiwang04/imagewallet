@@ -7,14 +7,17 @@ test('IW :: can be imported', () => {
 
 test('IW :: interface :: is defined', () => {
     utils.testSlots(API, [
-        'decode',
+        'decryptImage',
+        'decryptQrData',
         // 'deriveKey', ???
-        'encode',
+        'generateFromPassword',
+        'generateFromPasswordAndImage',
+        'getQrDataFromImage',
         'name',
         'provider',
         'version',
 	]);
     expect(API.name).toBe('Image Wallet');
-    expect(API.version).toBe('0.2.1');
+    expect(API.version).toBe('0.2.2');
     expect(API.provider).toBe('Trinkler Software AG');
 });

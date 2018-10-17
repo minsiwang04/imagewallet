@@ -22,7 +22,7 @@
         <br />
 
         <!-- ---------------------------------------------- -->
-        <!-- Encode                                         -->
+        <!-- Generate                                       -->
         <!-- ---------------------------------------------- -->
         <b-container v-show="action === 'generate'">
             <!-- ---------------------------------------------- -->
@@ -42,9 +42,22 @@
                             placeholder="Please enter a strong password" />
                     </b-col>
                 </b-row>
+                <br />
+                <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate From Password</b-button>
+                <br />
             </b-form-group>
-            <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate From Password</b-button>
-            <br />
+            <b-form-group>
+                <b-form-file
+                    v-model="encoding.walletFile"
+                    :state="Boolean(encoding.walletFile)"
+                    @input=onDecode
+                    accept="image/png"
+                    placeholder="Choose an image ..." />
+                    <br />
+                    <br />
+                    <b-button v-on:click="onGenerateFromPasswordAndImage" variant="secondary" :block=true>Generate From Password And Image</b-button>
+                    <br />
+            </b-form-group>
         </b-container>
 
         <!-- ---------------------------------------------- -->
@@ -121,7 +134,6 @@
                     </b-col>
                 </b-row>
             </b-form-group>
-
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
         </b-modal>
     </div>
@@ -152,6 +164,7 @@ export default {
                 password: 'P96P4Bdp6wMy4pBV',
                 secretSeed: null,
                 walletFile: null,
+                walletImage: null
             },
             encoding: {
                 credentials: {
@@ -166,11 +179,16 @@ export default {
 
     // View handlers.
     methods: {
-        // Event handler: on encode initiation.
+        // Event handler: on generation from password.
         onGenerateFromPassword(evt) {
             ImageWallet.generateFromPassword(this.encoding.credentials.password, {})
                 .then(this.onGenerationComplete)
                 .catch(this.onGenerationError);
+        },
+
+        // Event handler: on generation from password and image.
+        onGenerateFromPasswordAndImage(evt) {
+            console.log(123);
         },
 
         // Event handler: on generation complete.
@@ -198,7 +216,7 @@ export default {
 
         // Event handler: on decode initiation.
         async onDecode(encoded) {
-            await ImageWallet.decode(encoded, this.decoding.password)
+            await ImageWallet.decryptImage(encoded, this.decoding.password)
                 .then(this.onDecodeComplete)
                 .catch(this.onDecodeError);
         },

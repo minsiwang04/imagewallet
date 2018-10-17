@@ -13,28 +13,34 @@
 
 // Module imports.
 import encoder from './encoder/index';
-import decoder from './decoder/index';
-import deriveKey from './cryptography/index';
+import decodeQR from './decoder/decodeQR';
+import decryptQR from './decoder/decryptQR';
+import deriveKey from './cryptography/keyDerivation';
 import NotImplementedError from './utils/exceptions';
 
+
 /**
- * Asynchronously decodes an image wallet.
+ * Asynchronously decrypts an image wallet.
  * @param {Blob} blob - An image wallet.
  * @param {string} password - Password used when generating wallet.
- * @return A private key.
+ * @return Secret seed.
  */
-const decode = async (blob, password) => {
-    return await decoder(blob, password);
+const decryptImage = async (blob, password) => {
+    // TODO validate input
+    const qrData = await decodeQR(blob);
+
+    return await decryptQR(qrData, password);
 };
 
 /**
- * Asynchronously encodes an image wallet from user credentials and encoding options.
- * @param {object} credentials - Credentials to be encoded.
- * @param {object} options - Encoding options.
- * @return A promise resolving to an HTML canvas object.
+ * Asynchronously decrypts previously decoded QR data.
+ * @param {string} qrData - Previously decoded qr data (utf8 encoded).
+ * @param {string} password - Password used when generating wallet.
+ * @return Secret seed.
  */
-const encode = async (credentials, options) => {
-    return await encoder(credentials, options);
+const decryptQrData = async (qrData, password) => {
+    // TODO validate input
+    return await decryptQR(qrData, password);
 };
 
 /**
@@ -57,7 +63,17 @@ const generateFromPassword = async (password, options) => {
  * @return A promise resolving to an HTML canvas object.
  */
 const generateFromPasswordAndImage = async (password, imgBlob, options) => {
- throw new NotImplementedError();
+    throw new NotImplementedError();
+};
+
+/**
+ * Asynchronously decodes the QR data from within an image wallet.
+ * @param {Blob} blob - An image wallet.
+ * @return {object} Decode data.
+ */
+const getQrDataFromImage = async (blob) => {
+    // TODO validate input
+    return await decodeQR(blob);
 };
 
 // Library version.
@@ -67,15 +83,16 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.2.1';
+const version = '0.2.2';
 
 // Module exports.
 export {
-	decode,
+    decryptImage,
+    decryptQrData,
     deriveKey,
-	encode,
     generateFromPassword,
     generateFromPasswordAndImage,
+    getQrDataFromImage,
 	name,
 	provider,
     version,

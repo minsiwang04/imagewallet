@@ -15,6 +15,8 @@ import * as cryptography from '../cryptography/index';
  * Scans QR code embedded in image wallet.
  * @param {DecodingContextInfo} ctx - Decoding processing context information.
  */
-export default async function(ctx) {
-    ctx.plainText = cryptography.decrypt(ctx.qrCode.data, ctx.password);
+export default async function(qrData, password) {
+    const plainText = cryptography.decrypt(qrData, password);
+
+    return JSON.parse(plainText);
 }

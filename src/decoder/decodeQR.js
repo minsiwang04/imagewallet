@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Sets QR code extracted from an image wallet.
+ * @fileOverview Decodes the QR code from an image wallet.
  */
 
 // Module imports.
@@ -18,16 +18,18 @@ import { readFileAsArrayBuffer } from '../utils/io';
  * Scans QR code embedded in image wallet.
  * @param {DecodingContextInfo} ctx - Decoding processing context information.
  */
-export default async function(ctx) {
-    const buffer = await readFileAsArrayBuffer(ctx.blob);
-    ctx.qrCode = await getQrCode(buffer);
+export default async function(blob) {
+    const buffer = await readFileAsArrayBuffer(blob);
+    const decoded = await decodeFromFileBuffer(buffer);
+
+    return decoded.data;
 }
 
 /**
- * Extract qr code from PNG file buffer.
+ * Extract qr data from PNG file buffer.
  * @param {ArrayBuffer} buffer - PNG file array buffer.
  */
-const getQrCode = async (buffer) => {
+const decodeFromFileBuffer = async (buffer) => {
     return new Promise((resolve, reject) => {
         const pr = new PNGReader(buffer);
         pr.parse((err, pngData) => {
