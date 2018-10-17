@@ -21,6 +21,7 @@ import * as hash from './hashes/index';
  * @param {hex} seed - Master source of entropy.
  * @param {string} coinSymbol - Coin symbol, e.g. IW.
  * @param {number} accountIndex - Account identifier.
+ * @param {string} chainPath - BIP-esque path used for derivation, default to BIP32.
  * @return {hex} seed - Master source of entropy.
  */
 export default function(seed, coinSymbol, accountIndex) {
@@ -28,11 +29,11 @@ export default function(seed, coinSymbol, accountIndex) {
     const coin = validateInputs(seed, coinSymbol, accountIndex);
 
     // Iterate BIP32 path extendingly master key accordingly.
-    const path = getBip32Path(coin.hexCode, accountIndex || 0, 0);
+    const paths = getBip32Paths(coin.hexCode, accountIndex || 0, 0);
     let derived = getMasterExtendedKey(seed);
-    for (let i = 1; i < path.length; i++) {
-        derived = getDerivedExtendedKey(derived, path[i]);
-    }
+    paths.forEach((segment) => {
+        derived = getDerivedExtendedKey(derived, segment);
+    });
 
     return derived.key;
 }
@@ -45,8 +46,8 @@ export default function(seed, coinSymbol, accountIndex) {
  * @param {number} accountIndex - Account identifier.
  * @return {hex} seed - Master source of entropy.
  */
-const getBip32Path = (coinHexCode, account, address_index) => {
-    return `m / 0x8000002C / ${coinHexCode} / ${account} / 0 / ${address_index}`.split(' / ');
+const getBip32Paths = (coinHexCode, account, address_index) => {
+    return `m/0x8000002C/${coinHexCode}/${account}/0/${address_index}`.split('/');
 }
 
 /**

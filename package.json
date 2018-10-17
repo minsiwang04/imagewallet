@@ -30,7 +30,7 @@
         "lint": "eslint src demo",
         "demo": "parcel -p 3001 ./demo/public/index.html",
         "demo-format": "prettier --write './demo/*.js'",
-        "test": "jest ./test/*"
+        "test": "jest ./test/240*"
     },
     "dependencies": {
         "bindings": "^1.3.0",
