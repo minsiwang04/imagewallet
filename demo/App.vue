@@ -24,7 +24,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Encode                                         -->
         <!-- ---------------------------------------------- -->
-        <b-container v-show="action === 'encode'">
+        <b-container v-show="action === 'generate'">
             <!-- ---------------------------------------------- -->
             <!-- Credentials                                    -->
             <!-- ---------------------------------------------- -->
@@ -43,29 +43,14 @@
                     </b-col>
                 </b-row>
             </b-form-group>
-            <b-form-group>
-                <b-row>
-                    <b-col sm="3">
-                        <label for="filenameInput">Wallet Filename:</label>
-                    </b-col>
-                    <b-col sm="9">
-                        <b-form-input
-                            v-model="encoding.filename"
-                            id="filenameInput"
-                            type="text"
-                            required
-                            placeholder="Please enter your wallet's file name" />
-                    </b-col>
-                </b-row>
-            </b-form-group>
-            <b-button v-on:click="onEncode" variant="secondary" :block=true>Generate Image Wallet</b-button>
+            <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate From Password</b-button>
             <br />
         </b-container>
 
         <!-- ---------------------------------------------- -->
         <!-- Decode                                         -->
         <!-- ---------------------------------------------- -->
-        <b-container v-show="action === 'decode'">
+        <b-container v-show="action === 'decrypt'">
             <b-form-group>
                 <b-row>
                     <b-col sm="3">
@@ -121,6 +106,22 @@
         <!-- ---------------------------------------------- -->
         <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.2.1 - Demonstration">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
+            <b-form-group>
+                <b-row>
+                    <b-col sm="2">
+                        <label for="filenameInput">Filename:</label>
+                    </b-col>
+                    <b-col sm="10">
+                        <b-form-input
+                            v-model="encoding.filename"
+                            id="filenameInput"
+                            type="text"
+                            required
+                            placeholder="Please enter your wallet's file name" />
+                    </b-col>
+                </b-row>
+            </b-form-group>
+
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
         </b-modal>
     </div>
@@ -142,10 +143,10 @@ export default {
     // View model.
     data() {
         return {
-            action: 'encode',
+            action: 'generate',
             actions: [
-                { value: 'encode', text: 'Encode' },
-                { value: 'decode', text: 'Decode' },
+                { value: 'generate', text: 'Generate' },
+                { value: 'decrypt', text: 'Decrypt' },
             ],
             decoding: {
                 password: 'P96P4Bdp6wMy4pBV',
@@ -165,6 +166,36 @@ export default {
 
     // View handlers.
     methods: {
+        // Event handler: on encode initiation.
+        onGenerateFromPassword(evt) {
+            ImageWallet.generateFromPassword(this.encoding.credentials.password, {})
+                .then(this.onGenerationComplete)
+                .catch(this.onGenerationError);
+        },
+
+        // Event handler: on generation complete.
+        async onGenerationComplete(wallet) {
+            // Cache result.
+            this.encoding.wallet = wallet;
+
+            // Update DOM.
+            const $container = document.getElementById(
+                'imageWalletDemoContainer',
+            );
+            while ($container.firstChild) {
+                $container.removeChild($container.firstChild);
+            }
+            $container.appendChild(wallet);
+
+            // Display wallet modal.
+            this.$refs.iwModalRef.show();
+        },
+
+        // Event handler: on generation error.
+        async onGenerationError(err) {
+            alert(err.message);
+        },
+
         // Event handler: on decode initiation.
         async onDecode(encoded) {
             await ImageWallet.decode(encoded, this.decoding.password)
@@ -188,36 +219,6 @@ export default {
         // Event handler: on decode error.
         async onDecodeError(err) {
             // TODO display error modal.
-            alert(err.message);
-        },
-
-        // Event handler: on encode initiation.
-        onEncode(evt) {
-            ImageWallet.encode(this.encoding.credentials, {})
-                .then(this.onEncodeComplete)
-                .catch(this.onEncodeError);
-        },
-
-        // Event handler: on encode complete.
-        async onEncodeComplete(wallet) {
-            // Cache result.
-            this.encoding.wallet = wallet;
-
-            // Update DOM.
-            const $container = document.getElementById(
-                'imageWalletDemoContainer',
-            );
-            while ($container.firstChild) {
-                $container.removeChild($container.firstChild);
-            }
-            $container.appendChild(wallet);
-
-            // Display wallet modal.
-            this.$refs.iwModalRef.show();
-        },
-
-        // Event handler: on encode error.
-        async onEncodeError(err) {
             alert(err.message);
         },
 

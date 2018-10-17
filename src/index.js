@@ -15,6 +15,7 @@
 import encoder from './encoder/index';
 import decoder from './decoder/index';
 import deriveKey from './cryptography/index';
+import NotImplementedError from './utils/exceptions';
 
 /**
  * Asynchronously decodes an image wallet.
@@ -30,14 +31,34 @@ const decode = async (blob, password) => {
  * Asynchronously encodes an image wallet from user credentials and encoding options.
  * @param {object} credentials - Credentials to be encoded.
  * @param {object} options - Encoding options.
- * @return A promise encoded image wallet.
+ * @return A promise resolving to an HTML canvas object.
  */
 const encode = async (credentials, options) => {
     return await encoder(credentials, options);
 };
 
-// Synonym for encode.
-const generateFromPassword = encode;
+/**
+ * Asynchronously generates a lightly branded image wallet
+ * from a user's password & associated encoding options.
+ * @param {object} password - A user's (hopefully strong) password.
+ * @param {object} options - Encoding options.
+ * @return A promise resolving to an HTML canvas object.
+ */
+const generateFromPassword = async (password, options) => {
+    return await encoder({password}, options);
+};
+
+/**
+* Asynchronously generates a lightly branded image wallet
+* from a user's password, image & associated encoding options.
+ * @param {object} password - A user's (hopefully strong) password.
+ * @param {object} imgBlob - An image blob.
+ * @param {object} options - Encoding options.
+ * @return A promise resolving to an HTML canvas object.
+ */
+const generateFromPasswordAndImage = async (password, imgBlob, options) => {
+ throw new NotImplementedError();
+};
 
 // Library version.
 const name = 'Image Wallet';
@@ -53,6 +74,8 @@ export {
 	decode,
     deriveKey,
 	encode,
+    generateFromPassword,
+    generateFromPasswordAndImage,
 	name,
 	provider,
     version,
