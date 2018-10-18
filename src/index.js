@@ -82,11 +82,11 @@ const getQrDataFromImage = async (blob) => {
 /**
  * Returns a keccak256 hash of input data.
  * @param {Object} data - Data to be hashed.
- * @return {hex} Hexadecimal string.
+ * @return {hex|Buffer} The hashed value.
  */
-const getHash = (data) => {
+const getHash = (data, encoding) => {
     // TODO validate input
-    return keccak256(data);
+    return keccak256(data, encoding);
 }
 
 /**

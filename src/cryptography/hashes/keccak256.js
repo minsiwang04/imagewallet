@@ -18,11 +18,12 @@ const ALGO = 'keccak256';
  * Returns a hash of the passed data using the keccak256 algorithm.
  *
  * @param {obj} data - Data to be hashed.
- * @return {Buffer} The hashed value.
+ * @param {string} encoding - Required output encoding.
+ * @return {hex|Buffer} The hashed value.
  */
-export default function(data) {
+export default function(data, encoding) {
     const input = JSON.stringify(data);
-	const h = keccak.default(ALGO);
+	const h = keccak.default(ALGO).update(input);
 
-	return h.update(input).digest();
+    return encoding === 'hex' ? h.digest('hex') : h.digest();
 }

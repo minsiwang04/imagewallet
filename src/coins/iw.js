@@ -21,7 +21,7 @@ export const name = 'Imagewallet';
 export const symbol = 'IW';
 
 // Elliptic curve type.
-export const curveType = 'ecdsa';
+export const curveType = 'eddsa';
 
 // Elliptic curve name.
-export const curveName = 'secp256k1';
+export const curveName = 'ed25519';

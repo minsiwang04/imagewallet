@@ -70,10 +70,10 @@ export const getVerificationKey = (pbk) => {
  *
  * @param {hex|Buffer|Array} pvk - A private key.
  * @param {string} msgHash - Hexadecimal string.
- * @return A digital signature in DER format.
+ * @return {Array} A digital signature as a byte array.
  */
 export const sign = (pvk, msgHash) => {
-    const signer = CURVE.keyFromSecret(pvk);
+    const signer = getSigningKey(pvk);
 
     return signer.sign(msgHash).toBytes();
 };
@@ -87,7 +87,7 @@ export const sign = (pvk, msgHash) => {
  * @return True if verified, false otherwise.
  */
 export const verify = (key, msgHash, sig) => {
-    const verifier = CURVE.keyFromPublic(key);
+    const verifier = getVerificationKey(key);
 
     return verifier.verify(msgHash, sig);
 };
