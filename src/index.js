@@ -19,7 +19,7 @@ import deriveKey from './cryptography/keyDerivation';
 import NotImplementedError from './utils/exceptions';
 
 import {ed25519} from './cryptography/ecc/index';
-import {hash} from './cryptography';
+import keccak256 from './cryptography/hashes/keccak256';
 import {hexFromArray} from './utils/conversion';
 
 /**
@@ -86,7 +86,7 @@ const getQrDataFromImage = async (blob) => {
  */
 const getHash = (data) => {
     // TODO validate input
-    return hash.keccak256(data);
+    return keccak256(data);
 }
 
 /**
@@ -109,7 +109,7 @@ const signData = (pvk, data) => {
  */
 const signHash = (pvk, msgHash) => {
     // TODO validate input
-    const key = ed25519.getKeyPair(pvk);
+    const key = ed25519.getSigningKey(pvk);
 
     return key.sign(msgHash).toHex();
 };
@@ -143,7 +143,7 @@ const getUserPrivateKey = (derivedEntropy) => {
  */
 const verifyHash = (pbk, msgHash, sig) => {
     // TODO validate input
-    const key = ed25519.getKeyPairFromPublicKey(pbk);
+    const key = ed25519.getVerificationKey(pbk);
 
     return key.verify(msgHash, sig);
 };
@@ -155,7 +155,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.2.2';
+const version = '0.2.3';
 
 // Module exports.
 export {

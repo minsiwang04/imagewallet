@@ -10,7 +10,7 @@ test('IW :: key pairs :: key derivation :: valid', () => {
 	// ... wallet identifier.
 	const walletIndex = 2147483648;
 
-	// ... derive image wallet key.
+	// ... derived entropy.
 	const derivedEntropy = IW.deriveKey(secretSeed, 'IW', 2147483648);
 
 	// ... get user private key.
@@ -21,8 +21,8 @@ test('IW :: key pairs :: key derivation :: valid', () => {
 
 	// ... sign a request.
 	const requestData = {
-			'Al-Kindi': 'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي'
-		}
+		'Al-Kindi': 'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي'
+	};
 	const {sig, requestDataHash} = IW.signData(pvk, requestData);
 
 	// Server side.

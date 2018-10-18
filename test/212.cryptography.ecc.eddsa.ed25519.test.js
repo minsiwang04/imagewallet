@@ -1,26 +1,28 @@
 import * as _ from 'lodash';
+import * as IW from '../src/index';
 import {ed25519 as API} from '../src/cryptography/ecc/index';
-import {hash} from '../src/cryptography';
-import * as utils from './utils';
 
 // Entropy supplied by a PRNG.
-// const ENTROPY = [51, 249, 175, 112, 28, 27, 243, 17, 139, 94, 116, 114, 230, 189, 105, 90, 206, 28, 109, 226, 213, 26, 59, 123, 161, 114, 72, 84, 63, 82, 50, 193];
-const ENTROPY = '33f9af701c1bf3118b5e7472e6bd695ace1c6de2d51a3b7ba17248543f5232c1';
+const ENTROPY = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe';
 
 // Expected private key.
-const PVK = [144, 175, 138, 157, 198, 117, 158, 134, 65, 29, 106, 30, 177, 152, 47, 204, 156, 152, 177, 151, 41, 49, 145, 158, 4, 101, 12, 97, 144, 240, 14, 106];
+const PVK = [240, 191, 75, 102, 214, 131, 180, 62, 206, 64, 68, 50, 57, 120, 240, 186, 39, 128, 13, 68, 38, 19, 88, 107, 224, 102, 244, 165, 120, 105, 160, 115];
 
 // Expected public key.
-const PBK = [100, 165, 232, 92, 163, 107, 82, 10, 177, 15, 223, 245, 65, 126, 138, 63, 188, 91, 237, 217, 233, 131, 166, 121, 237, 28, 158, 51, 172, 67, 13, 209];
+const PBK = [87, 250, 206, 35, 35, 143, 25, 229, 93, 97, 214, 159, 100, 97, 188, 63, 207, 152, 100, 136, 129, 123, 173, 246, 198, 185, 231, 238, 47, 67, 165, 19];
 
 // Data for signing/verification.
-const DATA = {
-		'Al-Kindi': 'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي'
-	};
-const DATA_HASH = hash.keccak256(DATA);
+const DATA_HASH = IW.getHash({
+	'Al-Kindi': 'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي'
+});
 
 // Expected signature.
-const SIG = [172, 203, 142, 225, 65, 23, 200, 191, 125, 233, 252, 198, 39, 44, 148, 215, 162, 161, 28, 88, 153, 182, 244, 130, 124, 93, 89, 138, 131, 185, 239, 140, 211, 166, 183, 96, 64, 245, 254, 185, 194, 158, 76, 73, 141, 164, 83, 115, 226, 233, 181, 151, 79, 208, 14, 137, 18, 114, 66, 50, 78, 77, 213, 6];
+const SIG = [242, 119, 53, 133, 108, 147, 108, 83, 24, 132, 69, 52, 119, 91, 234, 78, 136, 133, 149, 86, 101, 116, 152, 212, 52, 242, 147, 52, 15, 161, 64, 127, 160, 32, 225, 177, 153, 115, 220, 79, 141, 140, 99, 14, 7, 118, 243, 35, 202, 255, 0, 34, 206, 165, 169, 69, 239, 139, 192, 26, 137, 146, 128, 2];
+
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getKeyPair', () => {
+	const kp = API.getKeyPair(ENTROPY);
+	expect(kp).toBeDefined();
+});
 
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getPrivateKey', () => {
 	const pvk = API.getPrivateKey(ENTROPY);
@@ -28,15 +30,25 @@ test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getPrivateKey', () => {
 });
 
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getPublicKey', () => {
-	const pbk = API.getPublicKey(ENTROPY);
+	const pbk = API.getPublicKey(PVK);
     expect(_.isEqual(pbk, PBK)).toBe(true);
 });
 
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getSigningKey', () => {
+	const key = API.getSigningKey(PVK);
+	expect(key).toBeDefined();
+});
+
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getVerificationKey', () => {
+	const key = API.getVerificationKey(PVK);
+	expect(key).toBeDefined();
+});
+
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: sign', () => {
-	const sig = API.sign(ENTROPY, DATA_HASH);
+	const sig = API.sign(PVK, DATA_HASH);
     expect(_.isEqual(sig, SIG)).toBe(true);
 });
 
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: verify', () => {
-    expect(API.verify(ENTROPY, DATA_HASH, SIG)).toBe(true);
+    expect(API.verify(PBK, DATA_HASH, SIG)).toBe(true);
 });
