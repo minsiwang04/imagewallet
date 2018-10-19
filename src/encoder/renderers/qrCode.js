@@ -9,9 +9,7 @@
  */
 
 // Module imports.
-import QRious from 'qrious';
 import qrcode from 'qrcode';
-
 import * as DEFAULTS from '../defaults/qrCode';
 import { renderLine, renderRect } from '../../utils/rendering';
 import { logDebug } from '../../utils/logging';
@@ -41,17 +39,6 @@ const renderCode = async (ctx) => {
         DEFAULTS.size,
         DEFAULTS.size,
     );
-};
-
-const getQrDataURL = async (ctx) => {
-    const qrCode = new QRious({
-        background: 'white',
-        element: document.createElement('img'),
-        level: DEFAULTS.errorCorrectionLevel,
-        size: DEFAULTS.size,
-        value: ctx.cipherText
-    });
-    return qrCode.toDataURL();
 };
 
 /**

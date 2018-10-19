@@ -13,13 +13,16 @@ import * as cryptography from '../cryptography/index';
 import * as IW from '../index';
 const uuidv4 = require('uuid/v4')
 
+// Number of entropic bytes.
+const ENTROPY_SIZE_BYTES = 32
+
 /**
  * Encrypts data in readiness for transformation to a QR code.
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    ctx.seed = cryptography.generateEntropy(32).toString('hex');
-    let data = {
+    ctx.seed = cryptography.generateEntropy(ENTROPY_SIZE_BYTES).toString('hex');
+    const asObject = {
         data: {
             secretSeed: ctx.seed
         },
@@ -27,5 +30,6 @@ export default async function(ctx) {
         version: IW.version,
         uid: uuidv4()
     };
-    ctx.cipherText = cryptography.encrypt(JSON.stringify(data), ctx.credentials.password);
+    const asJSON = JSON.stringify(asObject);
+    ctx.cipherText = cryptography.encrypt(asJSON, ctx.credentials.password);
 }

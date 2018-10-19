@@ -46,18 +46,6 @@
                 <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate From Password</b-button>
                 <br />
             </b-form-group>
-            <b-form-group>
-                <b-form-file
-                    v-model="encoding.walletFile"
-                    :state="Boolean(encoding.walletFile)"
-                    @input=onDecode
-                    accept="image/png"
-                    placeholder="Choose an image ..." />
-                    <br />
-                    <br />
-                    <b-button v-on:click="onGenerateFromPasswordAndImage" variant="secondary" :block=true>Generate From Password And Image</b-button>
-                    <br />
-            </b-form-group>
         </b-container>
 
         <!-- ---------------------------------------------- -->
@@ -90,7 +78,7 @@
             <b-form-group v-show="decoding.walletFile">
                 <b-row>
                     <b-col sm="3">
-                        <label for="decodingSecretSeed">Secret Seed:</label>
+                        <label for="decodingSecretSeed">Entropy:</label>
                     </b-col>
                     <b-col sm="9">
                         <b-form-input
@@ -186,15 +174,10 @@ export default {
                 .catch(this.onGenerationError);
         },
 
-        // Event handler: on generation from password and image.
-        onGenerateFromPasswordAndImage(evt) {
-            console.log(123);
-        },
-
         // Event handler: on generation complete.
         async onGenerationComplete(wallet) {
             // Cache result.
-            this.encoding.wallet = wallet;
+            this.encoding.wallet = wallet.$canvas;
 
             // Update DOM.
             const $container = document.getElementById(
@@ -203,7 +186,7 @@ export default {
             while ($container.firstChild) {
                 $container.removeChild($container.firstChild);
             }
-            $container.appendChild(wallet);
+            $container.appendChild(wallet.$canvas);
 
             // Display wallet modal.
             this.$refs.iwModalRef.show();
