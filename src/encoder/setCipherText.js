@@ -11,24 +11,20 @@
 // Module imports.
 import * as cryptography from '../cryptography/index';
 import * as IW from '../index';
-
+const uuidv4 = require('uuid/v4')
 
 /**
  * Encrypts data in readiness for transformation to a QR code.
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    const asObject = {
+    let data = {
         data: {
-            secretSeed: cryptography.generateEntropy(32).toString('hex'),
+            secretSeed: cryptography.generateEntropy(32).toString('hex')
         },
-        wallet: {
-            created: new Date().toISOString(),
-            name: IW.name,
-            provider: IW.provider,
-            version: IW.version,
-        },
+        created: new Date().toISOString(),
+        version: IW.version,
+        uid: uuidv4()
     };
-    const asJSON = JSON.stringify(asObject);
-    ctx.cipherText = cryptography.encrypt(asJSON, ctx.credentials.password);
+    ctx.cipherText = cryptography.encrypt(JSON.stringify(data), ctx.credentials.password);
 }

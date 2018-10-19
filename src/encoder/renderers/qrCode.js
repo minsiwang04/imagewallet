@@ -10,6 +10,8 @@
 
 // Module imports.
 import QRious from 'qrious';
+import qrcode from 'qrcode';
+
 import * as DEFAULTS from '../defaults/qrCode';
 import { renderLine, renderRect } from '../../utils/rendering';
 import { logDebug } from '../../utils/logging';
@@ -30,10 +32,10 @@ export default async function(ctx) {
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 const renderCode = async (ctx) => {
-    const $img = new Image();
-    $img.src = await getQrDataURL(ctx);
+    const $cvs = document.createElement('canvas');
+    await qrcode.toDataURL($cvs, ctx.cipherText, {errorCorrectionLevel: 'H'});
     ctx.$ctx.drawImage(
-        $img,
+        $cvs,
         DEFAULTS.x,
         DEFAULTS.y,
         DEFAULTS.size,
