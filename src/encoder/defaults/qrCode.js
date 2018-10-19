@@ -12,7 +12,7 @@
 import * as CANVAS from './canvas';
 
 // Default qr code padding.
-export const errorCorrectionLevel = 'M';
+export const errorCorrectionLevel = 'H';
 
 // Default qr code frame width.
 export const frameWidth = 4;
