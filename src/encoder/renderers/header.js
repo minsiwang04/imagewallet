@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as DEFAULTS from '../defaults/index';
+import * as DEFAULTS from '../defaults/header';
 import { renderText } from '../../utils/rendering';
 
 /**
@@ -17,11 +17,28 @@ import { renderText } from '../../utils/rendering';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
+    const settings = getSettings(ctx.options);
     renderText(
         ctx.$ctx,
-        DEFAULTS.HEADER.text,
-        DEFAULTS.HEADER.font,
-        DEFAULTS.HEADER.x,
-        DEFAULTS.HEADER.y,
+        settings.text,
+        settings.font,
+        settings.x,
+        settings.y,
     );
 }
+
+/**
+ * Validates supplied password.
+ * @param {string} pwd - Password being validated.
+ */
+const getSettings = (options) => {
+    if (!options || !options.header) {
+        return DEFAULTS;
+    }
+    return {
+        text: options.header.text || DEFAULTS.text,
+        font: options.header.font || DEFAULTS.font,
+        x: options.header.x || DEFAULTS.x,
+        y: options.header.y || DEFAULTS.y
+    }
+};

@@ -8,9 +8,6 @@
  * @fileOverview Wallet canvas defaults.
  */
 
-// Golden ratio used for scaling - thx Nimiq !
-const phi = 1.618;
-
 // Default canvas font family.
 export const fontFamily = 'Times';
 

@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as DEFAULTS from '../defaults/index';
+import * as DEFAULTS from '../defaults/qrCode';
 import { renderLine, renderRect } from '../../utils/rendering';
 import { logDebug } from '../../utils/logging';
 
@@ -32,35 +32,35 @@ const renderFrame = async (ctx) => {
     // Work.
     await renderLine(
         ctx.$ctx,
-        DEFAULTS.QR_CODE.x,
-        DEFAULTS.QR_CODE.y,
-        DEFAULTS.QR_CODE.x + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.y,
-        DEFAULTS.QR_CODE.frameWidth,
+        DEFAULTS.x,
+        DEFAULTS.y,
+        DEFAULTS.x + DEFAULTS.size,
+        DEFAULTS.y,
+        DEFAULTS.frameWidth,
     );
     await renderLine(
         ctx.$ctx,
-        DEFAULTS.QR_CODE.x + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.y,
-        DEFAULTS.QR_CODE.x + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.y + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.frameWidth,
+        DEFAULTS.x + DEFAULTS.size,
+        DEFAULTS.y,
+        DEFAULTS.x + DEFAULTS.size,
+        DEFAULTS.y + DEFAULTS.size,
+        DEFAULTS.frameWidth,
     );
     await renderLine(
         ctx.$ctx,
-        DEFAULTS.QR_CODE.x + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.y + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.x,
-        DEFAULTS.QR_CODE.y + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.frameWidth,
+        DEFAULTS.x + DEFAULTS.size,
+        DEFAULTS.y + DEFAULTS.size,
+        DEFAULTS.x,
+        DEFAULTS.y + DEFAULTS.size,
+        DEFAULTS.frameWidth,
     );
     await renderLine(
         ctx.$ctx,
-        DEFAULTS.QR_CODE.x,
-        DEFAULTS.QR_CODE.y + DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.x,
-        DEFAULTS.QR_CODE.y,
-        DEFAULTS.QR_CODE.frameWidth,
+        DEFAULTS.x,
+        DEFAULTS.y + DEFAULTS.size,
+        DEFAULTS.x,
+        DEFAULTS.y,
+        DEFAULTS.frameWidth,
     );
 };
 
@@ -73,9 +73,9 @@ const renderCode = async (ctx) => {
     $img.src = ctx.qrCode.toDataURL();
     ctx.$ctx.drawImage(
         $img,
-        DEFAULTS.QR_CODE.x,
-        DEFAULTS.QR_CODE.y,
-        DEFAULTS.QR_CODE.size,
-        DEFAULTS.QR_CODE.size,
+        DEFAULTS.x,
+        DEFAULTS.y,
+        DEFAULTS.size,
+        DEFAULTS.size,
     );
 };

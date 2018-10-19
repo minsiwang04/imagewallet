@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as DEFAULTS from '../defaults/index';
+import * as DEFAULTS from '../defaults/canvas';
 
 /**
  * Canvas renderer.
@@ -18,7 +18,7 @@ import * as DEFAULTS from '../defaults/index';
 export default async function(ctx) {
     const $canvas = (ctx.$canvas = document.createElement('canvas'));
     $canvas.classList.add('ts-iw');
-    $canvas.height = DEFAULTS.CANVAS.height;
-    $canvas.width = DEFAULTS.CANVAS.width;
+    $canvas.height = DEFAULTS.height;
+    $canvas.width = DEFAULTS.width;
     ctx.$ctx = $canvas.getContext('2d');
 }

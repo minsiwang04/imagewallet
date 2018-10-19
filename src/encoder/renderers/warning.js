@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as DEFAULTS from '../defaults/index';
+import * as DEFAULTS from '../defaults/warning';
 import { renderText } from '../../utils/rendering';
 
 /**
@@ -19,9 +19,9 @@ import { renderText } from '../../utils/rendering';
 export default async function(ctx) {
     renderText(
         ctx.$ctx,
-        DEFAULTS.WARNING.text,
-        DEFAULTS.WARNING.font,
-        DEFAULTS.WARNING.x,
-        DEFAULTS.WARNING.y,
+        DEFAULTS.text,
+        DEFAULTS.font,
+        DEFAULTS.x,
+        DEFAULTS.y,
     );
 }

@@ -18,18 +18,17 @@ import * as IW from '../index';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    ctx.cipherText = cryptography.encrypt(
-        JSON.stringify({
-            data: {
-                secretSeed: cryptography.generateEntropy(32).toString('hex'),
-            },
-            wallet: {
-                created: new Date().toISOString(),
-                name: IW.name,
-                provider: IW.provider,
-                version: IW.version,
-            },
-        }),
-        ctx.credentials.password,
-    );
+    const asObject = {
+        data: {
+            secretSeed: cryptography.generateEntropy(32).toString('hex'),
+        },
+        wallet: {
+            created: new Date().toISOString(),
+            name: IW.name,
+            provider: IW.provider,
+            version: IW.version,
+        },
+    };
+    const asJSON = JSON.stringify(asObject);
+    ctx.cipherText = cryptography.encrypt(asJSON, ctx.credentials.password);
 }

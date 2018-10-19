@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as DEFAULTS from '../defaults/index';
+import * as DEFAULTS from '../defaults/canvas';
 import { renderText } from '../../utils/rendering';
 
 /**
@@ -20,15 +20,15 @@ export default async function(ctx) {
     renderText(
         ctx.$ctx,
         'PYRAMID',
-        '6px ' + DEFAULTS.CANVAS.fontFamily,
-        DEFAULTS.CANVAS.width / 2,
+        '6px ' + DEFAULTS.fontFamily,
+        DEFAULTS.width / 2,
         620,
     );
     renderText(
         ctx.$ctx,
         'أبو يوسف يعقوب بن إسحاق الصبّاح الكندي',
-        '2px ' + DEFAULTS.CANVAS.fontFamily,
-        DEFAULTS.CANVAS.width / 2,
+        '4px ' + DEFAULTS.fontFamily,
+        DEFAULTS.width / 2,
         323,
     );
 }
