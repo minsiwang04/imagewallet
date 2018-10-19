@@ -116,6 +116,24 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
   integrity sha512-LAQ1d4OPfSJ/BMbI2DuizmYrrkD9JMaTdi2hQTlI53lQ4kRQPyZQRS4CYQ7O66bnBBnP/oYdRxbk++X0xuFU6A==
 
+"@trinkler/imagewallet@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@trinkler/imagewallet/-/imagewallet-0.2.7.tgz#8ab8fc3c4b6d201ea901819a89d99b2a4f490c43"
+  integrity sha512-U9w7Llw2UAiOqZ11T9K/GXT/CF7vkspeaSTDItgh+eQPcu5DXEj5ARW4bF8c0tA7POW2C5ItxSYUh8AiAwuFQA==
+  dependencies:
+    bindings "^1.3.0"
+    esm "^3.0.84"
+    jsqr "^1.1.0"
+    keccak "^1.4.0"
+    lodash "^4.17.11"
+    logger "^0.0.1"
+    png.js "^0.2.1"
+    popper.js "^1.14.4"
+    qrcode "^1.3.0"
+    src "^1.1.2"
+    tweetnacl-auth "^1.0.1"
+    uuid "^3.3.2"
+
 "@vue/component-compiler-utils@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-2.2.0.tgz#bbbb7ed38a9a8a7c93abe7ef2e54a90a04b631b4"
@@ -3048,6 +3066,11 @@ eslint@^5.2.0:
     strip-json-comments "^2.0.1"
     table "^4.0.3"
     text-table "^0.2.0"
+
+esm@^3.0.84:
+  version "3.0.84"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.0.84.tgz#bb108989f4673b32d4f62406869c28eed3815a63"
+  integrity sha512-SzSGoZc17S7P+12R9cg21Bdb7eybX25RnIeRZ80xZs+VZ3kdQKzqTp2k4hZJjR7p9l0186TTXSgrxzlMDBktlw==
 
 espree@^4.0.0:
   version "4.0.0"

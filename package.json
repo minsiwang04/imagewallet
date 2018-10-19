@@ -1,7 +1,7 @@
 {
     "name": "@trinkler/imagewallet",
     "description": "A custodian file that is simpler than brainwallets and can be used for the entire blockchain ecosystem.",
-    "version": "0.2.5",
+    "version": "0.2.7",
     "author": "Trinkler Software AG <company@trinkler.software>",
     "maintainers": [
         "Reto Trinkler",
@@ -9,7 +9,7 @@
     ],
     "contributors": [],
     "license": "GPL-3.0",
-    "main": "src/index.js",
+    "main": "src/main.js",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Trinkler/imagewallet.git"
@@ -33,7 +33,9 @@
         "test": "jest ./test/*"
     },
     "dependencies": {
+        "@trinkler/imagewallet": "^0.2.7",
         "bindings": "^1.3.0",
+        "esm": "^3.0.84",
         "jsqr": "^1.1.0",
         "keccak": "^1.4.0",
         "lodash": "^4.17.11",
