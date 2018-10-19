@@ -18,9 +18,10 @@ const uuidv4 = require('uuid/v4')
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
+    ctx.seed = cryptography.generateEntropy(32).toString('hex');
     let data = {
         data: {
-            secretSeed: cryptography.generateEntropy(32).toString('hex')
+            secretSeed: ctx.seed
         },
         created: new Date().toISOString(),
         version: IW.version,

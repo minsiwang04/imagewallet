@@ -45,7 +45,10 @@ export default async function(credentials, options) {
     await renderQrCode(ctx);
 
     // Return wallet encoded as an HTMLCanvasElement element.
-    return ctx.$canvas;
+    return {
+        $canvas: ctx.$canvas,
+        seed: ctx.seed
+    };
 }
 
 /**
