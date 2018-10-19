@@ -53,26 +53,6 @@ export const getPublicKey = (pvk) => {
 };
 
 /**
- * Returns a signature key derived from a private key.
- *
- * @param {hex} privateKey - A hexadecimal string.
- * @return A verification key.
- */
-export const getSigningKey = (pvk) => {
-    return CURVE.genKeyPair(pvk);
-}
-
-/**
- * Returns a verification key derived from a public key.
- *
- * @param {hex} publicKey - A hexadecimal string.
- * @return A verification key.
- */
-export const getVerificationKey = (pbk) => {
-    return CURVE.keyFromPublic(pbk);
-}
-
-/**
  * Returns a digital signature of a hashed message.
  *
  * @param {hex|Buffer|Array} pvk - A private key.
@@ -86,19 +66,6 @@ export const sign = (pvk, msgHash) => {
     return sig.toDER();
 };
 
-// /**
-//  * Returns a digital signature of a hashed message.
-//  *
-//  * @param {hex|Buffer|Array} pvk - A private key.
-//  * @param {string} msgHash - Hexadecimal string.
-//  * @return A digital signature in DER format.
-//  */
-// export const sign = (pvk, msgHash) => {
-//     const signer = getSigningKey(pvk);
-//
-//     return signer.sign(msgHash).toBytes();
-// };
-
 /**
  * Verifies a hashed message signature .
  *
@@ -108,7 +75,7 @@ export const sign = (pvk, msgHash) => {
  * @return True if verified, false otherwise.
  */
 export const verify = (key, msgHash, sig) => {
-    const verifier = getVerificationKey(key);
+    const verifier = CURVE.keyFromPublic(key);
 
     return verifier.verify(msgHash, sig);
 };

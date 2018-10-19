@@ -11,9 +11,6 @@ const DATA = {
 // Keccak 256 haxadecimal string representation of message data.
 const DATA_KECCAK256 = 'd860c67d1cf51ae4ce4f0b56e8d2c93dfbd83510f7e74423a20ecfc3815c60a3';
 
-// Blake 2B haxadecimal string representation of message data.
-const DATA_BLAKE2B = 'fc59bea026e6fdc9a3066dffea668e4394a56c80060ff31f155ccf4b696df7eb';
-
 // HMAC-SHA-512 haxadecimal string representation of message data.
 const DATA_HMAC_SHA512 = '8debe67b3c485a8f6d4845c7112c4090509c982d0fbe0a2640f7784792645bd390c091dc228ab9cd17512f541acc0cf6293f4cd7743f1579e270055f00ca470d';
 

@@ -34,16 +34,6 @@ test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getPublicKey', () => {
     expect(_.isEqual(pbk, PBK)).toBe(true);
 });
 
-test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getSigningKey', () => {
-	const key = API.getSigningKey(PVK);
-	expect(key).toBeDefined();
-});
-
-test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getVerificationKey', () => {
-	const key = API.getVerificationKey(PVK);
-	expect(key).toBeDefined();
-});
-
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: sign', () => {
 	const sig = API.sign(PVK, DATA_HASH);
     expect(_.isEqual(sig, SIG)).toBe(true);

@@ -48,7 +48,7 @@ const decryptQrData = async (qrData, password) => {
 
 /**
  * Asynchronously generates a lightly branded image wallet
- * from a user's password & associated encoding options.
+ * from a user's password & associated options.
  * @param {object} password - A user's (hopefully strong) password.
  * @param {object} options - Encoding options.
  * @return A promise resolving to an HTML canvas object.
@@ -59,7 +59,7 @@ const generateFromPassword = async (password, options) => {
 
 /**
 * Asynchronously generates a lightly branded image wallet
-* from a user's password, image & associated encoding options.
+* from a user's password, image & associated options.
  * @param {object} password - A user's (hopefully strong) password.
  * @param {object} imgBlob - An image blob.
  * @param {object} options - Encoding options.
@@ -82,37 +82,13 @@ const getQrDataFromImage = async (blob) => {
 /**
  * Returns a keccak256 hash of input data.
  * @param {Object} data - Data to be hashed.
+ * @param {string} encoding - Required output encoding.
  * @return {hex|Buffer} The hashed value.
  */
 const getHash = (data, encoding) => {
     // TODO validate input
     return keccak256(data, encoding);
 }
-
-/**
- * Signs a data structure.
- * @param {hex} pvk - User's private key.
- * @return {object} Signature plus data hash.
- */
-const signData = (pvk, data) => {
-    // TODO validate input
-    const hash = getHash(data);
-    const sig = signHash(pvk, hash);
-
-    return {sig, hash};
-};
-
-/**
- * Signs a message hash.
- * @param {hex} pvk - User's private key.
- * @return {hex} msgHash - Hash of data.
- */
-const signHash = (pvk, msgHash) => {
-    // TODO validate input
-    const key = ed25519.getSigningKey(pvk);
-
-    return key.sign(msgHash).toHex();
-};
 
 /**
  * Returns a user's public key.
@@ -135,6 +111,29 @@ const getUserPrivateKey = (derivedEntropy) => {
 }
 
 /**
+ * Signs a data structure.
+ * @param {hex} pvk - User's private key.
+ * @return {object} Signature plus data hash.
+ */
+const signData = (pvk, data, encoding) => {
+    // TODO validate input
+    const hashedData = getHash(data, 'hex');
+    const sig = signHash(pvk, hashedData, encoding);
+
+    return {sig, hashedData};
+};
+
+/**
+ * Signs a message hash.
+ * @param {hex} pvk - User's private key.
+ * @return {hex} msgHash - Hash of data.
+ */
+const signHash = (pvk, msgHash, encoding) => {
+    // TODO validate input
+    return ed25519.sign(pvk, msgHash, encoding);
+};
+
+/**
  * Verifies that a message was signed by the private key wiht which the public key is associated.
  * @param {hex} pbk - A user's public key.
  * @param {hex} msgHash - A message hash.
@@ -143,9 +142,7 @@ const getUserPrivateKey = (derivedEntropy) => {
  */
 const verifyHash = (pbk, msgHash, sig) => {
     // TODO validate input
-    const key = ed25519.getVerificationKey(pbk);
-
-    return key.verify(msgHash, sig);
+    return ed25519.verify(pbk, msgHash, sig);
 };
 
 // Library version.

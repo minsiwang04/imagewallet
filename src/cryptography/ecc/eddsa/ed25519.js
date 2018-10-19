@@ -46,48 +46,32 @@ export const getPublicKey = (pvk) => {
 };
 
 /**
- * Returns a signature key derived from a private key.
- *
- * @param {hex} privateKey - A hexadecimal string.
- * @return A verification key.
- */
-export const getSigningKey = (pvk) => {
-    return CURVE.keyFromSecret(pvk);
-}
-
-/**
- * Returns a verification key derived from a public key.
- *
- * @param {hex} publicKey - A hexadecimal string.
- * @return A verification key.
- */
-export const getVerificationKey = (pbk) => {
-    return CURVE.keyFromPublic(pbk);
-}
-
-/**
  * Returns a digital signature of a hashed message.
  *
  * @param {hex|Buffer|Array} pvk - A private key.
  * @param {string} msgHash - Hexadecimal string.
  * @return {Array} A digital signature as a byte array.
  */
-export const sign = (pvk, msgHash) => {
-    const signer = getSigningKey(pvk);
+export const sign = (pvk, msgHash, encoding) => {
+    const signer = CURVE.keyFromSecret(pvk);
+    const sig = signer.sign(msgHash);
 
-    return signer.sign(msgHash).toBytes();
+    return encoding === 'hex' ? sig.toHex() : sig.toBytes();
 };
 
 /**
  * Verifies a hashed message signature .
  *
- * @param {hex|Buffer|Array} key - A private or public key.
+ * @param {hex|Array} key - A private or public key.
  * @param {string} msgHash - Hexadecimal string.
  * @param {Array} sig - A digital signature of the message hash in DER array format.
  * @return True if verified, false otherwise.
  */
 export const verify = (key, msgHash, sig) => {
-    const verifier = getVerificationKey(key);
+    if (typeof key === 'string' && key.startsWith('0x')) {
+        key = key.slice(2)
+    }
+    const verifier = CURVE.keyFromPublic(key);
 
     return verifier.verify(msgHash, sig);
 };

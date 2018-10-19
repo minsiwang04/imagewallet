@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as IW from '../src/index';
 import {secp256k1 as API} from '../src/cryptography/ecc/index';
+import {hexFromArray} from '../src/utils/conversion';
 
 // Entropy supplied by a PRNG.
 const ENTROPY = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe';
@@ -32,16 +33,6 @@ test('IW :: cryptography :: ecc :: ecdsa:secp256k1 :: getPrivateKey', () => {
 test('IW :: cryptography :: ecc :: ecdsa:secp256k1 :: getPublicKey', () => {
 	const pbk = API.getPublicKey(PVK);
     expect(_.isEqual(pbk, PBK)).toBe(true);
-});
-
-test('IW :: cryptography :: ecc :: ecdsa:secp256k1 :: getSigningKey', () => {
-	const key = API.getSigningKey(PVK);
-	expect(key).toBeDefined();
-});
-
-test('IW :: cryptography :: ecc :: ecdsa:secp256k1 :: getVerificationKey', () => {
-	const key = API.getVerificationKey(PBK);
-	expect(key).toBeDefined();
 });
 
 test('IW :: cryptography :: ecc :: ecdsa:secp256k1 :: sign', () => {

@@ -22,6 +22,6 @@ export default async function(ctx) {
         element: document.createElement('img'),
         level: DEFAULTS.QR_CODE.errorCorrectionLevel,
         size: DEFAULTS.QR_CODE.size,
-        value: ctx.cipherText,
+        value: ctx.cipherText
     });
 }
