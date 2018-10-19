@@ -29,6 +29,7 @@ export default function(seed, coinSymbol, accountIndex) {
     const coin = validateInputs(seed, coinSymbol, accountIndex);
 
     // Iterate BIP32 path extendingly master key accordingly.
+    // TODO: verify that accountIndex is included in derivation
     const paths = getBip32Paths(coin.hexCode, accountIndex || 0, 0);
     let derived = getMasterExtendedKey(seed);
     paths.forEach((segment) => {

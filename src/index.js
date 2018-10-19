@@ -58,18 +58,6 @@ const generateFromPassword = async (password, options) => {
 };
 
 /**
-* Asynchronously generates a lightly branded image wallet
-* from a user's password, image & associated options.
- * @param {object} password - A user's (hopefully strong) password.
- * @param {object} imgBlob - An image blob.
- * @param {object} options - Encoding options.
- * @return A promise resolving to an HTML canvas object.
- */
-const generateFromPasswordAndImage = async (password, imgBlob, options) => {
-    throw new NotImplementedError();
-};
-
-/**
  * Asynchronously decodes the QR data from within an image wallet.
  * @param {Blob} blob - An image wallet.
  * @return {object} Decode data.
@@ -164,7 +152,6 @@ export {
     decryptImage,
     decryptQrData,
     generateFromPassword,
-    generateFromPasswordAndImage,
     getQrDataFromImage,
     // ... key derivation, signing ... etc.
     deriveKey,
