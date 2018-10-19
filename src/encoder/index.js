@@ -19,7 +19,6 @@ import renderPanels from './renderers/panels';
 import renderQrCode from './renderers/qrCode';
 import renderWarning from './renderers/warning';
 import setCipherText from './setCipherText';
-import setQrCode from './setQrCode';
 import validateInputs from './validateInputs';
 
 /**
@@ -36,7 +35,6 @@ export default async function(credentials, options) {
     // TODO: verify that awaits are required ?
     await validateInputs(ctx);
     await setCipherText(ctx);
-    await setQrCode(ctx);
     await renderCanvas(ctx);
     await renderOther(ctx);
     await renderPanels(ctx);
