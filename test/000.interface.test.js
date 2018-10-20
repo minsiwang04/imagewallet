@@ -20,9 +20,10 @@ test('IW :: interface :: is defined', () => {
         'getUserPublicKey',
         'signData',
         'signHash',
+        'verifyData',
         'verifyHash',
 	]);
     expect(API.name).toBe('Image Wallet');
-    expect(API.version).toBe('0.2.8');
+    expect(API.version).toBe('0.2.9');
     expect(API.provider).toBe('Trinkler Software AG');
 });

@@ -123,7 +123,21 @@ const signHash = (pvk, msgHash, encoding) => {
 };
 
 /**
- * Verifies that a message was signed by the private key wiht which the public key is associated.
+ * Verifies that the signature of the hash of the data is verified with the public key.
+ * @param {hex} pbk - A user's public key.
+ * @param {hex} msgHash - A message hash.
+ * @param {???} sig - A message signature.
+ * @return {Boolean} True if verified, false otherwise.
+ */
+const verifyData = (pbk, data, sig) => {
+    // TODO validate input
+    const msgHash = getHash(data);
+
+    return verifyHash(pbk, msgHash, sig);
+};
+
+/**
+ * Verifies that the signature of the hash is verified with the public key.
  * @param {hex} pbk - A user's public key.
  * @param {hex} msgHash - A message hash.
  * @param {???} sig - A message signature.
@@ -161,5 +175,6 @@ export {
     getUserPublicKey,
     signData,
     signHash,
+    verifyData,
     verifyHash,
 };
