@@ -12,14 +12,14 @@
  */
 
 // Module imports.
-import encoder from './encoder/index';
 import decodeQR from './decoder/decodeQR';
 import decryptQR from './decoder/decryptQR';
 import deriveKey from './cryptography/keyDerivation';
-import {NotImplementedError} from './utils/exceptions';
 import {ed25519} from './cryptography/ecc/index';
-import keccak256 from './cryptography/hashes/keccak256';
+import encoder from './encoder/index';
 import {hexFromArray} from './utils/conversion';
+import keccak256 from './cryptography/hashes/keccak256';
+import {NotImplementedError} from './utils/exceptions';
 
 /**
  * Asynchronously decrypts an image wallet.
