@@ -74,17 +74,17 @@ const getQrDataFromImage = async (blob) => {
  */
 const getHash = (data, encoding) => {
     // TODO validate input
-    return keccak256(data, encoding);
+    return keccak256(data, encoding || 'hex');
 }
 
 /**
  * Returns a user's public key.
- * @param {hex} derivedEntropy - Entropy derived from master entropy that is decrypted from a QR code.
+ * @param {hex} pvk - User's private key.
  * @return {hex} Public key.
  */
-const getUserPublicKey = (derivedEntropy) => {
+const getUserPublicKey = (pvk) => {
     // TODO validate input
-    return hexFromArray(ed25519.getPublicKey(derivedEntropy));
+    return hexFromArray(ed25519.getPublicKey(pvk));
 }
 
 /**
@@ -100,14 +100,16 @@ const getUserPrivateKey = (derivedEntropy) => {
 /**
  * Signs a data structure.
  * @param {hex} pvk - User's private key.
+ * @param {object} data - Data to be signed.
+ * @param {string} encoding - Required signature encoding, hexadecimal string or byte array.
  * @return {object} Signature plus data hash.
  */
 const signData = (pvk, data, encoding) => {
     // TODO validate input
-    const hashedData = getHash(data, 'hex');
-    const sig = signHash(pvk, hashedData, encoding);
+    const msgHash = getHash(data);
+    const sig = signHash(pvk, msgHash, encoding);
 
-    return {sig, hashedData};
+    return {sig, msgHash};
 };
 
 /**
@@ -117,7 +119,7 @@ const signData = (pvk, data, encoding) => {
  */
 const signHash = (pvk, msgHash, encoding) => {
     // TODO validate input
-    return ed25519.sign(pvk, msgHash, encoding);
+    return ed25519.sign(pvk, msgHash, encoding || 'hex');
 };
 
 /**

@@ -17,7 +17,10 @@ const DATA_HASH = IW.getHash({
 });
 
 // Expected signature.
-const SIG = [242, 119, 53, 133, 108, 147, 108, 83, 24, 132, 69, 52, 119, 91, 234, 78, 136, 133, 149, 86, 101, 116, 152, 212, 52, 242, 147, 52, 15, 161, 64, 127, 160, 32, 225, 177, 153, 115, 220, 79, 141, 140, 99, 14, 7, 118, 243, 35, 202, 255, 0, 34, 206, 165, 169, 69, 239, 139, 192, 26, 137, 146, 128, 2];
+const SIG = {
+	asBytes: [242, 119, 53, 133, 108, 147, 108, 83, 24, 132, 69, 52, 119, 91, 234, 78, 136, 133, 149, 86, 101, 116, 152, 212, 52, 242, 147, 52, 15, 161, 64, 127, 160, 32, 225, 177, 153, 115, 220, 79, 141, 140, 99, 14, 7, 118, 243, 35, 202, 255, 0, 34, 206, 165, 169, 69, 239, 139, 192, 26, 137, 146, 128, 2],
+	asHex: 'F27735856C936C5318844534775BEA4E88859556657498D434F293340FA1407FA020E1B19973DC4F8D8C630E0776F323CAFF0022CEA5A945EF8BC01A89928002'
+}
 
 test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getKeyPair', () => {
 	const kp = API.getKeyPair(ENTROPY);
@@ -34,11 +37,20 @@ test('IW :: cryptography :: ecc :: eddsa:ed25519 :: getPublicKey', () => {
     expect(_.isEqual(pbk, PBK)).toBe(true);
 });
 
-test('IW :: cryptography :: ecc :: eddsa:ed25519 :: sign', () => {
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: sign bytes', () => {
 	const sig = API.sign(PVK, DATA_HASH);
-    expect(_.isEqual(sig, SIG)).toBe(true);
+    expect(_.isEqual(sig, SIG.asBytes)).toBe(true);
 });
 
-test('IW :: cryptography :: ecc :: eddsa:ed25519 :: verify', () => {
-    expect(API.verify(PBK, DATA_HASH, SIG)).toBe(true);
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: sign hex', () => {
+	const sig = API.sign(PVK, DATA_HASH, 'hex');
+    expect(_.isEqual(sig, SIG.asHex)).toBe(true);
+});
+
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: verify bytes', () => {
+	expect(API.verify(PBK, DATA_HASH, SIG.asHex)).toBe(true);
+});
+
+test('IW :: cryptography :: ecc :: eddsa:ed25519 :: verify hex', () => {
+	expect(API.verify(PBK, DATA_HASH, SIG.asHex)).toBe(true);
 });
