@@ -14,7 +14,7 @@
 // Module imports.
 import decodeQR from './decoder/decodeQR';
 import decryptQR from './decoder/decryptQR';
-import deriveKey from './cryptography/keyDerivation';
+import keyDeriver from './cryptography/keyDerivation';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
 import {hexFromArray} from './utils/conversion';
@@ -44,6 +44,18 @@ const decryptQrData = async (qrData, password) => {
     // TODO validate input
     return await decryptQR(qrData, password);
 };
+
+/**
+ * Returns a entropy derived from seed by applying a derivation path algorithm.
+ *
+ * @param {hex} seed - Master source of entropy.
+ * @param {string} coinSymbol - Coin symbol, e.g. IW.
+ * @param {number} accountIndex - Account identifier.
+ * @return {hex} seed - Master source of entropy.
+ */
+const deriveKey = (seed, coinSymbol, accountIndex) => {
+    return keyDeriver(seed, coinSymbol, accountIndex);
+}
 
 /**
  * Asynchronously generates a lightly branded image wallet

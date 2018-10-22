@@ -38,3 +38,10 @@ test('IW :: cryptography :: key derivation :: valid', () => {
     const derived = API.deriveKey(SEED, COIN_SYMBOL, WALLET_INDEX);
     expect(_.isEqual(derived, DERIVED)).toBe(true);
 });
+
+test('IW :: cryptography :: key derivation :: ranged', () => {
+    const derived = _.map(_.range(5), (i) => {
+        return API.deriveKey(SEED, COIN_SYMBOL, WALLET_INDEX - i);
+    });
+    console.log(derived);
+});

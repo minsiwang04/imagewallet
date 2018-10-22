@@ -36,6 +36,7 @@
         "@trinkler/imagewallet": "^0.2.7",
         "bindings": "^1.3.0",
         "esm": "^3.0.84",
+        "fs": "^0.0.1-security",
         "jsqr": "^1.1.0",
         "keccak": "^1.4.0",
         "lodash": "^4.17.11",
