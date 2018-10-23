@@ -33,7 +33,6 @@
         "test": "jest ./test/*"
     },
     "dependencies": {
-        "@trinkler/imagewallet": "^0.2.7",
         "bindings": "^1.3.0",
         "esm": "^3.0.84",
         "jsqr": "^1.1.0",
