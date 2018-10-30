@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import slip0010 from '../src/cryptography/keyDerivation/slip0010';
+import bip32 from '../src/cryptography/keyDerivation/bip32';
 import { InvalidCoinIdentiferError } from '../src/utils/exceptions';
 import { BaseError } from '../src/utils/exceptions';
 import * as utils from './utils';
@@ -46,7 +46,7 @@ const execute = (cfg) => {
 }
 
 const executeTest = (seed, curve, seedModifier, derivationPath, fingerprint, chainCode, pvk, pbk) => {
-    const xkey = slip0010(seed, curve, seedModifier, derivationPath, fingerprint);
+    const xkey = bip32(seed, curve, seedModifier, derivationPath, fingerprint);
     expect(xkey.publicKey).toBe(pbk);
     expect(xkey.privateKey).toBe(pvk);
     expect(xkey.chainCode).toBe(chainCode);

@@ -11,7 +11,7 @@
 // Module imports.
 import * as coins from '../../coins/index';
 import * as exceptions from '../../utils/exceptions';
-import slip0010 from './slip0010';
+import bip32 from './bip32';
 
 // Map of elliptic curves to seed modifiers.
 const SEED_MODIFIERS = {
@@ -45,7 +45,7 @@ export default function(seed, coinSymbol, accountIndex) {
     const derivationPath = getDerivationPath(coin.hexCode, accountIndex, 0);
     const fingerprint = null;
     const seedModifier = SEED_MODIFIERS[coin.curve];
-    const xkey = slip0010(seed, coin.curve, seedModifier, derivationPath, fingerprint);
+    const xkey = bip32(seed, coin.curve, seedModifier, derivationPath, fingerprint);
 
     return {
         privateKey: xkey.privateKey,

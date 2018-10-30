@@ -5,7 +5,7 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
-* @fileOverview SLIP-0010: universal private key derivation from master private key.
+* @fileOverview Universal private key derivation from master private key.
  */
 
 // Module imports.
