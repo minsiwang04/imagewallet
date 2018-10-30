@@ -12,7 +12,7 @@
 import { default as assert } from 'assert';
 import { ed25519 } from '../ecc/index';
 import { hexFromArray } from '../../utils/conversion';
-import { hmacSha512 } from '../hashes/index';
+import { hmacSha512 } from '../hashing/index';
 import { secp256k1 } from '../ecc/index';
 
 // Map of elliptic curve type to curve implementation wrapper.

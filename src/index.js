@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.3.0
+ * @version 0.3.1
  */
 
 // Module imports.
@@ -18,7 +18,7 @@ import keyDeriver from './cryptography/keyDerivation/derive';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
 import {hexFromArray} from './utils/conversion';
-import keccak256 from './cryptography/hashes/keccak256';
+import keccak256 from './cryptography/hashing/keccak256';
 import {NotImplementedError} from './utils/exceptions';
 
 /**
@@ -183,7 +183,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.3.0';
+const version = '0.3.1';
 
 // Module exports.
 export {

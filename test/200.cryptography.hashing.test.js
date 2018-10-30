@@ -17,14 +17,14 @@ const DATA_HMAC_SHA512 = '0b04df343d74d5eba11e16d3b6e62cd16f05c01d8c890cec7a511f
 // Key used when generating hmacSha512.
 const KEY = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe';
 
-test('IW :: cryptography :: hashes  :: test interface', () => {
+test('IW :: cryptography :: hashing  :: test interface', () => {
 	utils.testSlots(API, [
         'hmacSha512',
     	'keccak256',
 	]);
 });
 
-test('IW :: cryptography :: hashes  :: keccak256', () => {
+test('IW :: cryptography :: hashing  :: keccak256', () => {
 	let hashed;
 	hashed = API.keccak256(DATA);
 	hashed = Array.from(hashed);
@@ -32,7 +32,7 @@ test('IW :: cryptography :: hashes  :: keccak256', () => {
     expect(hashed).toBe(DATA_KECCAK256);
 });
 
-test('IW :: cryptography :: hashes  :: hmacSha512', () => {
+test('IW :: cryptography :: hashing  :: hmacSha512', () => {
 	let hashed;
 	hashed = API.hmacSha512(DATA_KECCAK256, KEY);
 	hashed = Array.from(hashed);

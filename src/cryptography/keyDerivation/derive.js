@@ -11,9 +11,6 @@
 // Module imports.
 import * as coins from '../../coins/index';
 import * as exceptions from '../../utils/exceptions';
-import * as convert from '../../utils/conversion';
-import * as hash from '../hashes/index';
-import { logInfo } from '../../utils/logging';
 import slip0010 from './slip0010';
 
 // Map of elliptic curves to seed modifiers.
@@ -48,7 +45,6 @@ export default function(seed, coinSymbol, accountIndex) {
     const derivationPath = getDerivationPath(coin.hexCode, accountIndex, 0);
     const fingerprint = null;
     const seedModifier = SEED_MODIFIERS[coin.curve];
-
     const xkey = slip0010(seed, coin.curve, seedModifier, derivationPath, fingerprint);
 
     return {
