@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.3.2
+ * @version 0.3.3
  */
 
 // Module imports.
@@ -183,7 +183,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.3.2';
+const version = '0.3.3';
 
 // Module exports.
 export {
