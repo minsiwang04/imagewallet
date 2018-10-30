@@ -15,6 +15,7 @@ test('IW :: interface :: is defined', () => {
         'generateFromPassword',
         'getQrDataFromImage',
         'deriveKey',
+        'deriveKeyPair',
         'getHash',
         'getUserPrivateKey',
         'getUserPublicKey',
@@ -24,6 +25,6 @@ test('IW :: interface :: is defined', () => {
         'verifyHash',
 	]);
     expect(API.name).toBe('Image Wallet');
-    expect(API.version).toBe('0.2.10');
+    expect(API.version).toBe('0.3.0');
     expect(API.provider).toBe('Trinkler Software AG');
 });

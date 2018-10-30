@@ -1,7 +1,7 @@
 {
     "curve": "secp256k1",
-    "seedModifier": "Bitcoin seed",
     "seed": "000102030405060708090a0b0c0d0e0f",
+    "seedModifier": "Bitcoin seed",
     "vector": [
         {
             "derivationPath": "m",

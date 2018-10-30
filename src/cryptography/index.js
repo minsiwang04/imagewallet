@@ -14,7 +14,7 @@ import {
     encrypt,
 } from './encryption';
 import generateEntropy from './entropyCreation';
-import deriveKey from './keyDerivation';
+import deriveKey from './keyDerivation/derive';
 import * as hash from './hashes';
 
  // Module exports.

@@ -32,7 +32,6 @@ export default async function(credentials, options) {
     const ctx = new EncodingContextInfo(credentials, options);
 
     // Invoke pipeline.
-    // TODO: verify that awaits are required ?
     await validateInputs(ctx);
     await setCipherText(ctx);
     await renderCanvas(ctx);

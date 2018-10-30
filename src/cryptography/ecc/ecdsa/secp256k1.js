@@ -14,8 +14,21 @@
 import * as elliptic from '../../../ext/elliptic';
 
 // Set ECDSA context.
-const secp256k1 = new elliptic.ec('secp256k1');
 const CURVE = new elliptic.ec('secp256k1');
+
+export const order = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;
+
+/**
+ * Returns a key pair (optionally generated from supplied entropy).
+ *
+ * @param {Array} entropy - A 32 byte array emitted by a PRNG.
+ * @return A key pair for signing / verification purposes.
+ */
+export const createKeyPair = (entropy) => {
+    entropy = entropy || generateEntropy();
+
+    return CURVE.genKeyPair({entropy});
+};
 
 /**
  * Returns a key pair (optionally derived from supplied entropy).
@@ -47,10 +60,10 @@ export const getPrivateKey = (entropy) => {
  * @param {hex|Buffer|Array} pvk - A private key.
  * @return {Array} A 64 byte array.
  */
-export const getPublicKey = (pvk) => {
-    const keyPair = getKeyPair(pvk);
+export const getPublicKey = (pvk, compressed) => {
+    const keyPair = CURVE.keyFromPrivate(pvk);
 
-    return keyPair.getPublic().encode('array');
+    return keyPair.getPublic(compressed || true, 'array');
 };
 
 /**
@@ -61,7 +74,7 @@ export const getPublicKey = (pvk) => {
  * @return {Array} A digital signature in DER Array format.
  */
 export const sign = (pvk, msgHash) => {
-    const kp = getKeyPair(pvk);
+    const kp = CURVE.keyFromPrivate(pvk);
     const sig = kp.sign(msgHash);
 
     return sig.toDER();

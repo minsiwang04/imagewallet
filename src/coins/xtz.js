@@ -9,16 +9,16 @@
  */
 
 // SLIP 0044 coin index.
-export const index = 241;
+export const index = 1729;
 
 // SLIP 0044 coin hex code.
-export const hexCode = 0x800000f1;
+export const hexCode = 0x800006c1;
 
 // Coin name.
-export const name = 'Imagewallet';
+export const name = 'Tezos';
 
 // Coin ticker symbol.
-export const symbol = 'IW';
+export const symbol = 'XTZ';
 
 // Elliptic curve type.
 export const curve = 'ed25519';

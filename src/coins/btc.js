@@ -20,8 +20,5 @@ export const name = 'Bitcoin';
 // Coin ticker symbol.
 export const symbol = 'BTC';
 
-// Elliptic curve type.
-export const curveType = 'ecdsa';
-
 // Elliptic curve name.
-export const curveName = 'secp256k1';
+export const curve = 'secp256k1';

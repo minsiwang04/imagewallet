@@ -9,7 +9,7 @@
  */
 
 // Module imports.
-import * as keccak from 'keccak';
+import {default as keccak} from 'keccak';
 
 // Hashing algorithm - sha-3:keccak256.
 const ALGO = 'keccak256';
@@ -23,7 +23,7 @@ const ALGO = 'keccak256';
  */
 export default function(data, encoding) {
     const input = JSON.stringify(data);
-	const h = keccak.default(ALGO).update(input);
+	const h = keccak(ALGO).update(input);
 
     return encoding === 'hex' ? h.digest('hex') : h.digest();
 }

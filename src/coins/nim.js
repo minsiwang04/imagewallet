@@ -21,7 +21,4 @@ export const name = 'Nimiq';
 export const symbol = 'NIM';
 
 // Elliptic curve type.
-export const curveType = 'eddsa';
-
-// Elliptic curve name.
-export const curveName = 'ed25519';
+export const curve = 'ed25519';

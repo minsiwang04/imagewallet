@@ -6,11 +6,15 @@
 
 // Module imports.
 // import * as elliptic from 'elliptic';
+import _ from 'lodash';
 import * as elliptic from '../../../ext/elliptic';
 import generateEntropy from '../../entropyCreation';
 
 // Set EcDSA context.
 const CURVE = new elliptic.eddsa('ed25519');
+
+// Buffer prepended to public keys.
+const ZERO_BYTE = [0];
 
 /**
  * Returns a key pair (optionally derived from supplied entropy).
@@ -38,12 +42,12 @@ export const getPrivateKey = (entropy) => {
  * Returns a public key dervied from supplied private key.
  *
  * @param {hex|Buffer|Array} pvk - A private key.
- * @return {Array} A 64 byte array.
+ * @return {Array} A 33 byte array.
  */
 export const getPublicKey = (pvk) => {
-    const keyPair = getKeyPair(pvk);
+    const keyPair = CURVE.keyFromSecret(pvk);
 
-    return keyPair.pubBytes();
+    return (_.concat(ZERO_BYTE, keyPair.pubBytes()));
 };
 
 /**
@@ -69,9 +73,15 @@ export const sign = (pvk, msgHash, encoding) => {
  * @return True if verified, false otherwise.
  */
 export const verify = (key, msgHash, sig) => {
-    if (typeof key === 'string' && key.startsWith('0x')) {
-        key = key.slice(2)
+    // Strip out leading byte if necessary.
+    if (typeof key === 'string') {
+        if (key.startsWith('0x') || key.startsWith('00')) {
+            key = key.slice(2);
+        }
+    } else if (Array.isArray(key) && key[0] === 0) {
+        key = key.slice(1);
     }
+
     const verifier = CURVE.keyFromPublic(key);
 
     return verifier.verify(msgHash, sig);

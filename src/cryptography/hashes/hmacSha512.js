@@ -9,18 +9,21 @@
  */
 
 // Module imports.
-// AUDIT REPORT: https://cure53.de/tweetnacl.pdf
-const nacl = require('tweetnacl');
-nacl.auth = require('tweetnacl-auth');
+import {default as createHmac} from 'create-hmac';
+
+// Hashing algorithm.
+const ALGO = 'sha512';
 
 /**
  * Authenticates the given message with the secret key.
- * I.E. returns HMAC-SHA-512-256 of the message under the key.
+ * I.E. returns HMAC-SHA-512 of the message under the key.
  *
  * @param {string} message - Message to be hashed.
  * @param {string} key - Key to apply.
  * @return {Uint8Array} 64 element Uint8Array.
  */
 export default function(message, key) {
-    return nacl.auth.full(message, key);
+    const hmac = createHmac(ALGO, message);
+
+    return hmac.update(key).digest();
 }

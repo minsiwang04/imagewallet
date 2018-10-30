@@ -8,13 +8,13 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.2.10
+ * @version 0.3.0
  */
 
 // Module imports.
 import decodeQR from './decoder/decodeQR';
 import decryptQR from './decoder/decryptQR';
-import keyDeriver from './cryptography/keyDerivation';
+import keyDeriver from './cryptography/keyDerivation/derive';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
 import {hexFromArray} from './utils/conversion';
@@ -54,7 +54,23 @@ const decryptQrData = async (qrData, password) => {
  * @return {hex} seed - Master source of entropy.
  */
 const deriveKey = (seed, coinSymbol, accountIndex) => {
-    return keyDeriver(seed, coinSymbol, accountIndex);
+    const kp = deriveKeyPair(seed, coinSymbol, accountIndex);
+
+    return kp.privateKey;
+}
+
+/**
+ * Returns a key pair derived from seed by applying a derivation path algorithm.
+ *
+ * @param {hex} seed - Master source of entropy.
+ * @param {string} coinSymbol - Coin symbol, e.g. IW.
+ * @param {number} accountIndex - Account identifier.
+ * @return {hex} seed - Master source of entropy.
+ */
+const deriveKeyPair = (seed, coinSymbol, accountIndex) => {
+    const kp = keyDeriver(seed, coinSymbol, accountIndex);
+
+    return kp;
 }
 
 /**
@@ -101,7 +117,7 @@ const getUserPublicKey = (pvk) => {
 
 /**
  * Returns a user's private key.
- * @param {hex} derivedEntropy - Entropy derived from master entropy that is decrypted from a QR code.
+ * @param {hex} derivedEntropy - Entropy derived from seed decrypted from a QR code.
  * @return {hex} Private key.
  */
 const getUserPrivateKey = (derivedEntropy) => {
@@ -167,7 +183,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.2.10';
+const version = '0.3.0';
 
 // Module exports.
 export {
@@ -182,6 +198,7 @@ export {
     getQrDataFromImage,
     // ... key derivation, signing ... etc.
     deriveKey,
+    deriveKeyPair,
     getHash,
     getUserPrivateKey,
     getUserPublicKey,

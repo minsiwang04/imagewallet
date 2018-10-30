@@ -21,7 +21,4 @@ export const name = 'Ether';
 export const symbol = 'ETH';
 
 // Elliptic curve type.
-export const curveType = 'ecdsa';
-
-// Elliptic curve name.
-export const curveName = 'secp256k1';
+export const curve = 'secp256k1';
