@@ -22,8 +22,8 @@ export default async function(ctx) {
         ctx.$ctx,
         settings.text,
         settings.font,
-        settings.x,
-        settings.y,
+        DEFAULTS.x,
+        DEFAULTS.y,
     );
 }
 
@@ -38,7 +38,5 @@ const getSettings = (options) => {
     return {
         text: options.footer.text || DEFAULTS.text,
         font: options.footer.font || DEFAULTS.font,
-        x: options.footer.x || DEFAULTS.x,
-        y: options.footer.y || DEFAULTS.y
     }
 };
