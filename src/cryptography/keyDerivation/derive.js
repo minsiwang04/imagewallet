@@ -54,12 +54,7 @@ export default function(seed, coinSymbol, accountIndex) {
 }
 
 /**
- * Returns a hash of the passed data using the keccak256 algorithm.
- *
- * @param {hex} seed - Master source of entropy.
- * @param {string} coinSymbol - Coin symbol, e.g. IW.
- * @param {number} accountIndex - Account identifier.
- * @return {hex} seed - Master source of entropy.
+ * Returns derivation path to be used to deterministically derive keys.
  */
 const getDerivationPath = (coinHexCode, accountIndex, address_index) => {
     return `m/44H/${coinHexCode}/${accountIndex}/0/${address_index}`;

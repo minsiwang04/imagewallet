@@ -20,10 +20,12 @@ const ALGO = 'sha512';
  *
  * @param {string} message - Message to be hashed.
  * @param {string} key - Key to apply.
- * @return {Uint8Array} 64 element Uint8Array.
+ * @param {string} encoding - Required output encoding.
+ * @return {hex|Uint8Array} 64 element Uint8Array.
  */
-export default function(message, key) {
-    const hmac = createHmac(ALGO, message);
+export default function(message, key, encoding) {
+    const h = createHmac(ALGO, message);
+    h.update(key)
 
-    return hmac.update(key).digest();
+    return encoding === 'hex' ? h.digest('hex') : h.digest();
 }

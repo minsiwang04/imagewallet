@@ -11,7 +11,7 @@
 // Module imports.
 import * as cryptography from '../cryptography/index';
 import * as IW from '../index';
-const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4');
 
 // Number of entropic bytes.
 const ENTROPY_SIZE_BYTES = 32

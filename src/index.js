@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.3.3
+ * @version 0.3.4
  */
 
 // Module imports.
@@ -18,6 +18,7 @@ import keyDeriver from './cryptography/keyDerivation/derive';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
 import {hexFromArray} from './utils/conversion';
+import blake2b from './cryptography/hashing/blake2b';
 import keccak256 from './cryptography/hashing/keccak256';
 import {NotImplementedError} from './utils/exceptions';
 
@@ -95,14 +96,15 @@ const getQrDataFromImage = async (blob) => {
 };
 
 /**
- * Returns a keccak256 hash of input data.
+ * Returns a blake2b hash of input data.
  * @param {Object} data - Data to be hashed.
  * @param {string} encoding - Required output encoding.
  * @return {hex|Buffer} The hashed value.
  */
 const getHash = (data, encoding) => {
     // TODO validate input
-    return keccak256(data, encoding || 'hex');
+    return blake2b(data, encoding || 'hex');
+    // return keccak256(data, encoding || 'hex');
 }
 
 /**
@@ -183,7 +185,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.3.3';
+const version = '0.3.4';
 
 // Module exports.
 export {

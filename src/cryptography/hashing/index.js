@@ -5,15 +5,17 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 /**
- * @fileOverview Wraps keccak library to expose keccak256 hashing algorithm.
+ * @fileOverview Exposes set of supported hashing algorithms.
  */
 
 // Module imports.
+import blake2b from './blake2b';
 import hmacSha512 from './hmacSha512';
 import keccak256 from './keccak256';
 
  // Module exports.
  export {
+     blake2b,
      hmacSha512,
  	 keccak256,
  }
