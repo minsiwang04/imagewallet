@@ -14,7 +14,6 @@ import renderCanvas from './renderers/canvas';
 import renderFooter from './renderers/footer';
 import renderHeader from './renderers/header';
 import renderIdenticon from './renderers/identicon';
-import renderOther from './renderers/other';
 import renderPanels from './renderers/panels';
 import renderQrCode from './renderers/qrCode';
 import renderWarning from './renderers/warning';
@@ -35,7 +34,6 @@ export default async function(credentials, options) {
     await validateInputs(ctx);
     await setCipherText(ctx);
     await renderCanvas(ctx);
-    await renderOther(ctx);
     await renderPanels(ctx);
     await renderFooter(ctx);
     await renderHeader(ctx);
@@ -58,9 +56,6 @@ export default async function(credentials, options) {
  */
 class EncodingContextInfo {
     constructor(credentials, options) {
-        this.asImageData = null;
-        this.asArrayBuffer = null;
-        this.asBlob = null;
         this.cipherText = null;
         this.credentials = credentials;
         this.options = options;

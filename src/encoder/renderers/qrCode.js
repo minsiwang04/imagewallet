@@ -30,14 +30,14 @@ export default async function(ctx) {
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 const renderCode = async (ctx) => {
-    const $cvs = document.createElement('canvas');
-    await qrcode.toDataURL($cvs, ctx.cipherText, {errorCorrectionLevel: 'H'});
+    const $cvs = await qrcode.toCanvas(ctx.cipherText, {
+        errorCorrectionLevel: 'H',
+        width: DEFAULTS.size
+    });
     ctx.$ctx.drawImage(
         $cvs,
         DEFAULTS.x,
-        DEFAULTS.y,
-        DEFAULTS.size,
-        DEFAULTS.size,
+        DEFAULTS.y
     );
 };
 

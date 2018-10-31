@@ -13,6 +13,7 @@ import jsQR from 'jsqr';
 import PNGReader from 'png.js';
 import { InvalidPngFileError } from '../utils/exceptions';
 import { readFileAsArrayBuffer } from '../utils/io';
+import { readFileAsDataURL } from '../utils/io';
 
 /**
  * Scans QR code embedded in image wallet.
@@ -48,15 +49,15 @@ const decodeFromFileBuffer = async (buffer) => {
  * @param {PNGReader.Output} pngData - Data emitted from PNG parser.
  */
 const convertPngToByteArray = (pngData) => {
-    const out = new Uint8ClampedArray(pngData.width * pngData.height * 4);
+    const arr = new Uint8ClampedArray(pngData.width * pngData.height * 4);
     for (let y = 0; y < pngData.height; y++) {
         for (let x = 0; x < pngData.width; x++) {
             const pixelData = pngData.getPixel(x, y);
-            out[(y * pngData.width + x) * 4 + 0] = pixelData[0];
-            out[(y * pngData.width + x) * 4 + 1] = pixelData[1];
-            out[(y * pngData.width + x) * 4 + 2] = pixelData[2];
-            out[(y * pngData.width + x) * 4 + 3] = pixelData[3];
+            arr[(y * pngData.width + x) * 4 + 0] = pixelData[0];
+            arr[(y * pngData.width + x) * 4 + 1] = pixelData[1];
+            arr[(y * pngData.width + x) * 4 + 2] = pixelData[2];
+            arr[(y * pngData.width + x) * 4 + 3] = pixelData[3];
         }
     }
-    return out;
+    return arr;
 };

@@ -14,14 +14,14 @@ import * as IW from '../index';
 const uuidv4 = require('uuid/v4');
 
 // Number of entropic bytes.
-const ENTROPY_SIZE_BYTES = 32
+const ENTROPY_BYTES = 32
 
 /**
  * Encrypts data in readiness for transformation to a QR code.
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    ctx.seed = cryptography.generateEntropy(ENTROPY_SIZE_BYTES).toString('hex');
+    ctx.seed = cryptography.generateEntropy(ENTROPY_BYTES).toString('hex');
     const asObject = {
         data: {
             secretSeed: ctx.seed

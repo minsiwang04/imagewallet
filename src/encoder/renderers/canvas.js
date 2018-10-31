@@ -16,9 +16,11 @@ import * as DEFAULTS from '../defaults/canvas';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    const $canvas = (ctx.$canvas = document.createElement('canvas'));
+    const $canvas = document.createElement('canvas');
     $canvas.classList.add('ts-iw');
     $canvas.height = DEFAULTS.height;
     $canvas.width = DEFAULTS.width;
+
+    ctx.$canvas = $canvas;
     ctx.$ctx = $canvas.getContext('2d');
 }
