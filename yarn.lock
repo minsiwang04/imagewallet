@@ -116,6 +116,11 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
   integrity sha512-LAQ1d4OPfSJ/BMbI2DuizmYrrkD9JMaTdi2hQTlI53lQ4kRQPyZQRS4CYQ7O66bnBBnP/oYdRxbk++X0xuFU6A==
 
+"@types/node@^8.0.7":
+  version "8.10.36"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.36.tgz#eac05d576fbcd0b4ea3c912dc58c20475c08d9e4"
+  integrity sha512-SL6KhfM7PTqiFmbCW3eVNwVBZ+88Mrzbuvn9olPsfv43mbiWaFY+nRcz/TGGku0/lc2FepdMbImdMY1JrQ+zbw==
+
 "@vue/component-compiler-utils@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-2.2.0.tgz#bbbb7ed38a9a8a7c93abe7ef2e54a90a04b631b4"
@@ -2476,6 +2481,13 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+data-uri-to-buffer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-2.0.0.tgz#0ba23671727349828c32cfafddea411908d13d23"
+  integrity sha512-YbKCNLPPP4inc0E5If4OaalBc7gpaM2MRv77Pv2VThVComLKfbGYtJcdDCViDyp1Wd4SebhHLz94vp91zbK6bw==
+  dependencies:
+    "@types/node" "^8.0.7"
 
 data-urls@^1.0.0:
   version "1.0.1"
@@ -6460,6 +6472,13 @@ png.js@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/png.js/-/png.js-0.2.1.tgz#da6b83c134bdc101940d9ab1c98e9154affbb1f2"
   integrity sha1-2muDwTS9wQGUDZqxyY6RVK/7sfI=
+
+pngjs3@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/pngjs3/-/pngjs3-4.0.0.tgz#2ded04058c4afbb4054e70a0928230bddeda7e63"
+  integrity sha512-IV0atJM6mAQki/EiHAbugh3JAqpLam1RqL4yUb/hW1WvNygTtMO6TAQUHj/x0NaOZLG24CKvUmSSZovhWfr6Cw==
+  dependencies:
+    browserify-zlib "^0.2.0"
 
 pngjs@^3.3.0:
   version "3.3.3"

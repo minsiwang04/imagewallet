@@ -35,7 +35,7 @@
                     </b-col>
                     <b-col sm="9">
                         <b-form-input
-                            v-model="encoding.credentials.password"
+                            v-model="generated.credentials.password"
                             id="passwordInput"
                             type="password"
                             required
@@ -55,13 +55,13 @@
             <b-form-group>
                 <b-row>
                     <b-col sm="3">
-                        <label for="decodingPasswordInput">Password:</label>
+                        <label for="decryptionPasswordInput">Password:</label>
                     </b-col>
                     <b-col sm="9">
                         <b-form-input
-                            id="decodingPasswordInput"
+                            id="decryptionPasswordInput"
                             type="password"
-                            v-model="decoding.password"
+                            v-model="decrypted.password"
                             required
                             placeholder="Please enter a password" />
                     </b-col>
@@ -69,33 +69,33 @@
             </b-form-group>
             <b-form-group>
                 <b-form-file
-                    v-model="decoding.walletFile"
-                    :state="Boolean(decoding.walletFile)"
-                    @input=onDecode
+                    v-model="decrypted.walletFile"
+                    :state="Boolean(decrypted.walletFile)"
+                    @input=onWalletFileSelected
                     accept="image/png"
                     placeholder="Choose an Image Wallet ..." />
             </b-form-group>
-            <b-form-group v-show="decoding.walletFile">
+            <b-form-group v-show="decrypted.walletFile">
                 <b-row>
                     <b-col sm="3">
-                        <label for="decodingSecretSeed">Entropy:</label>
+                        <label for="decryptedSecretSeed">Entropy:</label>
                     </b-col>
                     <b-col sm="9">
                         <b-form-input
-                            id="decodingSecretSeed"
+                            id="decryptedSecretSeed"
                             type="text"
-                            v-model="decoding.secretSeed"
+                            v-model="decrypted.secretSeed"
                             disabled />
                     </b-col>
                 </b-row>
             </b-form-group>
-            <b-form-group v-show="decoding.walletFile">
+            <b-form-group v-show="decrypted.walletFile">
                 <b-row>
                     <b-col sm="3">
-                        <label for="decodingImageWallet">Image Wallet:</label>
+                        <label for="decryptedWallet">Image Wallet:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-img id="decodingImageWallet" alt="Decoded Image Wallet" fluid style="text-align: center;"/>
+                        <b-img id="decryptedWallet" alt="Decoded Image Wallet" fluid style="text-align: center;"/>
                     </b-col>
                 </b-row>
             </b-form-group>
@@ -105,7 +105,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.2.1 - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.3.5 - Demonstration">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
             <b-form-group>
                 <b-row>
@@ -114,7 +114,7 @@
                     </b-col>
                     <b-col sm="10">
                         <b-form-input
-                            v-model="encoding.filename"
+                            v-model="generated.filename"
                             id="filenameInput"
                             type="text"
                             required
@@ -148,13 +148,13 @@ export default {
                 { value: 'generate', text: 'Generate' },
                 { value: 'decrypt', text: 'Decrypt' },
             ],
-            decoding: {
+            decrypted: {
                 password: 'P96P4Bdp6wMy4pBV',
                 secretSeed: null,
                 walletFile: null,
                 walletImage: null
             },
-            encoding: {
+            generated: {
                 credentials: {
                     password: 'P96P4Bdp6wMy4pBV',
                 },
@@ -169,7 +169,7 @@ export default {
     methods: {
         // Event handler: on generation from password.
         onGenerateFromPassword(evt) {
-            ImageWallet.generateFromPassword(this.encoding.credentials.password, {})
+            ImageWallet.generateFromPassword(this.generated.credentials.password, {})
                 .then(this.onGenerationComplete)
                 .catch(this.onGenerationError);
         },
@@ -177,7 +177,7 @@ export default {
         // Event handler: on generation complete.
         async onGenerationComplete(wallet) {
             // Cache result.
-            this.encoding.wallet = wallet.$canvas;
+            this.generated.wallet = wallet.$canvas;
 
             // Update DOM.
             const $container = document.getElementById(
@@ -197,36 +197,33 @@ export default {
             alert(err.message);
         },
 
-        // Event handler: on decode initiation.
-        async onDecode(encoded) {
-            await ImageWallet.decryptImage(encoded, this.decoding.password)
-                .then(this.onDecodeComplete)
-                .catch(this.onDecodeError);
+        // Event handler: on selection of a wallet file.
+        async onWalletFileSelected(walletFileBlob) {
+            await ImageWallet.decryptImage(walletFileBlob, this.decrypted.password)
+                .then(this.onDecryptionComplete)
+                .catch(this.onDecryptionError);
         },
 
-        // Event handler: on decode completed.
-        async onDecodeComplete(response) {
-            this.decoding.secretSeed = response.data.secretSeed;
-            const stream = new FileReader();
-            stream.onload = function(e) {
-                const $decodingImageWallet = document.getElementById(
-                    'decodingImageWallet',
-                );
-                $decodingImageWallet.src = stream.result;
+        // Event handler: on decryption completed.
+        onDecryptionComplete(response) {
+            this.decrypted.secretSeed = response.data.secretSeed;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('decryptedWallet').src = reader.result;
             };
-            stream.readAsDataURL(this.decoding.walletFile);
+            reader.readAsDataURL(this.decrypted.walletFile);
         },
 
-        // Event handler: on decode error.
-        async onDecodeError(err) {
-            // TODO display error modal.
+        // Event handler: on decryption error.
+        onDecryptionError(err) {
+            this.decrypted.secretSeed = '';
             alert(err.message);
         },
 
         // Event handler: on save wallet to file system.
         onSaveWallet(evt) {
-            domtoimage.toBlob(this.encoding.wallet).then((blob) => {
-                saveAs(blob, `${this.encoding.filename}.png`);
+            domtoimage.toBlob(this.generated.wallet).then((blob) => {
+                saveAs(blob, `${this.generated.filename}.png`);
             });
         },
     },

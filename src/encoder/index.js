@@ -10,6 +10,7 @@
 
 // Module imports.
 import { EncodingError } from '../utils/exceptions';
+import { logInfo, logWarning } from '../utils/logging';
 import renderCanvas from './renderers/canvas';
 import renderFooter from './renderers/footer';
 import renderHeader from './renderers/header';
@@ -19,6 +20,10 @@ import renderQrCode from './renderers/qrCode';
 import renderWarning from './renderers/warning';
 import setCipherText from './setCipherText';
 import validateInputs from './validateInputs';
+import validateOutput from './validateOutput';
+
+// Maximum attempts before rendering is aborted.
+const MAX_ATTEMPTS = 5;
 
 /**
  * Encodes an image wallet from user credentials and encoding options.
@@ -27,25 +32,45 @@ import validateInputs from './validateInputs';
  * @return An image wallet encoded as an HTMLCanvasElement.
  */
 export default async function(credentials, options) {
-    // Set processing context.
-    const ctx = new EncodingContextInfo(credentials, options);
+    // Initialise procssing context info.
+    let ctx = new EncodingContextInfo(credentials, options);
 
-    // Invoke pipeline.
+    // Invoke pre-rendering tasks.
     await validateInputs(ctx);
-    await setCipherText(ctx);
-    await renderCanvas(ctx);
-    await renderPanels(ctx);
-    await renderFooter(ctx);
-    await renderHeader(ctx);
-    await renderWarning(ctx);
-    await renderIdenticon(ctx);
-    await renderQrCode(ctx);
 
-    // Return wallet encoded as an HTMLCanvasElement element.
-    return {
-        $canvas: ctx.$canvas,
-        seed: ctx.seed
-    };
+    // Invoke rendering pipeline - limiting the number of attempts.
+    let attempts = 0;
+    while (attempts <= MAX_ATTEMPTS) {
+        // Increment attempt count.
+        attempts += 1;
+        logInfo(`Canvas rendering attempt #${attempts}: begin`);
+
+        // Invoke pipeline.
+        await setCipherText(ctx);
+        await renderCanvas(ctx);
+        await renderPanels(ctx);
+        await renderFooter(ctx);
+        await renderHeader(ctx);
+        await renderWarning(ctx);
+        await renderIdenticon(ctx);
+        await renderQrCode(ctx);
+
+        // Verify rendering.
+        let wasRendered = await validateOutput(ctx);
+        if (wasRendered) {
+            logInfo(`Canvas rendering attempt #${attempts}: success`);
+            return {
+                $canvas: ctx.$canvas,
+                seed: ctx.seed
+            };
+        } else {
+            logWarning(`Canvas rendering attempt #${attempts}: failed`);
+            ctx = new EncodingContextInfo(credentials, options);
+        }
+    }
+
+    // If not rendered then throw error.
+    throw new Error("Image wallet rendering failed");
 }
 
 /**

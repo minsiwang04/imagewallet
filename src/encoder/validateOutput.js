@@ -12,18 +12,19 @@
 import jsQR from 'jsqr';
 import PNGReader from 'png.js';
 import { InvalidPngFileError } from '../utils/exceptions';
-import { readFileAsArrayBuffer } from '../utils/io';
-import { readFileAsDataURL } from '../utils/io';
+const dataUriToBuffer = require('data-uri-to-buffer');
+import * as cryptography from '../cryptography/index';
 
 /**
  * Scans QR code embedded in image wallet.
  * @param {DecodingContextInfo} ctx - Decoding processing context information.
  */
-export default async function(blob) {
-    const buffer = await readFileAsArrayBuffer(blob);
-    const decoded = await decodeFromFileBuffer(buffer);
+export default async function(ctx) {
+    const asDataURL = ctx.$canvas.toDataURL();
+    const asBuffer = dataUriToBuffer(asDataURL);
+    const asDecoded = await decodeFromFileBuffer(asBuffer);
 
-    return decoded.data;
+    return asDecoded !== null;
 }
 
 /**

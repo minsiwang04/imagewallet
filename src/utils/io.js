@@ -60,11 +60,3 @@ export const readFileAsDataURL = async (inputFile) => {
 export const readFileAsText = async (inputFile) => {
     return await readFile(inputFile, 'Text');
 };
-
-/**
- * Reads a File handle and returns contents as an array buffer.
- * @param {File} inputFile - a file handle.
- */
-export const readFileAsPNG = async (inputFile) => {
-    return await readFile(inputFile, 'ArrayBuffer');
-};

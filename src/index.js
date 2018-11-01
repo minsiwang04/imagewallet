@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.3.4
+ * @version 0.3.5
  */
 
 // Module imports.
@@ -21,6 +21,15 @@ import {hexFromArray} from './utils/conversion';
 import blake2b from './cryptography/hashing/blake2b';
 import keccak256 from './cryptography/hashing/keccak256';
 import {NotImplementedError} from './utils/exceptions';
+
+// Library version.
+const name = 'Image Wallet';
+
+// Library provider.
+const provider = 'Trinkler Software AG';
+
+// Library version.
+const version = '0.3.5';
 
 /**
  * Asynchronously decrypts an image wallet.
@@ -177,15 +186,6 @@ const verifyHash = (pbk, msgHash, sig) => {
     // TODO validate input
     return ed25519.verify(pbk, msgHash, sig);
 };
-
-// Library version.
-const name = 'Image Wallet';
-
-// Library provider.
-const provider = 'Trinkler Software AG';
-
-// Library version.
-const version = '0.3.4';
 
 // Module exports.
 export {

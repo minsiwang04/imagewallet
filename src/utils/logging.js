@@ -16,7 +16,7 @@ const LOG_LEVEL_DEBUG = 'DEBUG';
 const LOG_LEVEL_ERROR = 'ERROR';
 const LOG_LEVEL_INFO = 'INFO';
 const LOG_LEVEL_TODO = 'TODO';
-const LOG_LEVEL_WARNING = 'WARNING';
+const LOG_LEVEL_WARNING = 'WARN';
 
 /**
  * Emits a logging message.
