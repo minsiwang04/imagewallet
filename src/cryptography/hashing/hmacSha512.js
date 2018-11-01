@@ -11,6 +11,8 @@
 // Module imports.
 import {default as createHmac} from 'create-hmac';
 
+const crypto = require('crypto');
+
 // Hashing algorithm.
 const ALGO = 'sha512';
 
@@ -24,6 +26,11 @@ const ALGO = 'sha512';
  * @return {hex|Uint8Array} 64 element Uint8Array.
  */
 export default function(message, key, encoding) {
+    const h1 = crypto.createHmac(ALGO, message);
+    h1.update(key)
+    return encoding === 'hex' ? h1.digest('hex') : h1.digest();
+
+
     const h = createHmac(ALGO, message);
     h.update(key)
 
