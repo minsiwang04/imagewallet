@@ -1,3 +1,5 @@
+const assert = require('assert').strict;
+
 import * as _ from 'lodash';
 import { hash as API } from '../src/cryptography';
 import { hexFromArray } from '../src/utils/conversion';

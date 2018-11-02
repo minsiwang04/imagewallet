@@ -9,9 +9,7 @@
  */
 
 // Module imports.
-import {default as createHmac} from 'create-hmac';
-
-const crypto = require('crypto');
+import * as crypto from 'crypto';
 
 // Hashing algorithm.
 const ALGO = 'sha512';

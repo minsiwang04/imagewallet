@@ -15,10 +15,12 @@ import {
 } from './encryption';
 import generateEntropy from './entropyCreation';
 import deriveKey from './keyDerivation/derive';
+import * as ecc from './ecc/index';
 import * as hash from './hashing';
 
  // Module exports.
 export {
+    ecc,
 	decrypt,
     deriveKey,
     encrypt,

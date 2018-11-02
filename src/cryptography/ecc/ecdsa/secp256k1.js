@@ -9,7 +9,7 @@
  *
  */
 
- // Module imports.
+// Module imports.
 // import * as elliptic from 'elliptic';
 import * as elliptic from '../../../ext/elliptic';
 
@@ -62,8 +62,7 @@ export const getPrivateKey = (entropy) => {
  */
 export const getPublicKey = (pvk, compressed) => {
     const keyPair = CURVE.keyFromPrivate(pvk);
-
-    return keyPair.getPublic(compressed || true, 'array');
+    return keyPair.getPublic(compressed === false ? false : true, 'array');
 };
 
 /**

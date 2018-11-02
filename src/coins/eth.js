@@ -8,6 +8,9 @@
  * @fileOverview Coin metadata plus related functions.
  */
 
+// Module imports.
+import * as cryptography from '../cryptography/index';
+
 // SLIP 0044 coin index.
 export const index = 60;
 
@@ -22,3 +25,33 @@ export const symbol = 'ETH';
 
 // Elliptic curve type.
 export const curve = 'secp256k1';
+
+/**
+ * Returns an Ethereum address mapped from a private key.
+ *
+ * @param {Array} pvk - A private key.
+ * @return {hex} The address.
+ */
+export const getAddressFromPrivateKey = (pvk) => {
+    // Map private key --> (uncompressed) public key.
+    const pbk = Buffer.from(cryptography.ecc.secp256k1.getPublicKey(pvk, false));
+
+    return getAddressFromPublicKey(pbk);
+};
+
+/**
+ * Returns an Ethereum address mapped from a public key.
+ *
+ * @param {Array} pbk - A public key.
+ * @return {hex} The address.
+ */
+export const getAddressFromPublicKey = (pbk) => {
+    // Map public key --> keccak256 hash.
+    const pbkh = cryptography.hash.keccak256(pbk)
+
+    // Map keccak256 hash --> address.
+    const addr = pbkh.slice(12)
+
+    // TODO: prefix with 0x ?
+    return addr.toString('hex');
+};
