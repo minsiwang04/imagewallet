@@ -9,7 +9,7 @@ export const testSlots = (api, slots) => {
 }
 
 export const executeBip32Tests = (curve, vector) => {
-    let cfg = `data/SLIP-0010-${curve}-vector-${vector}.json`;
+    let cfg = `data/bip32-${curve}-vector-${vector}.json`;
     cfg = path.join(__dirname, cfg);
     cfg = JSON.parse(fs.readFileSync(cfg));
     cfg.vector.forEach((i) => {
