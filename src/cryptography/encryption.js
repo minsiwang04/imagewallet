@@ -35,7 +35,7 @@ export const encrypt = (plainText, password) => {
  * @param {string} password - Password used to encrypt.
  */
 export const decrypt = (cipherText, password) => {
-    let decipher = crypto.createDecipher(CIPHER_ALGORITHM, password);
+    const decipher = crypto.createDecipher(CIPHER_ALGORITHM, password);
     let decrypted = decipher.update(cipherText, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
 

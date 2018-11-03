@@ -7,14 +7,14 @@ const ARR = [198, 48, 225, 10, 99, 32, 50, 39, 228, 109, 128, 78, 145, 225, 42, 
 
 test('IW :: utils :: conversion :: is defined', () => {
     utils.testSlots(API, [
-        'hexFromArray',
+        'arrayToHex',
         'hexToArray',
         'isHexString',
 	]);
 });
 
-test('IW :: utils :: conversion :: hexFromArray', () => {
-    const hex = API.hexFromArray(ARR);
+test('IW :: utils :: conversion :: arrayToHex', () => {
+    const hex = API.arrayToHex(ARR);
     expect(hex).toBe(HEX);
 });
 

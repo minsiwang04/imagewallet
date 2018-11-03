@@ -14,7 +14,7 @@
  * @param {Array} arr - A binary array.
  * @return A hexadecimal encoded string.
  */
-export const hexFromArray = (arr) => {
+export const arrayToHex = (arr) => {
     let hex = "";
     arr.forEach((i) => {
         hex += (i < 16 ? "0" : "") + i.toString(16);

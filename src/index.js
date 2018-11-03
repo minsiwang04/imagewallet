@@ -17,7 +17,7 @@ import decryptQR from './decoder/decryptQR';
 import keyDeriver from './cryptography/keyDerivation/derive';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
-import {hexFromArray} from './utils/conversion';
+import {arrayToHex} from './utils/conversion';
 import blake2b from './cryptography/hashing/blake2b';
 import keccak256 from './cryptography/hashing/keccak256';
 import {NotImplementedError} from './utils/exceptions';
@@ -123,7 +123,7 @@ const getHash = (data, encoding) => {
  */
 const getUserPublicKey = (pvk) => {
     // TODO validate input
-    return hexFromArray(ed25519.getPublicKey(pvk));
+    return arrayToHex(ed25519.getPublicKey(pvk));
 }
 
 /**
@@ -133,7 +133,7 @@ const getUserPublicKey = (pvk) => {
  */
 const getUserPrivateKey = (derivedEntropy) => {
     // TODO validate input
-    return hexFromArray(ed25519.getPrivateKey(derivedEntropy));
+    return arrayToHex(ed25519.getPrivateKey(derivedEntropy));
 }
 
 /**

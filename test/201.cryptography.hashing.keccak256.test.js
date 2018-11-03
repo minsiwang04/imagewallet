@@ -1,5 +1,5 @@
 import { hash as API } from '../src/cryptography';
-import { hexFromArray } from '../src/utils/conversion';
+import { arrayToHex } from '../src/utils/conversion';
 import * as utils from './utils';
 
 // Message data to be h.
@@ -23,12 +23,12 @@ test('IW :: cryptography :: hashing  :: keccak256 :: encoding=hex', () => {
 
 test('IW :: cryptography :: hashing  :: keccak256 :: encoding=array', () => {
 	let h = API.keccak256(DATA, 'array');
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });
 
 test('IW :: cryptography :: hashing  :: keccak256 :: encoding=null', () => {
 	let h = API.keccak256(DATA);
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });

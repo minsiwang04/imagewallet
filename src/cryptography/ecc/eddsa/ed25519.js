@@ -5,7 +5,6 @@
 // (at your option) any later version <http://www.gnu.org/licenses/>.
 
 // Module imports.
-// import * as elliptic from 'elliptic';
 import _ from 'lodash';
 import * as elliptic from '../../../ext/elliptic';
 import generateEntropy from '../../entropyCreation';

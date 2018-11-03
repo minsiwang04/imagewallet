@@ -2,7 +2,7 @@ const assert = require('assert').strict;
 
 import * as _ from 'lodash';
 import { hash as API } from '../src/cryptography';
-import { hexFromArray } from '../src/utils/conversion';
+import { arrayToHex } from '../src/utils/conversion';
 import * as utils from './utils';
 
 // Message data to be hashed.
@@ -29,12 +29,12 @@ test('IW :: cryptography :: hashing  :: hmacSha512 :: encoding=hex', () => {
 
 test('IW :: cryptography :: hashing  :: hmacSha512 :: encoding=array', () => {
 	let h = API.hmacSha512(DATA, KEY, 'array');
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });
 
 test('IW :: cryptography :: hashing  :: hmacSha512 :: encoding=null', () => {
 	let h = API.hmacSha512(DATA, KEY);
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });

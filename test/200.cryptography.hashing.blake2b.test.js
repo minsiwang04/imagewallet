@@ -1,5 +1,5 @@
 import { hash as API } from '../src/cryptography';
-import { hexFromArray } from '../src/utils/conversion';
+import { arrayToHex } from '../src/utils/conversion';
 import * as utils from './utils';
 
 // Message data to be h.
@@ -23,12 +23,12 @@ test('IW :: cryptography :: hashing  :: blake2b :: encoding=hex', () => {
 
 test('IW :: cryptography :: hashing  :: blake2b :: encoding=array', () => {
 	let h = API.blake2b(DATA, 'array');
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });
 
 test('IW :: cryptography :: hashing  :: blake2b :: encoding=null', () => {
 	let h = API.blake2b(DATA);
-	h = hexFromArray(Array.from(h));
+	h = arrayToHex(Array.from(h));
 	expect(h).toBe(HASH);
 });

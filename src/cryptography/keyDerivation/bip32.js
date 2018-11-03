@@ -9,9 +9,10 @@
  */
 
 // Module imports.
-import { default as assert } from 'assert';
+import { arrayToHex } from '../../utils/conversion';
+import { BigNumber as BN } from 'bignumber.js';
 import { ed25519 } from '../ecc/index';
-import { hexFromArray } from '../../utils/conversion';
+import { hexToArray } from '../../utils/conversion';
 import { hmacSha512 } from '../hashing/index';
 import { secp256k1 } from '../ecc/index';
 
@@ -24,6 +25,9 @@ const CURVES = {
 // Limit beyoind which an index is considered to be 'hardened'.
 const HARDENED_OFFSET = 0x80000000;
 
+// Symbols used in BIP32 paths to indicate an index that requires 'hardening'.
+const HARDENING_SYMBOLS = "H'";
+
 // Buffer(s) prepended to derived keys.
 const ZERO_BYTE = Buffer.alloc(1, 0);
 const ONE_BYTE = Buffer.alloc(1, 1);
@@ -31,7 +35,7 @@ const ONE_BYTE = Buffer.alloc(1, 1);
 /**
  * Returns a master extended key to push through child key derivation algo.
  * @param {hex} seed - Entropy encoded as hexadecimal string.
- * @param {string} curveName - Type of elliptical curve.
+ * @param {string} curveName - Elliptical curve name.
  * @param {string} seedModifier - A chain specific seed modifier.
  * @param {string} derivationPath - Derivation path to be parsed.
  * @param {string} fingerprint - Derivation fingerprint.
@@ -46,41 +50,50 @@ export default function(seed, curveName, seedModifier, derivationPath, fingerpri
     indexes.forEach((index) => {
         xkey = getDerivedChildKey(xkey, index, curveName);
     });
-    logDerivation(curveName, seed, xkey, derivationPath);
+    // logDerivation(curveName, seed, xkey, derivationPath);
 
     return {
-        publicKey: hexFromArray(getPublicKey(xkey.key, curveName)),
-        privateKey: hexFromArray(xkey.key),
-        chainCode: hexFromArray(xkey.chainCode),
+        publicKey: arrayToHex(getPublicKey(xkey.key, curveName)),
+        privateKey: arrayToHex(xkey.key),
+        chainCode: arrayToHex(xkey.chainCode),
     };
 }
 
 /**
- * Returns a master extended key to push through child key derivation algo.
+ * Returns a master extended key.
  * @param {hex} seed - Entropy encoded as hexadecimal string.
  * @param {string} modifier - A chain specific seed modifier.
  * @param {string} curve - Type of elliptical curve.
- * @return {object} A master extended key/chain-code.
+ * @return {object} The master extended key/chain-code.
  */
 const getMasterKey = (seed, modifier, curve) => {
     let a, I, IL, IR = null;
 
-    seed = Buffer.from(seed, 'hex');
+    // Map data to a buffer.
+    let data = Buffer.from(seed, 'hex');
+
+    // Map curve order to BN.
+    let o = BN(CURVES[curve].order);
+
     while (true) {
-        I = hmacSha512(modifier, seed);
+        // Calculate hmac.
+        I = hmacSha512(modifier, data);
         IL = I.slice(0, 32);
         IR = I.slice(32);
 
+        // Edwards curves require no further processing.
         if (curve === 'ed25519') {
             break;
         }
 
-        a = string_to_int(IL);
-        if (a != 0 && a < CURVES[curve].order) {
+        // Apply curve order check.
+        a = BN('0x' + IL.toString('hex'));
+        if (!a.eq(0) && a.lt(o)) {
             break;
         }
 
-        seed = I;
+        // Prepare for next loop.
+        data = I;
     }
 
     return {
@@ -97,35 +110,51 @@ const getMasterKey = (seed, modifier, curve) => {
  * @return {object} Derived key/chain-code.
  */
 const getDerivedChildKey = (parent, index, curve) => {
-    const isHardened = index >= HARDENED_OFFSET;
-    const indexBuffer = Buffer.allocUnsafe(4);
-    let a, data, I, IL, IR, key, pbk;
+    let a, data, I, IL, IR, k, key, pbk;
 
+    // Map index to buffer.
+    const indexBuffer = Buffer.allocUnsafe(4);
     indexBuffer.writeUInt32BE(index, 0);
-    if (isHardened) {
+
+    // Hardened child.
+    if (index >= HARDENED_OFFSET) {
+        // data = 0x00 || ser256(kpar) || ser32(index)
         data = Buffer.concat([ZERO_BYTE, parent.key, indexBuffer])
+
+    // Normal child.
     } else {
-        pbk = getPublicKey(parent.key, curve);
-        data = Buffer.concat([pbk, indexBuffer]);
+        // data = serP(Kpar) || ser32(index)
+        data = Buffer.concat([getPublicKey(parent.key, curve), indexBuffer]);
     }
 
+    // Map curve order & parent key to BN's.
+    const o = BN(CURVES[curve].order);
+    const pk = BN(`0x` + parent.key.toString('hex'));
+
     while (true) {
+        // Calculate hmac.
         I = hmacSha512(parent.chainCode, data);
         IL = I.slice(0, 32);
         IR = I.slice(32);
+
+        // Edwards curves require no further processing.
         if (curve === 'ed25519') {
             break;
         }
-        break;
 
-        // TODO: implement correctly.
-        a = string_to_int(IL);
-        console.log(`111 : ${a}`);
-        key = (a + string_to_int(parent.key)) % CURVES[curve].order
-        if (a < CURVES[curve].order && key != 0) {
-            key = int_to_string(key, 32);
+        // Apply curve order check.
+        a = BN('0x' + IL.toString('hex'));
+        k = a.plus(pk).mod(o);
+        if (!k.eq(0) && a.lt(o)) {
+            k = k.toString(16);
+            if (k.length === 63) {
+                k = `0${k}`;
+            }
+            IL = Buffer.from(k, 'hex');
             break;
         }
+
+        // Further extend key.
         data = Buffer.concat([ONE_BYTE, IR, indexBuffer]);
     }
 
@@ -142,7 +171,9 @@ const getDerivedChildKey = (parent, index, curve) => {
  * @return {Buffer} Public key buffer.
  */
 const getPublicKey = (pvk, curveName) => {
-    return Buffer.from(CURVES[curveName].getPublicKey(pvk));
+    const curve = CURVES[curveName];
+
+    return Buffer.from(curve.getPublicKey(pvk));
 }
 
 /**
@@ -151,19 +182,12 @@ const getPublicKey = (pvk, curveName) => {
  * @param {string} derivationPath - Path to be mapped to a set of indexes.
  * @return {Array} Array of derivation indexes.
  */
- const getIndexes = (derivationPath) => {
+const getIndexes = (derivationPath) => {
     return derivationPath.split('/').slice(1).map((i) => {
-        let index = parseInt(i);
-        const isHardened = (i.length > 1) && (i[i.length - 1] === "H");
-        if (isHardened) {
-            index += HARDENED_OFFSET
-        }
-        // console.log(i);
-        // console.log(index);
-        // console.log(HARDENED_OFFSET);
-        // assert(index < HARDENED_OFFSET, `Invalid index: ${index}`);
-
-        return index;
+        const isHardened = i.length > 1 &&
+                           HARDENING_SYMBOLS.indexOf(i[i.length - 1]) === 0;
+        return isHardened ? parseInt(i) + HARDENED_OFFSET :
+                            parseInt(i);
     });
 }
 
@@ -171,33 +195,12 @@ const getPublicKey = (pvk, curveName) => {
  * Logs a key derivation result.
  */
 const logDerivation = (curveName, seed, xkey, derivationPath) => {
-    return;
     console.log(`
     ${curveName}
         path: ${derivationPath}
         seed: ${seed}
-        chain code: ${hexFromArray(xkey.chainCode).slice(2)}
-        private key: ${hexFromArray(xkey.key).slice(2)}
-        public key: ${hexFromArray(getPublicKey(xkey.key, curveName)).slice(2)}
+        chain code: ${arrayToHex(xkey.chainCode)}
+        private key: ${arrayToHex(xkey.key)}
+        public key: ${arrayToHex(getPublicKey(xkey.key, curveName))}
     `)
-}
-
-const string_to_int = (s) => {
-    let result = 0
-    s.forEach((i) => {
-        result = (result << 8) + i;
-    });
-    return result;
-}
-
-const int_to_string = (x, pad) => {
-    let ordinal;
-    let result = Buffer.alloc(pad, 0);
-    while (x > 0) {
-        pad -= 1
-        ordinal = x & 0xFF
-        result[pad] = String.fromCharCode(ordinal)
-        x >>= 8
-    }
-    return result.join('');
 }
