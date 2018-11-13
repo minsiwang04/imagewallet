@@ -9,7 +9,7 @@ _A custodian file that is simpler than [brainwallets](https://en.bitcoin.it/wiki
 $ yarn install
 
 # Run demo
-$ yarn start-demo
+$ yarn run demo
 
 # Build
 $ yarn build
