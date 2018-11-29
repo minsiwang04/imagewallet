@@ -24,12 +24,7 @@ const ALGO = 'sha512';
  * @return {hex|Uint8Array} 64 element Uint8Array.
  */
 export default function(message, key, encoding) {
-    const h1 = crypto.createHmac(ALGO, message);
-    h1.update(key)
-    return encoding === 'hex' ? h1.digest('hex') : h1.digest();
-
-
-    const h = createHmac(ALGO, message);
+    const h = crypto.createHmac(ALGO, message);
     h.update(key)
 
     return encoding === 'hex' ? h.digest('hex') : h.digest();

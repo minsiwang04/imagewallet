@@ -68,6 +68,7 @@ export const getPrivateKey = (entropy) => {
  */
 export const getPublicKey = (pvk, compressed) => {
     const keyPair = CURVE.keyFromPrivate(pvk);
+
     return keyPair.getPublic(compressed === false ? false : true, 'array');
 };
 

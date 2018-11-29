@@ -11,7 +11,7 @@
 // Module imports.
 const blake2b = require('blake2b');
 
-//
+// Default length.
 const BYTES = 32;
 
 /**
