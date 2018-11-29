@@ -29,7 +29,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.4.0';
+const version = '0.4.4';
 
 /**
  * Asynchronously decrypts an image wallet.
