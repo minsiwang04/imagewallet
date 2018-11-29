@@ -19,8 +19,8 @@ import { logTODO } from '../utils/logging';
  * Validates encoding inputs.
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
-export default async function(ctx) {
-    validatePassword(ctx.credentials.password);
+export default async function(credentials, options) {
+    validatePassword(credentials.password);
 }
 
 /**

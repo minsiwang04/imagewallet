@@ -43,7 +43,7 @@
                     </b-col>
                 </b-row>
                 <br />
-                <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate From Password</b-button>
+                <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate Image Wallet</b-button>
                 <br />
             </b-form-group>
         </b-container>
@@ -105,7 +105,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.3.5 - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.4.0 - Demonstration">
             <div id="imageWalletDemoContainer" class="d-block text-center" />
             <b-form-group>
                 <b-row>

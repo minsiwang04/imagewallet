@@ -113,17 +113,6 @@ const getQrDataFromImage = async (blob) => {
 const getHash = (data, encoding) => {
     // TODO validate input
     return blake2b(data, encoding || 'hex');
-    // return keccak256(data, encoding || 'hex');
-}
-
-/**
- * Returns a user's public key.
- * @param {hex} pvk - User's private key.
- * @return {hex} Public key.
- */
-const getUserPublicKey = (pvk) => {
-    // TODO validate input
-    return arrayToHex(ed25519.getPublicKey(pvk));
 }
 
 /**
@@ -134,6 +123,16 @@ const getUserPublicKey = (pvk) => {
 const getUserPrivateKey = (derivedEntropy) => {
     // TODO validate input
     return arrayToHex(ed25519.getPrivateKey(derivedEntropy));
+}
+
+/**
+ * Returns a user's public key.
+ * @param {hex} pvk - User's private key.
+ * @return {hex} Public key.
+ */
+const getUserPublicKey = (pvk) => {
+    // TODO validate input
+    return arrayToHex(ed25519.getPublicKey(pvk));
 }
 
 /**

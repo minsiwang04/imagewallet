@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Local tmp folder
 tmp
+
+# Local test coverage folder
+coverage

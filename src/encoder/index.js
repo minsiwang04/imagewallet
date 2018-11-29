@@ -32,15 +32,13 @@ const MAX_ATTEMPTS = 5;
  * @return An image wallet encoded as an HTMLCanvasElement.
  */
 export default async function(credentials, options) {
-    // Initialise procssing context info.
+    // Defensive programming.
+    await validateInputs(credentials, options);
+
+    // Invoke rendering pipeline.
     let ctx = new EncodingContextInfo(credentials, options);
-
-    // Invoke pre-rendering tasks.
-    await validateInputs(ctx);
-
-    // Invoke rendering pipeline - limiting the number of attempts.
     let attempts = 0;
-    while (attempts <= MAX_ATTEMPTS) {
+    do {
         // Increment attempt count.
         attempts += 1;
         logInfo(`Canvas rendering attempt #${attempts}: begin`);
@@ -57,6 +55,8 @@ export default async function(credentials, options) {
 
         // Verify rendering.
         let wasRendered = await validateOutput(ctx);
+
+        // Either return or loop.
         if (wasRendered) {
             logInfo(`Canvas rendering attempt #${attempts}: success`);
             return {
@@ -67,7 +67,7 @@ export default async function(credentials, options) {
             logWarning(`Canvas rendering attempt #${attempts}: failed`);
             ctx = new EncodingContextInfo(credentials, options);
         }
-    }
+    } while (attempts < MAX_ATTEMPTS);
 
     // If not rendered then throw error.
     throw new Error("Image wallet rendering failed");

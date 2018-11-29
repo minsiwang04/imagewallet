@@ -30,6 +30,6 @@ export default async function(ctx) {
         version: IW.version,
         uid: uuidv4()
     };
-    const asJSON = JSON.stringify(asObject);
+    const asJSON = JSON.stringify(asObject, null, 0);
     ctx.cipherText = cryptography.encrypt(asJSON, ctx.credentials.password);
 }
