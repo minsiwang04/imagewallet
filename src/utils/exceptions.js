@@ -55,7 +55,7 @@ export class EncodingError extends BaseError {
 /**
  * Raised when secret seed is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
+ * @param {string} msg - Error message.
  */
 export class InvalidSecretSeedError extends EncodingError {
     constructor(msg) {
@@ -66,7 +66,6 @@ export class InvalidSecretSeedError extends EncodingError {
 /**
  * Raised when a user password is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
  */
 export class InvalidPasswordError extends EncodingError {
     constructor() {
@@ -80,7 +79,7 @@ export class InvalidPasswordError extends EncodingError {
 /**
  * Raised when image wallet png file is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
+ * @param {string} msg - Error message.
  */
 export class InvalidPngFileError extends DecodingError {
     constructor(msg) {
@@ -88,6 +87,18 @@ export class InvalidPngFileError extends DecodingError {
     }
 }
 
+/**
+ * Raised when
+ * @constructor
+ */
+export class IncorrectPasswordError extends DecodingError {
+    constructor() {
+        super(
+            'Password is incorrect',
+            'ERR_DECODING_INCORRECT_PASSWORD'
+        )
+    }
+}
 /**
  * Raised when image wallet is asked to derive a key for an invalid coin.
  * @constructor

@@ -17,14 +17,13 @@ const BYTES = 32;
 /**
  * Returns a hash of the passed data using the blake2b algorithm.
  *
- * @param {obj} data - Data to be hashed.
- * @param {string} encoding - Required output encoding.
- * @return {hex|Buffer} The hashed value.
+ * @param {Buffer|string} data - Data to be hashed.
+ * @param {string} [encoding] - Required output encoding.
+ * @return {Buffer|string} The hashed value.
  */
 export default function(data, encoding) {
-    const input = JSON.stringify(data);
     const h = blake2b(BYTES);
-	h.update(input);
+	h.update(data);
 
     return encoding === 'hex' ? h.digest('hex') : h.digest();
 }

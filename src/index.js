@@ -108,11 +108,12 @@ const getQrDataFromImage = async (blob) => {
  * Returns a blake2b hash of input data.
  * @param {Object} data - Data to be hashed.
  * @param {string} encoding - Required output encoding.
- * @return {hex|Buffer} The hashed value.
+ * @return {Buffer|string} The hashed value.
  */
 const getHash = (data, encoding) => {
     // TODO validate input
-    return blake2b(data, encoding || 'hex');
+    const input = JSON.stringify(data);
+    return blake2b(input, encoding || 'hex');
 }
 
 /**

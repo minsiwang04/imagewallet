@@ -9,27 +9,16 @@
  */
 
 // Module imports.
-import * as cryptography from '../cryptography/index';
-import * as IW from '../index';
-const uuidv4 = require('uuid/v4');
-
-// Number of entropic bytes.
-const ENTROPY_BYTES = 32
+import Payload from '../payload/index';
 
 /**
  * Encrypts data in readiness for transformation to a QR code.
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    ctx.seed = cryptography.generateEntropy(ENTROPY_BYTES).toString('hex');
-    const asObject = {
-        data: {
-            secretSeed: ctx.seed
-        },
-        created: new Date().toISOString(),
-        version: IW.version,
-        uid: uuidv4()
-    };
-    const asJSON = JSON.stringify(asObject, null, 0);
-    ctx.cipherText = cryptography.encrypt(asJSON, ctx.credentials.password);
+    // TODO use a user-provided purposeId here instead of generating a random one.
+    const purposeId = Math.round(Math.random() * 2**32);
+    const payload = Payload.generate(purposeId);
+
+    ctx.cipherText = payload.encrypt(ctx.credentials.password);
 }
