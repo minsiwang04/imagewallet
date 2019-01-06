@@ -16,9 +16,6 @@ import Payload from '../payload/index';
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 export default async function(ctx) {
-    // TODO use a user-provided purposeId here instead of generating a random one.
-    const purposeId = Math.round(Math.random() * 2**32);
-    const payload = Payload.generate(purposeId);
-
-    ctx.cipherText = payload.encrypt(ctx.credentials.password);
+    const payload = Payload.generate(ctx.purposeId);
+    ctx.cipherText = await payload.encrypt(ctx.credentials.password);
 }

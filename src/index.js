@@ -87,11 +87,12 @@ const deriveKeyPair = (seed, coinSymbol, accountIndex) => {
  * Asynchronously generates a lightly branded image wallet
  * from a user's password & associated options.
  * @param {object} password - A user's (hopefully strong) password.
+ * @param {number} purposeId - A number identifying the purpose of this wallet.
  * @param {object} options - Encoding options.
  * @return A promise resolving to an HTML canvas object.
  */
-const generateFromPassword = async (password, options) => {
-    return await encoder({password}, options);
+const generateFromPassword = async (password, purposeId, options) => {
+    return await encoder({password}, purposeId, options);
 };
 
 /**

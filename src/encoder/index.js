@@ -31,12 +31,12 @@ const MAX_ATTEMPTS = 5;
  * @param {object} options - Encoding options.
  * @return An image wallet encoded as an HTMLCanvasElement.
  */
-export default async function(credentials, options) {
+export default async function(credentials, purposeId, options) {
     // Defensive programming.
     await validateInputs(credentials, options);
 
     // Invoke rendering pipeline.
-    let ctx = new EncodingContextInfo(credentials, options);
+    let ctx = new EncodingContextInfo(credentials, purposeId, options);
     let attempts = 0;
     do {
         // Increment attempt count.
@@ -80,9 +80,10 @@ export default async function(credentials, options) {
  * @param {object} options - Encoding options.
  */
 class EncodingContextInfo {
-    constructor(credentials, options) {
+    constructor(credentials, purposeId, options) {
         this.cipherText = null;
         this.credentials = credentials;
+        this.purposeId = purposeId;
         this.options = options;
         this.$canvas = null;
         this.$ctx = null;

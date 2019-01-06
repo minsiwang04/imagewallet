@@ -17,13 +17,13 @@ import { readFileAsDataURL } from '../utils/io';
 
 /**
  * Scans QR code embedded in image wallet.
- * @param {DecodingContextInfo} ctx - Decoding processing context information.
+ * @param {Blob} blob - An image wallet.
+ * @return {Buffer} - QR code payload.
  */
 export default async function(blob) {
     const buffer = await readFileAsArrayBuffer(blob);
     const decoded = await decodeFromFileBuffer(buffer);
-
-    return decoded.data;
+    return Buffer.from(decoded.binaryData);
 }
 
 /**

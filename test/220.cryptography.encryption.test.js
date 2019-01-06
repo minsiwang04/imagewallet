@@ -6,7 +6,7 @@ import * as utils from './utils';
 const PLAIN_TEXT = Buffer.from('{"Al-Kindi":"أبو يوسف يعقوب بن إسحاق الصبّاح الكندي"}');
 
 // Cipher text representation of input data.
-const CIPHER_TEXT = Buffer.from('b857511dd346a36fe1863f02710df13c35aa9c53aa5e48656bf837cef6e4937475f39a28ffdd8cc7695a2e4919cb31d3e4494d6424273402f782b4d6f6148815a873aa7003ad8e8997841123b4891646632bf061182c53e1eb7aeacf20101cdc', 'hex');
+const CIPHER_TEXT = Buffer.from('2231898ec84202ae1d765f5b481d97d99f6f920dce24ea16335fc51b2e3dd307f18e70bbe27c0cd6858977339032b9b16b650f70e50319f69e61204d631e054b245c1a530e0dc5a29fe7f94db1cd745a1b7f34e655a07b', 'hex');
 
 // Password used during encryption.
 const PWD = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe يعقوب بن إسحاق الصبّ';
@@ -24,16 +24,27 @@ test('IW :: cryptography :: encryption :: interface', () => {
 	]);
 });
 
-test('IW :: cryptography :: decrypt', () => {
-	const plainText = API.decrypt(CIPHER_TEXT, PWD, SALT, ROUNDS);
-    expect(plainText.compare(PLAIN_TEXT)).toBe(0);
+test('IW :: cryptography :: decrypt', (done) => {
+	(async () => {
+        const plainText = await API.decrypt(CIPHER_TEXT, PWD, SALT, ROUNDS);
+        expect(plainText.compare(PLAIN_TEXT)).toBe(0);
+	})().then(done, done.fail);
 });
 
-test('IW :: cryptography :: decrypt (incorrect password)', () => {
-    expect(() => API.decrypt(CIPHER_TEXT, 'foobar', SALT, ROUNDS)).toThrowError(new exceptions.IncorrectPasswordError());
+test('IW :: cryptography :: decrypt (incorrect password)', (done) => {
+    (async () => {
+        try {
+            await API.decrypt(CIPHER_TEXT, 'foobar', SALT, ROUNDS);
+            done.fail();
+        } catch (e) {
+            expect(e).toEqual(new exceptions.IncorrectPasswordError());
+        }
+    })().then(done, done.fail);
 });
 
-test('IW :: cryptography :: encrypt', () => {
-	const cipherText = API.encrypt(PLAIN_TEXT, PWD, SALT, ROUNDS);
-    expect(cipherText.compare(CIPHER_TEXT)).toBe(0);
+test('IW :: cryptography :: encrypt', (done) => {
+    (async () => {
+        const cipherText = await API.encrypt(PLAIN_TEXT, PWD, SALT, ROUNDS);
+        expect(cipherText.compare(CIPHER_TEXT)).toBe(0);
+    })().then(done, done.fail);
 });

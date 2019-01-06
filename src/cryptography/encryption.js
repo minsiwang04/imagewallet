@@ -9,24 +9,20 @@
  */
 
 // Module imports.
-import * as crypto from 'crypto';
 import * as exceptions from '../utils/exceptions';
 import blake2b from './hashing/blake2b';
-
-// Default cipher algorithm.
-const CIPHER_ALGORITHM = 'aes-256-cbc';
-
-const KEY_BYTES = 32;
-
-const IV_BYTES = 16;
+const argon2 = require('argon2-wasm');
 
 // Number of checksum bytes.
 const CHECKSUM_BYTES = 2;
 
+// Argon2 memory cost.
+const ARGON2_MEM_COST = 512;
+
 /**
  *
  * @param {Buffer} plainText
- * @return (Buffer) checksum
+ * @return {Buffer} checksum
  */
 const getChecksum = (plainText) => {
     return Buffer.from(blake2b(plainText).slice(0, CHECKSUM_BYTES));
@@ -39,15 +35,30 @@ const getChecksum = (plainText) => {
  * @param {Buffer} salt - Salt used for key derivation.
  * @param {number} rounds - Number of rounds used for key derivation.
  * @param {number} outputSize - Size of the derived key.
- * @return {Buffer} The derived key.
+ * @return {Promise.<Uint8Array>} The derived key.
  */
 const kdf = (password, salt, rounds, outputSize) => {
-    return crypto.pbkdf2Sync(
-        Buffer.from(password, 'utf8'),
-        salt,
-        rounds,
-        outputSize,
-        'sha256');
+    return argon2.hash({
+        pass: password,
+        salt: new Uint8Array(salt),
+        hashLen: outputSize,
+        time: rounds,
+        mem: ARGON2_MEM_COST
+    }).then(res => res.hash);
+};
+
+/**
+ *
+ * @param {Buffer|Uint8Array} a
+ * @param {Buffer|Uint8Array} b
+ * @returns {Buffer}
+ */
+const xor = (a, b) => {
+    const res = Buffer.alloc(a.length);
+    for (let i = 0; i < a.length; ++i) {
+        res[i] = a[i] ^ b[i];
+    }
+    return res;
 };
 
 /**
@@ -57,20 +68,16 @@ const kdf = (password, salt, rounds, outputSize) => {
  * @param {string} password - Password used to encrypt.
  * @param {Buffer} salt - Salt used for key derivation.
  * @param {number} rounds - Number of rounds used for key derivation.
- * @return {Buffer} cipherText
+ * @return {Promise.<Buffer>} cipherText
  */
-export const encrypt = (plainText, password, salt, rounds) => {
+export const encrypt = async (plainText, password, salt, rounds) => {
     const checksum = getChecksum(plainText);
-    const plainTextWithChecksum = Buffer.concat([plainText, checksum]);
+    const plainTextWithChecksum = Buffer.alloc(checksum.length + plainText.length);
+    checksum.copy(plainTextWithChecksum);
+    plainText.copy(plainTextWithChecksum, checksum.length);
 
-    const derived = kdf(password, salt, rounds, KEY_BYTES + IV_BYTES);
-    const key = derived.slice(0, KEY_BYTES);
-    const iv = derived.slice(KEY_BYTES);
-    const cipher = crypto.createCipheriv(CIPHER_ALGORITHM, key, iv);
-
-    let encrypted = cipher.update(plainTextWithChecksum);
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return encrypted;
+    const key = await kdf(password, salt, rounds, plainTextWithChecksum.length);
+    return xor(plainTextWithChecksum, key);
 };
 
 /**
@@ -81,27 +88,16 @@ export const encrypt = (plainText, password, salt, rounds) => {
  * @param {Buffer} salt - Salt used for key derivation.
  * @param {number} rounds - Number of rounds used for key derivation.
  * @throws IncorrectPasswordError - Raised when the supplied password is incorrect.
- * @return {Buffer} plainText
+ * @return {Promise.<Buffer>} plainText
  */
-export const decrypt = (cipherText, password, salt, rounds) => {
-    const derived = kdf(password, salt, rounds, KEY_BYTES + IV_BYTES);
-    const key = derived.slice(0, KEY_BYTES);
-    const iv = derived.slice(KEY_BYTES);
-    const decipher = crypto.createDecipheriv(CIPHER_ALGORITHM, key, iv);
+export const decrypt = async (cipherText, password, salt, rounds) => {
+    const key = await kdf(password, salt, rounds, cipherText.length);
+    const decrypted = xor(cipherText, key);
 
-    let decrypted = decipher.update(cipherText);
-    try {
-        decrypted = Buffer.concat([decrypted, decipher.final()]);
-    } catch (e) {
-        throw new exceptions.IncorrectPasswordError();
-    }
-
-    const checksumOffset = decrypted.byteLength - CHECKSUM_BYTES;
-    const plainText = decrypted.slice(0, checksumOffset);
+    const plainText = decrypted.slice(CHECKSUM_BYTES);
     const checksum = getChecksum(plainText);
-    if (checksum.compare(decrypted, checksumOffset, checksumOffset + CHECKSUM_BYTES) !== 0) {
+    if (checksum.compare(decrypted, 0, CHECKSUM_BYTES) !== 0) {
         throw new exceptions.IncorrectPasswordError();
     }
-
     return plainText;
 };

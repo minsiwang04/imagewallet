@@ -169,7 +169,7 @@ export default {
     methods: {
         // Event handler: on generation from password.
         onGenerateFromPassword(evt) {
-            ImageWallet.generateFromPassword(this.generated.credentials.password, {})
+            ImageWallet.generateFromPassword(this.generated.credentials.password, 0, {})
                 .then(this.onGenerationComplete)
                 .catch(this.onGenerationError);
         },
@@ -194,6 +194,7 @@ export default {
 
         // Event handler: on generation error.
         async onGenerationError(err) {
+            console.error(err);
             alert(err.message);
         },
 
@@ -206,7 +207,7 @@ export default {
 
         // Event handler: on decryption completed.
         onDecryptionComplete(response) {
-            this.decrypted.secretSeed = response.data.secretSeed;
+            this.decrypted.secretSeed = response.seed.toString('hex');
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('decryptedWallet').src = reader.result;
@@ -217,6 +218,7 @@ export default {
         // Event handler: on decryption error.
         onDecryptionError(err) {
             this.decrypted.secretSeed = '';
+            console.error(err);
             alert(err.message);
         },
 

@@ -88,7 +88,7 @@ export class InvalidPngFileError extends DecodingError {
 }
 
 /**
- * Raised when
+ * Raised when the decryption password is deemed to be incorrect.
  * @constructor
  */
 export class IncorrectPasswordError extends DecodingError {
@@ -99,6 +99,33 @@ export class IncorrectPasswordError extends DecodingError {
         )
     }
 }
+
+/**
+ * Raised when the image wallet version is unsupported.
+ * @constructor
+ */
+export class UnsupportedVersionError extends DecodingError {
+    constructor() {
+        super(
+            'Unsupported version',
+            'ERR_DECODING_UNSUPPORTED_VERSION'
+        )
+    }
+}
+
+/**
+ * Raised when the number of KDF rounds is too large.
+ * @constructor
+ */
+export class ExcessiveRoundsError extends DecodingError {
+    constructor() {
+        super(
+            'Excessive number of KDF rounds',
+            'ERR_DECODING_EXCESSIVE_ROUNDS'
+        )
+    }
+}
+
 /**
  * Raised when image wallet is asked to derive a key for an invalid coin.
  * @constructor
