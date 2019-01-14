@@ -105,8 +105,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="Image Wallet v0.4.0 - Demonstration">
-            <div id="imageWalletDemoContainer" class="d-block text-center" />
+        <b-modal ref="iwModalRef" hide-footer title="Image Wallet - Demonstration">
             <b-form-group>
                 <b-row>
                     <b-col sm="2">
@@ -123,6 +122,8 @@
                 </b-row>
             </b-form-group>
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
+            <br/>
+            <div id="imageWalletDemoContainer" class="d-block text-center" />
         </b-modal>
     </div>
 </template>

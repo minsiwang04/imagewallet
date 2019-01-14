@@ -1,11 +1,8 @@
 import * as API from '../src/index';
 import * as utils from './utils';
 
-test('IW :: can be imported', () => {
-    expect(API).toBeDefined();
-});
-
 test('IW :: interface :: is defined', () => {
+    expect(API).toBeDefined();
     utils.testSlots(API, [
         'name',
         'provider',
@@ -14,8 +11,10 @@ test('IW :: interface :: is defined', () => {
         'decryptQrData',
         'generateFromPassword',
         'getQrDataFromImage',
+        'createSeed',
         'deriveKey',
         'deriveKeyPair',
+        'derivePrivateKey',
         'getHash',
         'getUserPrivateKey',
         'getUserPublicKey',
@@ -25,6 +24,6 @@ test('IW :: interface :: is defined', () => {
         'verifyHash',
 	]);
     expect(API.name).toBe('Image Wallet');
-    expect(API.version).toBe('0.4.4');
+    expect(API.version).toBe('0.5.0');
     expect(API.provider).toBe('Trinkler Software AG');
 });

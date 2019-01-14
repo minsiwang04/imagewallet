@@ -10,7 +10,7 @@
 
 // Module imports.
 import { EncodingError } from '../utils/exceptions';
-import { logInfo, logWarning } from '../utils/logging';
+import { logInfo, logTODO, logWarning } from '../utils/logging';
 import renderCanvas from './renderers/canvas';
 import renderFooter from './renderers/footer';
 import renderHeader from './renderers/header';
@@ -19,7 +19,6 @@ import renderPanels from './renderers/panels';
 import renderQrCode from './renderers/qrCode';
 import renderWarning from './renderers/warning';
 import setCipherText from './setCipherText';
-import validateInputs from './validateInputs';
 import validateOutput from './validateOutput';
 
 // Maximum attempts before rendering is aborted.
@@ -33,7 +32,7 @@ const MAX_ATTEMPTS = 5;
  */
 export default async function(credentials, purposeId, options) {
     // Defensive programming.
-    await validateInputs(credentials, options);
+    validateInputs(credentials, options);
 
     // Invoke rendering pipeline.
     let ctx = new EncodingContextInfo(credentials, purposeId, options);
@@ -71,6 +70,14 @@ export default async function(credentials, purposeId, options) {
 
     // If not rendered then throw error.
     throw new Error("Image wallet rendering failed");
+}
+
+/**
+ * Validates encoding inputs.
+ * @param {EncodingContextInfo} ctx - Encoding processing context information.
+ */
+const validateInputs = (credentials, options) => {
+    logTODO(`validate password [${credentials.password}] minimum length = 8 ?`);
 }
 
 /**
