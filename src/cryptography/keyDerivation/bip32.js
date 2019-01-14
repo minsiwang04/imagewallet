@@ -50,7 +50,6 @@ export default function(seed, curveName, seedModifier, derivationPath, fingerpri
     indexes.forEach((index) => {
         xkey = getDerivedChildKey(xkey, index, curveName);
     });
-    // logDerivation(curveName, seed, xkey, derivationPath);
 
     return {
         publicKey: arrayToHex(getPublicKey(xkey.key, curveName)),

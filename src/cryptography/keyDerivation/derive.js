@@ -42,6 +42,7 @@ export default function(seed, coinSymbol, accountIndex) {
         throw new exceptions.InvalidCoinSymbolError(coinSymbol);
     }
 
+    // Derive coin appropriate key.
     const derivationPath = getDerivationPath(coin.hexCode, accountIndex, 0);
     const fingerprint = null;
     const seedModifier = SEED_MODIFIERS[coin.curve];
@@ -58,5 +59,4 @@ export default function(seed, coinSymbol, accountIndex) {
  */
 const getDerivationPath = (coinHexCode, accountIndex, address_index) => {
     return `m/44H/${coinHexCode}/${accountIndex}/0/${address_index}`;
-    // return `m/0x8000002CH/${coinHexCode}/${accountIndex}/0/${address_index}`;
 }

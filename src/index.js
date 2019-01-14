@@ -14,6 +14,7 @@
 // Module imports.
 import decodeQR from './decoder/decodeQR';
 import decryptQR from './decoder/decryptQR';
+import generateEntropy from './cryptography/entropyCreation';
 import keyDeriver from './cryptography/keyDerivation/derive';
 import {ed25519} from './cryptography/ecc/index';
 import encoder from './encoder/index';
@@ -30,6 +31,17 @@ const provider = 'Trinkler Software AG';
 
 // Library version.
 const version = '0.4.4';
+
+/**
+ * Returns a 32 byte PRNG seed.
+ * @param {string} encoding - Seed encoding, defaults to hexadecimal.
+ * @return Secret seed.
+ */
+const createSeed = (encoding) => {
+    const seed = generateEntropy();
+
+    return encoding == 'hex' ? seed.toString('hex') : seed;
+}
 
 /**
  * Asynchronously decrypts an image wallet.
@@ -56,21 +68,7 @@ const decryptQrData = async (qrData, password) => {
 };
 
 /**
- * Returns a entropy derived from seed by applying a derivation path algorithm.
- *
- * @param {hex} seed - Master source of entropy.
- * @param {string} coinSymbol - Coin symbol, e.g. IW.
- * @param {number} accountIndex - Account identifier.
- * @return {hex} seed - Master source of entropy.
- */
-const deriveKey = (seed, coinSymbol, accountIndex) => {
-    const kp = deriveKeyPair(seed, coinSymbol, accountIndex);
-
-    return kp.privateKey;
-}
-
-/**
- * Returns a key pair derived from seed by applying a derivation path algorithm.
+* Returns a key pair derived from a seed over which a derivation path algorithm is applied.
  *
  * @param {hex} seed - Master source of entropy.
  * @param {string} coinSymbol - Coin symbol, e.g. IW.
@@ -80,8 +78,29 @@ const deriveKey = (seed, coinSymbol, accountIndex) => {
 const deriveKeyPair = (seed, coinSymbol, accountIndex) => {
     const kp = keyDeriver(seed, coinSymbol, accountIndex);
 
+    // Inject shortcut attributes.
+    kp.pbk = kp.publicKey;
+    kp.pvk = kp.privateKey;
+
     return kp;
 }
+
+/**
+* Returns a private key derived from a seed over which a derivation path algorithm is applied.
+ *
+ * @param {hex} seed - Master source of entropy.
+ * @param {string} coinSymbol - Coin symbol, e.g. IW.
+ * @param {number} accountIndex - Account identifier.
+ * @return {hex} seed - Master source of entropy.
+ */
+const derivePrivateKey = (seed, coinSymbol, accountIndex) => {
+    const kp = deriveKeyPair(seed, coinSymbol, accountIndex);
+
+    return kp.privateKey;
+}
+
+// Synonym.
+const deriveKey = derivePrivateKey;
 
 /**
  * Asynchronously generates a lightly branded image wallet
@@ -198,8 +217,10 @@ export {
     generateFromPassword,
     getQrDataFromImage,
     // ... key derivation, signing ... etc.
+    createSeed,
     deriveKey,
     deriveKeyPair,
+    derivePrivateKey,
     getHash,
     getUserPrivateKey,
     getUserPublicKey,
