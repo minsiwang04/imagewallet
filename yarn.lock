@@ -1062,6 +1062,11 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
+argon2-wasm@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/argon2-wasm/-/argon2-wasm-0.9.0.tgz#acb2af67fe258aec5336277ca5fd0ae3ebcbc57a"
+  integrity sha512-bt5xqrDt5FnA1gdLLouOwi2NN1h9BeML8DmKth7CCYhygoXUEDeIxEMB++q+CUPQ8U5gju065Z0MjI+hVSXX7A==
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"

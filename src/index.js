@@ -106,11 +106,12 @@ const deriveKey = derivePrivateKey;
  * Asynchronously generates a lightly branded image wallet
  * from a user's password & associated options.
  * @param {object} password - A user's (hopefully strong) password.
+ * @param {number} purposeId - A number identifying the purpose of this wallet.
  * @param {object} options - Encoding options.
  * @return A promise resolving to an HTML canvas object.
  */
-const generateFromPassword = async (password, options) => {
-    return await encoder({password}, options);
+const generateFromPassword = async (password, purposeId, options) => {
+    return await encoder({password}, purposeId, options);
 };
 
 /**
@@ -127,11 +128,12 @@ const getQrDataFromImage = async (blob) => {
  * Returns a blake2b hash of input data.
  * @param {Object} data - Data to be hashed.
  * @param {string} encoding - Required output encoding.
- * @return {hex|Buffer} The hashed value.
+ * @return {Buffer|string} The hashed value.
  */
 const getHash = (data, encoding) => {
     // TODO validate input
-    return blake2b(data, encoding || 'hex');
+    const input = JSON.stringify(data);
+    return blake2b(input, encoding || 'hex');
 }
 
 /**

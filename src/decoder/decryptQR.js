@@ -9,14 +9,18 @@
  */
 
 // Module imports.
-import * as cryptography from '../cryptography/index';
+import Payload from '../payload/index';
 
 /**
- * Scans QR code embedded in image wallet.
- * @param {DecodingContextInfo} ctx - Decoding processing context information.
+ * Decrypts the QR code payload.
+ * @param {Buffer} qrData - Encrypted QR code payload.
+ * @param {string} password - Password used for decryption.
+ * @return {{seed: Buffer, purposeId: number}} - Decrypted QR code payload.
  */
 export default async function(qrData, password) {
-    const plainText = cryptography.decrypt(qrData, password);
-
-    return JSON.parse(plainText);
+    const payload = await Payload.decrypt(qrData, password);
+    return {
+        seed: payload.entropy,
+        purposeId: payload.purposeId,
+    };
 }

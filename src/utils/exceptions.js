@@ -55,7 +55,7 @@ export class EncodingError extends BaseError {
 /**
  * Raised when secret seed is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
+ * @param {string} msg - Error message.
  */
 export class InvalidSecretSeedError extends EncodingError {
     constructor(msg) {
@@ -66,7 +66,6 @@ export class InvalidSecretSeedError extends EncodingError {
 /**
  * Raised when a user password is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
  */
 export class InvalidPasswordError extends EncodingError {
     constructor() {
@@ -80,11 +79,50 @@ export class InvalidPasswordError extends EncodingError {
 /**
  * Raised when image wallet png file is deemed to be invalid.
  * @constructor
- * @param {string} err - Error message.
+ * @param {string} msg - Error message.
  */
 export class InvalidPngFileError extends DecodingError {
     constructor(msg) {
         super(msg, 'ERR_DECODING_INVALID_PMG_FILE');
+    }
+}
+
+/**
+ * Raised when the decryption password is deemed to be incorrect.
+ * @constructor
+ */
+export class IncorrectPasswordError extends DecodingError {
+    constructor() {
+        super(
+            'Password is incorrect',
+            'ERR_DECODING_INCORRECT_PASSWORD'
+        )
+    }
+}
+
+/**
+ * Raised when the image wallet version is unsupported.
+ * @constructor
+ */
+export class UnsupportedVersionError extends DecodingError {
+    constructor() {
+        super(
+            'Unsupported version',
+            'ERR_DECODING_UNSUPPORTED_VERSION'
+        )
+    }
+}
+
+/**
+ * Raised when the number of KDF rounds is too large.
+ * @constructor
+ */
+export class ExcessiveRoundsError extends DecodingError {
+    constructor() {
+        super(
+            'Excessive number of KDF rounds',
+            'ERR_DECODING_EXCESSIVE_ROUNDS'
+        )
     }
 }
 

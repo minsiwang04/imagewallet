@@ -30,7 +30,7 @@ export default async function(ctx) {
  * @param {EncodingContextInfo} ctx - Encoding processing context information.
  */
 const renderCode = async (ctx) => {
-    const $cvs = await qrcode.toCanvas(ctx.cipherText, {
+    const $cvs = await qrcode.toCanvas([{data: ctx.cipherText}], {
         errorCorrectionLevel: 'H',
         width: DEFAULTS.size
     });
