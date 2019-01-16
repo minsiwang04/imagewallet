@@ -12,7 +12,7 @@
 import * as CANVAS from './canvas';
 
 // Default header text.
-export const text = 'Trinkler Software';
+export const text = 'imagewallet.io';
 
 // Default header text alignment.
 export const textAlign = CANVAS.textAlign;

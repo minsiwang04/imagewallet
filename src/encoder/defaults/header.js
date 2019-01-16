@@ -12,7 +12,7 @@
 import * as CANVAS from './canvas';
 
 // Default header text.
-export const text = 'ACCESS FILE';
+export const text = 'IMAGEWALLET';
 
 // Default header text alignment.
 export const textAlign = CANVAS.textAlign;
