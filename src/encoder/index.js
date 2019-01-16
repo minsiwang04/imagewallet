@@ -27,6 +27,7 @@ const MAX_ATTEMPTS = 5;
 /**
  * Encodes an image wallet from user credentials and encoding options.
  * @param {object} credentials - Credentials to be encoded.
+ * @param {string} purposeId - ???.
  * @param {object} options - Encoding options.
  * @return An image wallet encoded as an HTMLCanvasElement.
  */

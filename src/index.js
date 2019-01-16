@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.5.0
+ * @version 0.5.2
  */
 
 // Module imports.
@@ -22,6 +22,7 @@ import {arrayToHex} from './utils/conversion';
 import blake2b from './cryptography/hashing/blake2b';
 import keccak256 from './cryptography/hashing/keccak256';
 import {NotImplementedError} from './utils/exceptions';
+import * as testUtils from './utils/testing';
 
 // Library version.
 const name = 'Image Wallet';
@@ -30,7 +31,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.5.0';
+const version = '0.5.2';
 
 /**
  * Returns a 32 byte PRNG seed.
@@ -166,6 +167,7 @@ const getUserPublicKey = (pvk) => {
 const signData = (pvk, data, encoding) => {
     // TODO validate input
     const msgHash = getHash(data);
+
     const sig = signHash(pvk, msgHash, encoding);
 
     return {sig, msgHash};
@@ -230,4 +232,6 @@ export {
     signHash,
     verifyData,
     verifyHash,
+    // ... testing
+    testUtils,
 };
