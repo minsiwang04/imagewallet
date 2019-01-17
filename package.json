@@ -30,7 +30,7 @@
         "lint": "eslint src demo",
         "demo": "parcel -p 3001 ./demo/public/index.html",
         "demo-format": "prettier --write './demo/*.js'",
-        "test": "jest ./test/*"
+        "test": "tsc && jest ./test/*"
     },
     "dependencies": {
         "argon2-wasm": "^0.9.0",

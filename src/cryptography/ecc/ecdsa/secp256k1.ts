@@ -10,7 +10,6 @@
  */
 
 // Module imports.
-import * as elliptic from '../../../ext/elliptic';
 
 // Set ECDSA context.
 const CURVE = new elliptic.ec('secp256k1');

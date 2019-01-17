@@ -21,7 +21,7 @@ const ALGO = 'keccak256';
  * @param {string} encoding - Required output encoding.
  * @return {hex|Buffer} The hashed value.
  */
-export default function(data, encoding) {
+export default function(data, encoding?) {
     const input = JSON.stringify(data, null, 0);
     const h = keccak(ALGO);
 	h.update(input);

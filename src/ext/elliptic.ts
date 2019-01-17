@@ -1,6 +1,6 @@
 'use strict';
 
-var elliptic = exports;
+export let elliptic;
 
 // elliptic.version = require('../package.json').version;
 elliptic.version = '6.4.1';
