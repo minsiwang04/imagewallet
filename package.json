@@ -1,7 +1,7 @@
 {
     "name": "@trinkler/imagewallet",
     "description": "A custodian file that is simpler than brainwallets and can be used for the entire blockchain ecosystem.",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "author": "Trinkler Software AG <company@trinkler.software>",
     "maintainers": [
         "Reto Trinkler",
@@ -25,7 +25,7 @@
         "steganography"
     ],
     "scripts": {
-        "build": "parcel build ./src/index.js -o ImageWallet.js",
+        "build": "parcel build ./src/index.js -o Imagewallet.js",
         "format": "prettier --write './src/**/**/*.js'",
         "lint": "eslint src demo",
         "demo": "parcel -p 3001 ./demo/public/index.html",

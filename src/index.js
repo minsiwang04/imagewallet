@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.5.3
+ * @version 0.5.4
  */
 
 // Module imports.
@@ -25,13 +25,13 @@ import {NotImplementedError} from './utils/exceptions';
 import * as testUtils from './utils/testing';
 
 // Library version.
-const name = 'Image Wallet';
+const name = 'Imagewallet';
 
 // Library provider.
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.5.3';
+const version = '0.5.4';
 
 /**
  * Returns a 32 byte PRNG seed.

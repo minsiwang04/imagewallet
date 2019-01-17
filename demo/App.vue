@@ -8,13 +8,13 @@
 // View HTML template.
 // **************************************************
 <template>
-    <div id="imageWalletApplication">
+    <div id="imagewalletApplication">
 
         <!-- ---------------------------------------------- -->
         <!-- Header                                         -->
         <!-- ---------------------------------------------- -->
         <b-navbar toggleable="md" type="dark" variant="dark">
-            <b-navbar-brand href="#">Image Wallet Demonstration v{{ IW.version }}</b-navbar-brand>
+            <b-navbar-brand href="#">Imagewallet Demonstration v{{ IW.version }}</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
                 <b-form-radio-group buttons v-model="action" :options="actions"/>
             </b-navbar-nav>
@@ -43,7 +43,7 @@
                     </b-col>
                 </b-row>
                 <br />
-                <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate Image Wallet</b-button>
+                <b-button v-on:click="onGenerateFromPassword" variant="secondary" :block=true>Generate Imagewallet</b-button>
                 <br />
             </b-form-group>
         </b-container>
@@ -73,7 +73,7 @@
                     :state="Boolean(decrypted.walletFile)"
                     @input=onWalletFileSelected
                     accept="image/png"
-                    placeholder="Choose an Image Wallet ..." />
+                    placeholder="Choose an Imagewallet ..." />
             </b-form-group>
             <b-form-group v-show="decrypted.walletFile">
                 <b-row>
@@ -92,10 +92,10 @@
             <b-form-group v-show="decrypted.walletFile">
                 <b-row>
                     <b-col sm="3">
-                        <label for="decryptedWallet">Image Wallet:</label>
+                        <label for="decryptedWallet">Imagewallet:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-img id="decryptedWallet" alt="Decoded Image Wallet" fluid style="text-align: center;"/>
+                        <b-img id="decryptedWallet" alt="Decoded Imagewallet" fluid style="text-align: center;"/>
                     </b-col>
                 </b-row>
             </b-form-group>
@@ -105,7 +105,7 @@
         <!-- ---------------------------------------------- -->
         <!-- Modal - displays generated wallet              -->
         <!-- ---------------------------------------------- -->
-        <b-modal ref="iwModalRef" hide-footer title="Image Wallet - Demonstration">
+        <b-modal ref="iwModalRef" hide-footer title="Imagewallet - Demonstration">
             <b-form-group>
                 <b-row>
                     <b-col sm="2">
@@ -123,7 +123,7 @@
             </b-form-group>
             <b-btn class="mt-3" block @click="onSaveWallet">SAVE</b-btn>
             <br/>
-            <div id="imageWalletDemoContainer" class="d-block text-center" />
+            <div id="imagewalletDemoContainer" class="d-block text-center" />
         </b-modal>
     </div>
 </template>
@@ -133,13 +133,13 @@
 // **************************************************
 <script>
 import 'babel-polyfill';
-import * as ImageWallet from '../src/index';
+import * as Imagewallet from '../src/index';
 import { saveAs } from 'file-saver';
 import domtoimage from 'dom-to-image';
 
 // Application view.
 export default {
-    name: 'imageWalletApplication',
+    name: 'imagewalletApplication',
 
     // View model.
     data() {
@@ -162,7 +162,7 @@ export default {
                 filename: 'my-agora-image-wallet',
                 wallet: null,
             },
-            IW: ImageWallet,
+            IW: Imagewallet,
         };
     },
 
@@ -170,7 +170,7 @@ export default {
     methods: {
         // Event handler: on generation from password.
         onGenerateFromPassword(evt) {
-            ImageWallet.generateFromPassword(this.generated.credentials.password, 0, {})
+            Imagewallet.generateFromPassword(this.generated.credentials.password, 0, {})
                 .then(this.onGenerationComplete)
                 .catch(this.onGenerationError);
         },
@@ -182,7 +182,7 @@ export default {
 
             // Update DOM.
             const $container = document.getElementById(
-                'imageWalletDemoContainer',
+                'imagewalletDemoContainer',
             );
             while ($container.firstChild) {
                 $container.removeChild($container.firstChild);
@@ -201,7 +201,7 @@ export default {
 
         // Event handler: on selection of a wallet file.
         async onWalletFileSelected(walletFileBlob) {
-            await ImageWallet.decryptImage(walletFileBlob, this.decrypted.password)
+            await Imagewallet.decryptImage(walletFileBlob, this.decrypted.password)
                 .then(this.onDecryptionComplete)
                 .catch(this.onDecryptionError);
         },
