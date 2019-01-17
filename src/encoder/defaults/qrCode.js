@@ -15,13 +15,13 @@ import * as CANVAS from './canvas';
 export const errorCorrectionLevel = 'H';
 
 // Default qr code frame width.
-export const frameWidth = 3;
+export const frameWidth = 2;
 
 // Default qr code padding.
 export const padding = CANVAS.padding;
 
 // Default qr code size.
-export const size = 120;
+export const size = 150;
 
 // Default qr code x position.
 export const x = (CANVAS.width - size) / 2;
