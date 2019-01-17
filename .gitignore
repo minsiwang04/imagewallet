@@ -4,6 +4,12 @@
 /node_modules/
 /dist
 
+# ignore generated files
+/src/**/*.js
+/test/**/*.js
+/src/**/*.js.map
+/test/**/*.js.map
+
 # Local env files
 .env.local
 .env.*.local
