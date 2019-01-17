@@ -12,7 +12,7 @@
 import * as CANVAS from './canvas';
 
 // Default header text.
-export const text = 'Do NOT share this File or QR code!';
+export const text = 'Keep this file private at all times.';
 
 // Default header text alignment.
 export const textAlign = CANVAS.textAlign;

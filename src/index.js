@@ -31,6 +31,7 @@ const name = 'Image Wallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
+
 const version = '0.5.2';
 
 /**

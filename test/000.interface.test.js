@@ -24,6 +24,6 @@ test('IW :: interface :: is defined', () => {
         'verifyHash',
 	]);
     expect(API.name).toBe('Image Wallet');
-    expect(API.version).toBe('0.5.0');
+    expect(API.version).toBe('0.5.2');
     expect(API.provider).toBe('Trinkler Software AG');
 });
