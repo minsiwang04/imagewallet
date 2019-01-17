@@ -25,7 +25,7 @@ import {NotImplementedError} from './utils/exceptions';
 import * as testUtils from './utils/testing';
 
 // Library version.
-const name = 'Image Wallet';
+const name = 'Imagewallet';
 
 // Library provider.
 const provider = 'Trinkler Software AG';
