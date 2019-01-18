@@ -1,9 +1,9 @@
-import * as API from '../src/index';
+import * as IW from '../src/index';
 import * as utils from './utils';
 
 test('IW :: interface :: is defined', () => {
-    expect(API).toBeDefined();
-    utils.testSlots(API, [
+    expect(IW).toBeDefined();
+    utils.testSlots(IW, [
         'name',
         'provider',
         'version',
@@ -23,7 +23,7 @@ test('IW :: interface :: is defined', () => {
         'verifyData',
         'verifyHash',
 	]);
-    expect(API.name).toBe('Imagewallet');
-    expect(API.version).toBe('0.5.6');
-    expect(API.provider).toBe('Trinkler Software AG');
+    expect(IW.name).toBe('Imagewallet');
+    expect(IW.version).toBe('0.5.7');
+    expect(IW.provider).toBe('Trinkler Software AG');
 });

@@ -87,3 +87,35 @@ export const getTestKeyPair = (seed, coinSymbol, accountIndex) => {
 
     return kp;
 };
+
+/**
+ * Returns an image wallet key pair ready for signing.
+ */
+export const getTestKeyPairs = (seeds, coinSymbol, accountIndex) => {
+    seeds = seeds || SEEDS;
+    coinSymbol = coinSymbol || 'IW';
+    accountIndex = accountIndex || 0;
+
+    return _.map(seeds, (s) => getTestKeyPair(s, coinSymbol, accountIndex));
+};
+
+/**
+ * Returns image wallet key pairs ready for signing by individual customers.
+ */
+export const getTestKeyPairsForIndividualCustomers = () => {
+    return getTestKeyPairs(SEEDS_FOR_INDIVIDUAL_CUSTOMERS);
+}
+
+/**
+ * Returns image wallet key pairs ready for signing by corporate customers.
+ */
+export const getTestKeyPairsForCorporateCustomers = () => {
+    return getTestKeyPairs(SEEDS_FOR_CORPORATE_CUSTOMERS);
+}
+
+/**
+ * Returns image wallet key pairs ready for signing by market makers.
+ */
+export const getTestKeyPairsForMarketMakers = () => {
+    return getTestKeyPairs(SEEDS_FOR_MARKET_MAKERS);
+}
