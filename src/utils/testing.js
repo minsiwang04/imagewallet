@@ -10,7 +10,7 @@
 import _ from 'lodash';
 import keyDeriver from '../cryptography/keyDerivation/derive';
 
-// A set of test seeds for generating test wallet keypairs.
+// A set of 50 test seeds for generating test wallet keypairs.
 export const SEEDS = [
     '088550004429ce1fd04e859cb05cdb7286acbe783cb0f706bf3d1269ce623a2e',
     'a2d419bf498a85f8c43c7709ce1f9250922fd45360c359fd821ff1620c09fd40',
@@ -64,20 +64,24 @@ export const SEEDS = [
     '92f598a85be8fd8672afce99783e6a0e401ecfdb5b1a42a1d776c690bbdd9849',
 ];
 
+// Seeds reserved for individual customers.
+export const SEEDS_FOR_INDIVIDUAL_CUSTOMERS = SEEDS.slice(0, 30);
+
+// Seeds reserved for corporate customers.
+export const SEEDS_FOR_CORPORATE_CUSTOMERS = SEEDS.slice(0, 30);
+
+// Seeds reserved for market makers.
+export const SEEDS_FOR_MARKET_MAKERS = SEEDS.slice(40);
+
 /**
  * Returns an image wallet key pair ready for signing.
  */
-export const getKeyPair = (seedIndex, coinSymbol, accountIndex) => {
-    if (seedIndex && (seedIndex > 50 || seedIndex < 0)) {
-        throw new Error('Specify a seed index between 0 and 49')
-    }
+export const getTestKeyPair = (seed, coinSymbol, accountIndex) => {
+    seed = seed || SEEDS[_.random(SEEDS.length)];
+    coinSymbol = coinSymbol || 'IW';
+    accountIndex = accountIndex || 0;
 
-    seedIndex = seedIndex || _.random(SEEDS.length);
-    if (seedIndex === 50) {
-        seedIndex = 49;
-    }
-
-    const kp = keyDeriver(SEEDS[seedIndex], coinSymbol || 'IW', accountIndex || 0);
+    const kp = keyDeriver(seed, coinSymbol, accountIndex);
     kp.pbk = kp.publicKey;
     kp.pvk = kp.privateKey;
 
