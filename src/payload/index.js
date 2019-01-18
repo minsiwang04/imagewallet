@@ -22,7 +22,7 @@ const SALT_BYTES = 16;
 const KDF_ROUNDS = 256;
 
 // Payload format version.
-const FORMAT_VERSION = 1;
+const FORMAT_VERSION = 3;
 
 export default class Payload {
     /**

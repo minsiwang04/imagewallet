@@ -1,12 +1,12 @@
 # ------------------------------------------------------------------------------
-# ImageWallet - shell activation
+# Imagewallet - shell activation
 # ------------------------------------------------------------------------------
 # Set home path.
 export IW_CORE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export IW_CORE_HOME="$( cd "$( dirname "${IW_CORE_HOME[0]}" )" && pwd )"
 
 # ------------------------------------------------------------------------------
-# ImageWallet - aliases
+# Imagewallet - aliases
 # ------------------------------------------------------------------------------
 # Run demo
 alias iw-core-demo='cd $IW_CORE_HOME && yarn demo'

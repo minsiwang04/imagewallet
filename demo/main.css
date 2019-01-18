@@ -1,10 +1,10 @@
-#imageWalletDemoApplication {
+#imagewalletDemoApplication {
     width: 980px;
     margin:auto;
 }
 
 canvas.ts-iw {
-    background-image: url('assets/ancient-greek-columns-granger.jpg');
+    background-image: url('assets/colors.jpg');
     background-size: contain;
     background-blend-mode: darken;
     border: 5px solid black;
