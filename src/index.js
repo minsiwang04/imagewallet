@@ -8,7 +8,7 @@
  * @fileOverview An image wallet - easier than brain wallets.
  *
  * @exports decode/deriveKey/encode/name/provider/version
- * @version 0.5.7
+ * @version 0.5.8
  */
 
 // Module imports.
@@ -16,12 +16,12 @@ import decodeQR from './decoder/decodeQR';
 import decryptQR from './decoder/decryptQR';
 import generateEntropy from './cryptography/entropyCreation';
 import keyDeriver from './cryptography/keyDerivation/derive';
-import {ed25519} from './cryptography/ecc/index';
+import { ed25519 } from './cryptography/ecc/index';
 import encoder from './encoder/index';
-import {arrayToHex} from './utils/conversion';
+import { arrayToHex } from './utils/conversion';
 import blake2b from './cryptography/hashing/blake2b';
 import keccak256 from './cryptography/hashing/keccak256';
-import {NotImplementedError} from './utils/exceptions';
+import { NotImplementedError } from './utils/exceptions';
 import * as testUtils from './utils/testing';
 
 // Library version.
@@ -31,7 +31,7 @@ const name = 'Imagewallet';
 const provider = 'Trinkler Software AG';
 
 // Library version.
-const version = '0.5.7';
+const version = '0.5.8';
 
 /**
  * Returns a 32 byte PRNG seed.
@@ -42,7 +42,7 @@ const createSeed = (encoding) => {
     const seed = generateEntropy();
 
     return encoding == 'hex' ? seed.toString('hex') : seed;
-}
+};
 
 /**
  * Asynchronously decrypts an image wallet.
@@ -69,7 +69,7 @@ const decryptQrData = async (qrData, password) => {
 };
 
 /**
-* Returns a key pair derived from a seed over which a derivation path algorithm is applied.
+ * Returns a key pair derived from a seed over which a derivation path algorithm is applied.
  *
  * @param {hex} seed - Master source of entropy.
  * @param {string} coinSymbol - Coin symbol, e.g. IW.
@@ -84,10 +84,10 @@ const deriveKeyPair = (seed, coinSymbol, accountIndex) => {
     kp.pvk = kp.privateKey;
 
     return kp;
-}
+};
 
 /**
-* Returns a private key derived from a seed over which a derivation path algorithm is applied.
+ * Returns a private key derived from a seed over which a derivation path algorithm is applied.
  *
  * @param {hex} seed - Master source of entropy.
  * @param {string} coinSymbol - Coin symbol, e.g. IW.
@@ -98,7 +98,7 @@ const derivePrivateKey = (seed, coinSymbol, accountIndex) => {
     const kp = deriveKeyPair(seed, coinSymbol, accountIndex);
 
     return kp.privateKey;
-}
+};
 
 // Synonym.
 const deriveKey = derivePrivateKey;
@@ -112,7 +112,7 @@ const deriveKey = derivePrivateKey;
  * @return A promise resolving to an HTML canvas object.
  */
 const generateFromPassword = async (password, purposeId, options) => {
-    return await encoder({password}, purposeId, options);
+    return await encoder({ password }, purposeId, options);
 };
 
 /**
@@ -135,7 +135,7 @@ const getHash = (data, encoding) => {
     // TODO validate input
     const input = JSON.stringify(data);
     return blake2b(input, encoding || 'hex');
-}
+};
 
 /**
  * Returns a user's private key.
@@ -145,7 +145,7 @@ const getHash = (data, encoding) => {
 const getUserPrivateKey = (derivedEntropy) => {
     // TODO validate input
     return arrayToHex(ed25519.getPrivateKey(derivedEntropy));
-}
+};
 
 /**
  * Returns a user's public key.
@@ -155,7 +155,7 @@ const getUserPrivateKey = (derivedEntropy) => {
 const getUserPublicKey = (pvk) => {
     // TODO validate input
     return arrayToHex(ed25519.getPublicKey(pvk));
-}
+};
 
 /**
  * Signs a data structure.
@@ -170,7 +170,7 @@ const signData = (pvk, data, encoding) => {
 
     const sig = signHash(pvk, msgHash, encoding);
 
-    return {sig, msgHash};
+    return { sig, msgHash };
 };
 
 /**
@@ -213,7 +213,7 @@ const verifyHash = (pbk, msgHash, sig) => {
 export {
     // ... meta-data
     name,
-	provider,
+    provider,
     version,
     // ... image file management
     decryptImage,
