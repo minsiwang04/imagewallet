@@ -6,7 +6,7 @@ import * as utils from './utils';
 const PLAIN_TEXT = Buffer.from('{"Al-Kindi":"أبو يوسف يعقوب بن إسحاق الصبّاح الكندي"}');
 
 // Cipher text representation of input data.
-const CIPHER_TEXT = Buffer.from('2231898ec84202ae1d765f5b481d97d99f6f920dce24ea16335fc51b2e3dd307f18e70bbe27c0cd6858977339032b9b16b650f70e50319f69e61204d631e054b245c1a530e0dc5a29fe7f94db1cd745a1b7f34e655a07b', 'hex');
+const CIPHER_TEXT = Buffer.from('44cf43d90ef7c8c9ab0b30c9258340b83c4af3ca587c3ddd12796bbe989b401bb497925a29ece2d0a57e418c0c3af4f9d5d190001de782c06f7667382871f5efd61ae73bd41c4bc67fcd450e9bf45f95279cd4d26539ee', 'hex');
 
 // Password used during encryption.
 const PWD = 'a322c28cdfa2ef5691adfe2f1c63349b39c9f72518bf99e4179ef17123772bfe يعقوب بن إسحاق الصبّ';

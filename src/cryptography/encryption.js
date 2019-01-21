@@ -39,7 +39,7 @@ const getChecksum = (plainText) => {
  */
 const kdf = (password, salt, rounds, outputSize) => {
     return argon2.hash({
-        pass: password,
+        pass: new Uint8Array(Buffer.from(password)),
         salt: new Uint8Array(salt),
         hashLen: outputSize,
         time: rounds,
