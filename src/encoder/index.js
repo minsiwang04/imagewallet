@@ -27,7 +27,7 @@ const MAX_ATTEMPTS = 5;
 /**
  * Encodes an image wallet from user credentials and encoding options.
  * @param {object} credentials - Credentials to be encoded.
- * @param {string} purposeId - ???.
+ * @param {number} purposeId - A number identifying the purpose of this wallet.
  * @param {object} options - Encoding options.
  * @return An image wallet encoded as an HTMLCanvasElement.
  */
@@ -59,10 +59,7 @@ export default async function(credentials, purposeId, options) {
         // Either return or loop.
         if (wasRendered) {
             logInfo(`Canvas rendering attempt #${attempts}: success`);
-            return {
-                $canvas: ctx.$canvas,
-                seed: ctx.seed
-            };
+            return { $canvas: ctx.$canvas };
         } else {
             logWarning(`Canvas rendering attempt #${attempts}: failed`);
             ctx = new EncodingContextInfo(credentials, options);
@@ -70,7 +67,7 @@ export default async function(credentials, purposeId, options) {
     } while (attempts < MAX_ATTEMPTS);
 
     // If not rendered then throw error.
-    throw new Error("Image wallet rendering failed");
+    throw new Error('Image wallet rendering failed');
 }
 
 /**
@@ -79,7 +76,7 @@ export default async function(credentials, purposeId, options) {
  */
 const validateInputs = (credentials, options) => {
     logTODO(`validate password [${credentials.password}] minimum length = 8 ?`);
-}
+};
 
 /**
  * Contextual information passed along encoding pipeline.

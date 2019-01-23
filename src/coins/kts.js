@@ -22,6 +22,3 @@ export const symbol = 'KTS';
 
 // Elliptic curve type.
 export const curve = 'ed25519';
-
-// Hashing algorithm.
-export const hashAlgo = 'blake2b';
