@@ -48,7 +48,7 @@ const createSeed = (encoding) => {
  * Asynchronously decrypts an image wallet.
  * @param {Blob} blob - An image wallet.
  * @param {string} password - Password used when generating wallet.
- * @return Secret seed.
+ * @return {{seed: Buffer, purposeId: number}} - Decrypted QR code payload.
  */
 const decryptImage = async (blob, password) => {
     // TODO validate input
@@ -61,7 +61,7 @@ const decryptImage = async (blob, password) => {
  * Asynchronously decrypts previously decoded QR data.
  * @param {string} qrData - Previously decoded qr data (utf8 encoded).
  * @param {string} password - Password used when generating wallet.
- * @return Secret seed.
+ * @return {{seed: Buffer, purposeId: number}} - Decrypted QR code payload.
  */
 const decryptQrData = async (qrData, password) => {
     // TODO validate input
@@ -187,7 +187,7 @@ const signHash = (pvk, msgHash, encoding) => {
  * Verifies that the signature of the hash of the data is verified with the public key.
  * @param {hex} pbk - A user's public key.
  * @param {hex} msgHash - A message hash.
- * @param {???} sig - A message signature.
+ * @param {Array} sig - A digital signature of the message hash in DER array format.
  * @return {Boolean} True if verified, false otherwise.
  */
 const verifyData = (pbk, data, sig) => {
@@ -201,7 +201,7 @@ const verifyData = (pbk, data, sig) => {
  * Verifies that the signature of the hash is verified with the public key.
  * @param {hex} pbk - A user's public key.
  * @param {hex} msgHash - A message hash.
- * @param {???} sig - A message signature.
+ * @param {Array} sig - A digital signature of the message hash in DER array format.
  * @return {Boolean} True if verified, false otherwise.
  */
 const verifyHash = (pbk, msgHash, sig) => {
