@@ -12,7 +12,7 @@
 import * as CANVAS from './canvas';
 
 // Default header text.
-export const text = 'Keep this file private at all times';
+export const text = 'Your blockchain companion file';
 
 // Default header text alignment.
 export const textAlign = CANVAS.textAlign;
